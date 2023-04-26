@@ -186,9 +186,11 @@ class Screen(framebuf.FrameBuffer):
     def get_color(self,color):
         # note that because we are going from 24 bits to 16 bits, there will be significant color loss
 
+
+        # The framebuf seems to flip the blue and green
         red = ((color[0] >> 3) & 0x1f) << 11
-        green = ((color[1] >> 2) & 0x3f) << 5
-        blue = (color[2] >> 3) & 0x1f
+        blue = ((color[2] >> 3) & 0x1f) << 6
+        green = ((color[1] >> 2) & 0x3f)
 
         return (red | green | blue)
 
