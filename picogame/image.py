@@ -51,8 +51,9 @@ def createImageBuffer(sprite,size):
     tempBuffer = bytearray(width*height*2)
     buffer = framebuf.FrameBuffer(tempBuffer,width,height,framebuf.RGB565)
     
+    # We need to flip rows because bmp starts on the bottom left.
     for y in range(0,height):
         for x in range(0, width):
-            buffer.pixel(x,y,int.from_bytes(sprite[y*width+x],'little'))
+            buffer.pixel(x,y,int.from_bytes(sprite[(height-1-y)*width+x],'little'))
 
     return buffer
