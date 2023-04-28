@@ -182,6 +182,10 @@ class Screen(framebuf.FrameBuffer):
         self.fill(color)
         self.show()
 
+    def blt(self,imageBuffer,x,y,key=-1):
+        super.blt(imageBuffer,x,y,key=key)
+        
+
     '''Convert from RGB to RGB565 hex. The input argument color is a tuple (R, G, B)'''
     def get_color(self,color):
         # note that because we are going from 24 bits to 16 bits, there will be significant color loss
