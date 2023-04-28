@@ -35,26 +35,12 @@ def openImage(path):
 
         rowSize = int(size[0]*depth/32*4)
 
-        imageData = framebuf.FrameBuffer(f.read(rowSize*size[1]), size[0], size[1], framebuf.RGB565)
-        #imageData = []
-        #for currentRow in range(0,size[1]):
-        #    currentRead = f.read(rowSize)
-        #    if len(currentRead) > 0:
-        #        imageData.append(currentRead)
-
-
-        print("Signature: ", signature)
-        print("File Size: ", fsize)
-        print("Data Offset: ", dataOffset)
-        print("Header Size: ", infoHeaderSize)
-        print("Width/Height: ", size)
-        print("Bit Depth: ", depth)
-        print("Compression: ", compression)
-        print("Image Size: ", imageSize)
-        #print("Color Table Used: ", colorUsed)
-        print("Masks: ", masks)
-        print("Row Size: ", rowSize)
-        print("Number of rows: ", len(imageData))
+        #imageData = framebuf.FrameBuffer(f.read(rowSize*size[1]), size[0], size[1], framebuf.RGB565)
+        imageData = []
+        for currentRow in range(0,size[1]):
+            currentRead = f.read(rowSize)
+            if len(currentRead) > 0:
+                imageData.append(currentRead)
 
         return (size,imageData)
     
