@@ -38,14 +38,14 @@ def openImage(path):
         #imageData = framebuf.FrameBuffer(f.read(rowSize*size[1]), size[0], size[1], framebuf.RGB565)
         imageData = []
         for currentRow in range(0,size[1]):
-            currentRead = f.read(rowSize)
-            if len(currentRead) > 0:
-                imageData.append(currentRead)
+            for currentColumn in range(0,size[0]):
+                currentRead = f.read(2)
+                if len(currentRead) > 0:
+                    imageData.append(currentRead)
 
         return (size,imageData)
     
-def createImageBuffer(self,sprite,x,y):
-    #self.blit(sprite,size,x,y)
+def createImageBuffer(sprite,size):
     width = size[0]
     height = size[1]
     tempBuffer = bytearray(width*height*2)
@@ -53,6 +53,6 @@ def createImageBuffer(self,sprite,x,y):
     
     for y in range(0,height):
         for x in range(0, width):
-            buffer.pixel(x,y,sprite[x*y*2])
+            buffer.pixel(x,y,int.from_bytes(sprite[y*width+x],'little'))
 
     return buffer
