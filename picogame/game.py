@@ -18,13 +18,18 @@ class PicoGame:
         self.x += 1
         
         if self.x > 128:
-            self.x = 0
+            self.x = -10
+            
+        if self.y > 128:
+            self.y = -10
+        elif self.y < -50:
+            self.y = 110
         
         self._screen.fill(0x00)
         self._screen.blit(self._spriteBuffer,self.x,self.y)
         
         if(showFPS):
-            currentFPS = 1/self.deltaTime
+            currentFPS = 1/(self.deltaTime * 1000)
             self._screen.text(str(currentFPS),70,110,0xFF)
         
         
