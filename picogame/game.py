@@ -24,9 +24,8 @@ class PicoGame:
         self._screen.blit(self._spriteBuffer,self.x,self.y)
         
         if(showFPS):
-            deltaTime = time.ticks_diff(self.currentTime,self.lastTime)
-            currentFPS = 1/deltaTime
-            self._screen.text(str(currentFPS),110,110,0xFF)
+            currentFPS = 1/self.deltaTime
+            self._screen.text(str(currentFPS),70,110,0xFF)
         
         
         self._screen.show()
@@ -48,7 +47,8 @@ class PicoGame:
         while(True):
             self.currentTime = time.ticks_ms()
             
-            if time.ticks_diff(self.currentTime,self.lastTime) > secondsPerFrame:
+            self.deltaTime = time.ticks_diff(self.currentTime,self.lastTime)
+            if  self.deltaTime > secondsPerFrame:
                 self.draw(True)
                 self.lastTime = self.currentTime
             
@@ -57,10 +57,10 @@ class PicoGame:
                 break
             
             if not key2.value():
-                x -= 5
+                self.y -= 5
                 
             if not key1.value():
-                x += 5
+                self.y += 5
         
         
             
