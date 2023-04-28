@@ -1,5 +1,5 @@
-import screen
-import image
+from . import screen
+from . import image
 from machine import Timer, Pin
 
 class PicoGame:
@@ -25,17 +25,18 @@ class PicoGame:
 
     def run(self):
         # Set up the timer
-        timer = machine.Timer()
-        timer.init(mode=machine.Timer.PERIODIC, freq=60, callback=draw)
+        timer = Timer()
+        timer.init(mode=Timer.PERIODIC, freq=60, callback=self.draw)
         
         # Set up the input pins
         key0 = Pin(15, Pin.IN, Pin.PULL_UP)
         key1 = Pin(17, Pin.IN, Pin.PULL_UP)
-        key2 = Pin(2, PIN.IN, Pin.PULL_UP)
+        key2 = Pin(2, Pin.IN, Pin.PULL_UP)
         
         while(True):
             if not key0:
                 # we received the exit button
+                timer.deinit()
                 break
             
             if not key2:
