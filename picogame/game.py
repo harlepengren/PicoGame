@@ -5,8 +5,9 @@ import time
 
 class PicoGame:
     def __init__(self):
-        spriteSize, sprite = image.openImage('sprite.bmp')
-        self._spriteBuffer = image.createImageBuffer(sprite,spriteSize)
+        sprite = image.Image('sprite.bmp')
+        spriteSize = sprite.size
+        self._spriteBuffer = sprite.buffer
         
         self._screen = screen.Screen()
         self._screen.clear()
