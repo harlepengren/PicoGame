@@ -59,3 +59,28 @@ class Image:
         for y in range(0,height):
             for x in range(0, width):
                 self.buffer.pixel(x,y,int.from_bytes(self._imageData[(height-1-y)*width+x],'little'))
+                
+    def createFromString(self,newImage,width=-1):
+        """Use a string to create an image. One byte per pixel. If no width is given, infer based on \\n."""
+        
+        if width == -1:
+            width = newImage.find('\n',1)
+            
+        self._imageData = bytearray()
+        for currentChar in newImage:
+            if (currentChar == '\n') or (currentChar == ' '):
+                pass
+            elif (currentChar == '.') or (currenChar == 'f'):
+                self._imageData.append(0x0)
+            elif (currentChar == '1'):
+                self._imageData.append(0xffff)
+            elif (currentChar == 'a'):
+                self._imageData.append(0xf800)
+            elif (currentChar == '3'):
+                self._imageData.append(0x1f)
+            else:
+                self._imageData.append(0x7e0)
+            
+            
+                
+        
