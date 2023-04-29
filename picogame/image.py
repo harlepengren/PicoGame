@@ -31,11 +31,9 @@ def openImage(path):
 
         # Go to end of head
         f.seek(dataOffset)
-        print(f.tell())
 
         rowSize = int(size[0]*depth/32*4)
 
-        #imageData = framebuf.FrameBuffer(f.read(rowSize*size[1]), size[0], size[1], framebuf.RGB565)
         imageData = []
         for currentRow in range(0,size[1]):
             for currentColumn in range(0,size[0]):
@@ -54,6 +52,6 @@ def createImageBuffer(sprite,size):
     # We need to flip rows because bmp starts on the bottom left.
     for y in range(0,height):
         for x in range(0, width):
-            buffer.pixel(x,y,int.from_bytes(sprite[(height-1-y)*width+x],'little'))
+            buffer.pixel(x,y,int.from_bytes(sprite[(height-1-y)*width+x],'big'))
 
     return buffer
