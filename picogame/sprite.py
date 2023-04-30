@@ -10,7 +10,7 @@ class Sprite:
     """Class to track sprite objects."""
     def __init__(self,kind=SpriteKind.PLAYER, position=(0,0), speed=(0,0), image=None):
         self.kind = kind
-        self.position = Vector(position[0],position[1])
+        self.position = vector.Vector(position[0],position[1])
         self.image = image
         
     def updatePosition():
