@@ -7,22 +7,23 @@ class GameController:
     def __init__(self):
         self._screen = screen.Screen()
         self._screen.clear()
-
-    def draw(self,showFPS=False):
-        self._screen.fill(0x00)
-        self._screen.blit(self._spriteBuffer,self.x,self.y)
+        self._bgColor = 0
         
+    def setBGColor(bgColor):
+        self._bgColor = bgColor
+        
+    def update(self):
+        """This should be overriden by the user for any user specific game updates."""
+        pass
+
+    def draw(self,userBuffer,showFPS=False):
         if(showFPS):
             currentFPS = 1/(self.deltaTime * 1000)
             self._screen.text(str(currentFPS),70,110,0xFF)
         
-        
         self._screen.show()
 
-    def run(self,fps=60):
-        
-
-        
+    def run(self, fps=60):        
         # Run initial draw
         self.draw()
         
@@ -35,25 +36,6 @@ class GameController:
             
             self.deltaTime = time.ticks_diff(self.currentTime,self.lastTime)
             if  self.deltaTime > secondsPerFrame:
-                self.draw(True)
+                update()
+                self.draw()
                 self.lastTime = self.currentTime
-            
-            if not key0.value():
-                # we received the exit button
-                break
-            
-
-        
-        
-            
-            
-        
-        
-    
-
-        
-    
-    
-    
-    
-    
