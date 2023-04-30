@@ -3,15 +3,15 @@ from machine import Pin
 class Input:
     def __init__(self):
         # Set up the input pins
-        key0 = Pin(15, Pin.IN, Pin.PULL_UP)
-        buttonA = Pin(17, Pin.IN, Pin.PULL_UP)
-        buttonB = Pin(2, Pin.IN, Pin.PULL_UP)
+        self.key0 = Pin(15, Pin.IN, Pin.PULL_UP)
+        self.buttonA = Pin(17, Pin.IN, Pin.PULL_UP)
+        self.buttonB = Pin(2, Pin.IN, Pin.PULL_UP)
         
-    def buttonADown():
-        return not buttonA.value()
+    def buttonADown(self):
+        return not self.buttonA.value()
     
-    def buttonBDown():
-        return not buttonB.value()
+    def buttonBDown(self):
+        return not self.buttonB.value()
     
-    def key0Down():
-        return not key0.value()
+    def key0Down(self):
+        return not self.key0.value()
