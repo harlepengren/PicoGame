@@ -1,4 +1,4 @@
-from vector import Vector
+from . import vector
 
 
 class SpriteKind():
