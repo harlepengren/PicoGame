@@ -16,7 +16,7 @@ class GameController:
         """This should be overriden by the user for any user specific game updates."""
         pass
 
-    def draw(self,userBuffer,showFPS=False):
+    def draw(self,showFPS=False):
         if(showFPS):
             currentFPS = 1/(self.deltaTime * 1000)
             self._screen.text(str(currentFPS),70,110,0xFF)
@@ -36,6 +36,6 @@ class GameController:
             
             self.deltaTime = time.ticks_diff(self.currentTime,self.lastTime)
             if  self.deltaTime > secondsPerFrame:
-                update()
+                self.update()
                 self.draw()
                 self.lastTime = self.currentTime
