@@ -12,11 +12,12 @@ class Sprite:
         self.kind = kind
         self.position = vector.Vector(position[0],position[1])
         self.image = image
+        self.speed = Vector(speed)
         
-    def updatePosition():
-        if self.kind == PROJECTILE:
+    def updatePosition(self):
+        if self.kind == SpriteKind.PROJECTILE:
             self.position += self.speed
-        elif self.kind == ENEMY:
+        elif self.kind == SpriteKind.ENEMY:
             # AI updates
             pass
         
