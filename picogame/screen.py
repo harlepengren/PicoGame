@@ -181,13 +181,10 @@ class Screen(framebuf.FrameBuffer):
     def set_background_color(self,color):
         self.fill(color)
         self.show()
-
-    #def blit(self,imageBuffer,x,y,key=-1):
-        #super.blit(imageBuffer,x,y,key=key)
         
 
-    '''Convert from RGB to RGB565 hex. The input argument color is a tuple (R, G, B)'''
     def get_color(self,color):
+        """Convert from RGB to RGB565 hex. The input argument color is a tuple (R, G, B)"""
         # note that because we are going from 24 bits to 16 bits, there will be significant color loss
 
 
