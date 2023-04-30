@@ -3,29 +3,12 @@ from . import image
 from machine import Pin
 import time
 
-class PicoGame:
+class GameController:
     def __init__(self):
-        sprite = image.Image('sprite.bmp')
-        spriteSize = sprite.size
-        self._spriteBuffer = sprite.buffer
-        
         self._screen = screen.Screen()
         self._screen.clear()
-        
-        self.x = 0
-        self.y = 30
 
     def draw(self,showFPS=False):
-        self.x += 1
-        
-        if self.x > 128:
-            self.x = -10
-            
-        if self.y > 128:
-            self.y = -10
-        elif self.y < -50:
-            self.y = 110
-        
         self._screen.fill(0x00)
         self._screen.blit(self._spriteBuffer,self.x,self.y)
         
@@ -38,10 +21,7 @@ class PicoGame:
 
     def run(self,fps=60):
         
-        # Set up the input pins
-        key0 = Pin(15, Pin.IN, Pin.PULL_UP)
-        key1 = Pin(17, Pin.IN, Pin.PULL_UP)
-        key2 = Pin(2, Pin.IN, Pin.PULL_UP)
+
         
         # Run initial draw
         self.draw()
@@ -62,11 +42,7 @@ class PicoGame:
                 # we received the exit button
                 break
             
-            if not key2.value():
-                self.y -= 5
-                
-            if not key1.value():
-                self.y += 5
+
         
         
             
