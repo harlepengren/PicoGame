@@ -1,7 +1,7 @@
 from machine import Pin
 
 class Input:
-    def __init__:
+    def __init__(self):
         # Set up the input pins
         key0 = Pin(15, Pin.IN, Pin.PULL_UP)
         buttonA = Pin(17, Pin.IN, Pin.PULL_UP)
