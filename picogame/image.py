@@ -63,7 +63,7 @@ class Image:
         width = newImage.find('\n',1)    
         height = 0
             
-        self._imageData = bytearray()
+        self._imageData = []
         for currentChar in newImage:
             if (currentChar == '\n'):
                 height += 1
