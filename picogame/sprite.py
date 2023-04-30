@@ -12,7 +12,7 @@ class Sprite:
         self.kind = kind
         self.position = vector.Vector(position[0],position[1])
         self.image = image
-        self.speed = Vector(speed)
+        self.speed = vector.Vector(speed)
         
     def updatePosition(self):
         if self.kind == SpriteKind.PROJECTILE:
@@ -20,6 +20,9 @@ class Sprite:
         elif self.kind == SpriteKind.ENEMY:
             # AI updates
             pass
+    
+    def getBuffer():
+        return self.image.buffer
         
     
         
