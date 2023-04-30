@@ -7,7 +7,7 @@ class Image:
     def __init__(self,path):
         self.loadImage(path)
 
-    def loadImage(self,path):
+    def createFromPath(self,path):
         self.openImage(path)
         self.createImageBuffer()
     
