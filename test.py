@@ -31,8 +31,7 @@ class MyGame(GameController):
             . . f f 1 f 1 f 1 f 1 1 1 f 1 f 
             . . f f f 1 f 1 f 1 f 1 f 1 f f 
             . . . f 1 f 1 f 1 f 1 f 1 f f . 
-            . . . . f f f f f f f f f f . .
-    """)
+            . . . . f f f f f f f f f f . .""")
         self.player = Sprite(SpriteKind.PLAYER, image=playerImage)
         
         # Projectile
@@ -53,8 +52,7 @@ class MyGame(GameController):
                     f 1 f 1 f f f 1 f 1 1 1 1 1 f . 
                     . f 1 f 1 f 1 f 1 f 1 f 1 1 f . 
                     . . f 1 f 1 f 1 f 1 f 1 f f . . 
-                    . . . f f f f f f f f f f . . .
-        """)
+                    . . . f f f f f f f f f f . . .""")
         projectile = Sprite(SpriteKind.PROJECTILE,position=(128,randint(0,128)),speed=(0,-10),image=projectileImage)
         self.projectiles.append(projectile)
         
@@ -77,6 +75,10 @@ class MyGame(GameController):
             
         for currentEnemy in self.enemies:
             currentEnemy.updatePosition()
+            
+        self.blit(self.player)
+            
+        
             
 
 myGame = MyGame()
