@@ -23,6 +23,9 @@ class GameController:
         
         self._screen.show()
 
+    def blit(self,currentSprite):
+        self._screen.blit(currentSprite.getBuffer(),currentSprite.position.x,currentSprite.position.y,0)
+
     def run(self, fps=60):        
         # Run initial draw
         self.draw()
