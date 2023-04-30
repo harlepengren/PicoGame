@@ -4,9 +4,6 @@ import framebuf
 SEEK_CUR = 1
 
 class Image:
-    def __init__(self,path):
-        self.loadImage(path)
-
     def createFromPath(self,path):
         self.openImage(path)
         self.createImageBuffer()
@@ -70,7 +67,7 @@ class Image:
         for currentChar in newImage:
             if (currentChar == '\n') or (currentChar == ' '):
                 pass
-            elif (currentChar == '.') or (currenChar == 'f'):
+            elif (currentChar == '.') or (currentChar == 'f'):
                 self._imageData.append(0x0)
             elif (currentChar == '1'):
                 self._imageData.append(0xffff)
