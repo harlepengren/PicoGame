@@ -1,4 +1,7 @@
-class SpriteKind(Enum):
+from vector import Vector
+
+
+class SpriteKind():
     PLAYER = 1
     ENEMY = 2
     PROJECTILE = 3
@@ -6,8 +9,11 @@ class SpriteKind(Enum):
 class Sprite:
     """Class to track sprite objects."""
     
-    def __init__(self,kind=SpriteKind.PLAYER):
+    def __init__(self,kind=SpriteKind.PLAYER, buffer=None):
         self.kind = kind
-        self.position = (0,0)
+        self.position = Vector()
+        self.buffer = None
+        
+    
         
     

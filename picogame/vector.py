@@ -15,10 +15,14 @@ class Vector:
         newVector.y = self.y - other.y
         return newVector
     
-    def __multiply__(self, scalar):
-        newVector = Vector()
-        newVector.x = self.x * scalar
-        newVector.y = self.y * scalar
+    def __mul__(self, scalar:int):
+        if isinstance(scalar, int):
+            newVector = Vector()
+            newVector.x = self.x * scalar
+            newVector.y = self.y * scalar
+            return newVector
+        
+    __rmul__ = __mul__
         
     def __str__(self):
-        return "("+self.x+", " + self.y + ")"
+        return (self.x,self.y)
