@@ -15,7 +15,7 @@ class GameController:
     def update(self):
         """This should be overriden by the user for any user specific game updates."""
         pass
-
+    
     def draw(self,showFPS=False):
         if(showFPS):
             currentFPS = 1/(self.deltaTime * 1000)
@@ -25,6 +25,9 @@ class GameController:
 
     def blit(self,currentSprite):
         self._screen.blit(currentSprite.getBuffer(),currentSprite.position.x,currentSprite.position.y,0)
+        
+    def clearScreen(self):
+        self._screen.fill(self._bgColor)
 
     def run(self, fps=60):        
         # Run initial draw
