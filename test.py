@@ -1,7 +1,8 @@
 from picogame.game import GameController
 from picogame.sprite import Sprite, SpriteKind
 from picogame.image import Image
-from picogame.controller import Input
+from picogame.input import Input
+from picogame.vector import Vector
 from random import randint
 
 
@@ -63,10 +64,11 @@ class MyGame(GameController):
         super().update()
         
         # Get player input
-        if self.playerInput.buttonADown():
+        currentY = self.playerInput.getY()
+        if currentY < 0:
             self.player.position += Vector(0,5)
             
-        if self.playerInput.buttonBDown():
+        if currentY > 0:
             self.player.position += Vector(0,-5)
         
         # Update enemy and projectile positions
