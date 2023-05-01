@@ -1,4 +1,4 @@
-import picogame.controller
+import picogame.input
 import picogame.game
 import picogame.image
 import picogame.screen
