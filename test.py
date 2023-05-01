@@ -62,7 +62,7 @@ class MyGame(GameController):
                     . f 1 f 1 f 1 f 1 f 1 f 1 1 f . 
                     . . f 1 f 1 f 1 f 1 f 1 f f . . 
                     . . . f f f f f f f f f f . . .""")
-        projectile = Sprite(SpriteKind.PROJECTILE,position=(128,randint(0,128)),speed=(-1,0),image=projectileImage)
+        projectile = Sprite(SpriteKind.PROJECTILE,position=(128,randint(0,128)),speed=(-2,0),image=projectileImage)
         self.projectiles.append(projectile)
     
     def update(self):
