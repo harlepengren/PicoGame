@@ -24,22 +24,22 @@ You can create assets in two ways. First, you can create bitmap images in an ima
 ### Subclass the Game Controller
 PicoGame takes care of the screen drawing for you. All you need to do is take care of telling the engine what to draw. You can do this by creating a subclass of the game controller.
 
-'class YourClassName(GameController)'
+`class YourClassName(GameController)`
 
 You then create two methods:
-- __init__
-- update
+- `__init__()`
+- `update()`
 
-__init__ handles initialization. Ensure you call 'super().__init__(). In this method, place any code to load assets or set up the AI. In example1.py, we also created lists to manage enemies and projectiles. We also created a projectile timer that is called every 1.5 seconds to create a new projectile.
+`__init__()` handles initialization. Ensure you call 'super().__init__(). In this method, place any code to load assets or set up the AI. In example1.py, we also created lists to manage enemies and projectiles. We also created a projectile timer that is called every 1.5 seconds to create a new projectile.
 
-The update function handles everything we need to do to update a frame. First, we check for user input using the Input class. Next, we move the projectiles and enemies. Finally, we draw everything to the screen using the blit method.
+The `update()` function handles everything we need to do to update a frame. First, we check for user input using the Input class. Next, we move the projectiles and enemies. Finally, we draw everything to the screen using the blit method.
 
 ### Running the Game
 To run the game, upload the file to the Pico.
 
-'import yourfile.py
+`import yourfile.py
 yourClass = YourClass()
-yourClass.run()'
+yourClass.run()`
 
 ## Reference
 
