@@ -88,6 +88,6 @@ class MyGame(GameController):
         self.blit(self.player)
             
             
-
-myGame = MyGame()
-myGame.run()
+if __name__ == '__main__':
+    myGame = MyGame()
+    myGame.run()
