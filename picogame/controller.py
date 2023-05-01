@@ -1,17 +1,25 @@
-from machine import Pin
+from machine import Pin, ADC
 
-class Input:
-    def __init__(self):
-        # Set up the input pins
-        self.key0 = Pin(15, Pin.IN, Pin.PULL_UP)
-        self.buttonA = Pin(17, Pin.IN, Pin.PULL_UP)
-        self.buttonB = Pin(2, Pin.IN, Pin.PULL_UP)
+class Controller:
+    def __init__():
+        self.key0 = Pin(0,Pin.IN,Pin.PULL_UP)
+        self.key1 = Pin(1,Pin.IN,Pin.PULL_UP)
+        self.key2 = Pin(2,Pin.IN,Pin.PULL_UP)
+        self.key3 = Pin(3,Pin.IN,Pin.PULL_UP)
         
-    def buttonADown(self):
-        return not self.buttonA.value()
+        self.xAxis = ADC(Pin(27))
+        self.yAxis = ADC(Pin(26))
+        
+    def getX():
+        xValue = self.xAxis.read_u16()
+        return (xValue <= 600) or (xValue >= 60000)
     
-    def buttonBDown(self):
-        return not self.buttonB.value()
+    def getY():
+        yValue = self.yAxis.read_u16()
+        return (yValue <= 600) or (yValue >= 60000)
     
-    def key0Down(self):
+    def getA():
         return not self.key0.value()
+    
+    def getB():
+        return not self.key1.value()
