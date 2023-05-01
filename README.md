@@ -37,9 +37,11 @@ The `update()` function handles everything we need to do to update a frame. Firs
 ### Running the Game
 To run the game, upload the file to the Pico.
 
-`import yourfile.py
+```python
+import yourfile.py
 yourClass = YourClass()
-yourClass.run()`
+yourClass.run()
+```
 
 ## Reference
 
