@@ -181,7 +181,6 @@ class Screen(framebuf.FrameBuffer):
     def set_background_color(self,color):
         self.fill(color)
         self.show()
-        
 
     def get_color(self,color):
         """Convert from RGB to RGB565 hex. The input argument color is a tuple (R, G, B)"""

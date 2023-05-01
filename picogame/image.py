@@ -58,27 +58,31 @@ class Image:
                 self.buffer.pixel(x,y,int.from_bytes(self._imageData[(height-1-y)*width+x],'little'))
                 
     def createFromString(self,newImage):
-        """Use a string to create an image. One byte per pixel. Height and width are inferred based on carriage returns."""
+        """Use a string to create an image. One byte per pixel. Height and width are inferred based on carriage returns.
+        The input must have equal length rows."""
         
-        width = newImage.find('\n',1)    
+        width = 0    
         height = 0
             
         self._imageData = []
         for currentChar in newImage:
             if (currentChar == '\n'):
+                if height == 1:
+                    # First line, let's get the width
+                    width = len(self._imageData)
                 height += 1
             elif (currentChar == ' '):
                 pass
             elif (currentChar == '.') or (currentChar == 'f'):
-                self._imageData.append(0x0)
+                self._imageData.append(0)
             elif (currentChar == '1'):
-                self._imageData.append(0xffff)
+                self._imageData.append(int(0xffff))
             elif (currentChar == 'a'):
-                self._imageData.append(0xf800)
+                self._imageData.append(int(0xf800))
             elif (currentChar == '3'):
-                self._imageData.append(0x1f)
+                self._imageData.append(int(0x1f))
             else:
-                self._imageData.append(0x7e0)
+                self._imageData.append(int(0x7e0))
         
         tempBuffer = bytearray(width*height*2)
         self.buffer = framebuf.FrameBuffer(tempBuffer,width,height,framebuf.RGB565)
@@ -86,7 +90,7 @@ class Image:
         # We need to flip rows because bmp starts on the bottom left.
         for y in range(0,height):
             for x in range(0, width):
-                self.buffer.pixel(x,y,int.from_bytes(self._imageData[y*width+x],'little'))
+                self.buffer.pixel(x,y,self._imageData[y*width+x])
             
                 
         

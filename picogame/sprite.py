@@ -21,7 +21,7 @@ class Sprite:
             # AI updates
             pass
     
-    def getBuffer():
+    def getBuffer(self):
         return self.image.buffer
         
     
