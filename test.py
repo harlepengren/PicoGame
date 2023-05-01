@@ -72,13 +72,14 @@ class MyGame(GameController):
         # Update enemy and projectile positions
         for currentProjectile in self.projectiles:
             currentProjectile.updatePosition()
+            self.blit(currentProjectile)
             
         for currentEnemy in self.enemies:
             currentEnemy.updatePosition()
+            self.blit(currentEnemy)
             
         self.blit(self.player)
             
-        
             
 
 myGame = MyGame()
