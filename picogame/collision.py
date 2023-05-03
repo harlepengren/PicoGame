@@ -1,4 +1,4 @@
-from . import Vector
+from . import vector
 
 class AABB:
     def __init__(self,min:Vector,max:Vector):
@@ -20,13 +20,23 @@ class AABB:
         
         return True
 
-# Handles collision calculation
+def getAABB(target):
+    """Given a sprite, return the AABB."""
+
+    targetPosition = target.Position
+    targetAABB = AABB(targetPosition, Vector(targetPosition + target.width, targetPosition + target.heigth))
+
+    return targetAABB
 
 def findColliders(target, searchList):
     """Given a target and a searchList, find all objects in searchList that collide with target using just a bounding box."""
 
-    # Get the bounding box of the target
+    targetAABB = getAABB(target)
 
+    collisionList = []
     # for each item in searchList
-    #   for each corner of the current item, is it between targetmin and targetmax points
-    #       if yes - > add to list if no, keep looking
+    for item in searchList:
+        otherAABB = getAABB(item)
+        
+        if targetAABB.isOverlap(otherAABB):
+            collisionList.append(item)
