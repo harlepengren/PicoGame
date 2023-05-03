@@ -1,4 +1,4 @@
-from . import vector
+from .vector import Vector
 
 class AABB:
     def __init__(self,min:Vector,max:Vector):
@@ -23,8 +23,8 @@ class AABB:
 def getAABB(target):
     """Given a sprite, return the AABB."""
 
-    targetPosition = target.Position
-    targetAABB = AABB(targetPosition, Vector(targetPosition + target.width, targetPosition + target.heigth))
+    targetPosition = target.position
+    targetAABB = AABB(targetPosition, Vector(targetPosition.x + target.width, targetPosition.y + target.height))
 
     return targetAABB
 
@@ -40,3 +40,5 @@ def findColliders(target, searchList):
         
         if targetAABB.isOverlap(otherAABB):
             collisionList.append(item)
+            
+    return collisionList
