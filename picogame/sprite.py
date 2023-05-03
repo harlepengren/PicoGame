@@ -13,6 +13,14 @@ class Sprite:
         self.position = vector.Vector(position[0],position[1])
         self.image = image
         self.speed = vector.Vector(speed)
+
+        if self.image != None:
+            # Set the width and height
+            self.width = self.image.size[0]
+            self.height = self.image.size[1]
+        else:
+            self.width = 0
+            self.height = 0
         
     def updatePosition(self):
         if self.kind == SpriteKind.PROJECTILE:

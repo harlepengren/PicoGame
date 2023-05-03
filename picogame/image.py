@@ -91,6 +91,8 @@ class Image:
         for y in range(0,height):
             for x in range(0, width):
                 self.buffer.pixel(x,y,self._imageData[y*width+x])
+
+        self.size = (width,height)
             
                 
         
