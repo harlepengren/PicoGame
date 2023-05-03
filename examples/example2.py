@@ -14,6 +14,7 @@ class MyGame(GameController):
         # Create my sprites
         self.projectiles = []
         self.enemies = []
+        self.score = 0
         
         # The player
         playerImage = Image()
@@ -86,6 +87,11 @@ class MyGame(GameController):
             
         # Collision detection
         collisionList = collision.findColliders(self.player,self.projectiles)
+        if len(collisionList) > 0:
+            for item in collisionList:
+                self.score += 1
+                print(self.score)
+                self.projectiles.remove(item)
             
         
         # Draw everything
