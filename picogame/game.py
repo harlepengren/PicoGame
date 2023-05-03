@@ -26,6 +26,9 @@ class GameController:
     def blit(self,currentSprite):
         self._screen.blit(currentSprite.getBuffer(),currentSprite.position.x,currentSprite.position.y,0)
         
+    def blitText(self,screenText,position,color=0xFFFF):
+        self._screen.text(screenText,position[0],position[1],color)
+        
     def clearScreen(self):
         self._screen.fill(self._bgColor)
 

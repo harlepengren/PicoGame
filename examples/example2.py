@@ -102,6 +102,7 @@ class MyGame(GameController):
             self.blit(currentEnemy)
             
         self.blit(self.player)
+        self.blitText("Score: " + str(self.score),(50,5))
             
             
 if __name__ == '__main__':
