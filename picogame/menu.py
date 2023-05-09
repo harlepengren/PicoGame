@@ -13,7 +13,8 @@ def initCard():
     
     sd = sdcard.SDCard(spi, cs)
     vfs = uos.VfsFat(sd)
-    uos.mount(vfs, "/games")
+    uos.mount(vfs, '/games')
 
 def loadGames():
-    gameList = uos.listdir
+    gameList = uos.listdir('/games')
+    return gameList
