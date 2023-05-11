@@ -41,12 +41,12 @@ _TOKEN_DATA = const(0xFE)
 
 
 def mountCard(path):
-    cs = machine.Pin(9, machine.Pin.OUT)
-    spi = machine.SPI(1, baudrate=1000000,
+    cs = machine.Pin(17, machine.Pin.OUT)
+    spi = machine.SPI(0, baudrate=1000000,
                       firstbit=machine.SPI.MSB,
-                      sck=machine.Pin(10),
-                      mosi=machine.Pin(11),
-                      miso=machine.Pin(8))
+                      sck=machine.Pin(18),
+                      mosi=machine.Pin(19),
+                      miso=machine.Pin(16))
     
     sd = SDCard(spi, cs)
     vfs = uos.VfsFat(sd)
