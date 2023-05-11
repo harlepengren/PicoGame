@@ -12,9 +12,11 @@ import os
 # Add a selection bullet that shows the currently selected
 # If user selects a game, load the game
 
-class Menu(GameController):
+class Menu(game.GameController):
     def __init__(self,path):
+        super().__init__()
         self.path = path
+        sdcard.mountCard(path)
         self.loadGames(path)
     
     def loadGames(self,path):
@@ -36,6 +38,11 @@ class Menu(GameController):
             
         self.gameList = gameList
 
-    def showGames(self):
+    def update(self):
         """Show a list of games on the screen."""
-        pass
+        x = 0
+        y = 0
+        self.clearScreen()
+        for game in self.gameList:
+            self.blitText(game,(x,y))
+            y += 10
