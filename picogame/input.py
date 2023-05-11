@@ -2,8 +2,8 @@ from machine import Pin, ADC
 
 class Input:
     def __init__(self):
-        self.key0 = Pin(15,Pin.IN,Pin.PULL_UP)
-        self.key1 = Pin(17,Pin.IN,Pin.PULL_UP)
+        self.key0 = Pin(0,Pin.IN,Pin.PULL_UP)
+        self.key1 = Pin(1,Pin.IN,Pin.PULL_UP)
         self.key2 = Pin(2,Pin.IN,Pin.PULL_UP)
         self.key3 = Pin(3,Pin.IN,Pin.PULL_UP)
         
@@ -37,3 +37,6 @@ class Input:
     
     def getB(self):
         return not self.key1.value()
+    
+    def getHome(self):
+        return not self.key2.value()
