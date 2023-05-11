@@ -9,7 +9,7 @@ class GameController:
         self._screen.clear()
         self._bgColor = 0
         
-    def setBGColor(bgColor):
+    def setBGColor(self,bgColor):
         self._bgColor = bgColor
         
     def update(self):
