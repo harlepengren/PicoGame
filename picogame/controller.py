@@ -4,11 +4,12 @@ class Input:
     def __init__(self):
         self.key0 = Pin(0,Pin.IN,Pin.PULL_UP)
         self.key1 = Pin(1,Pin.IN,Pin.PULL_UP)
-        self.key2 = Pin(2,Pin.IN,Pin.PULL_UP)
-        self.key3 = Pin(3,Pin.IN,Pin.PULL_UP)
+        self.key2 = Pin(21,Pin.IN,Pin.PULL_UP)
+        self.key3 = Pin(22,Pin.IN,Pin.PULL_UP)
         
-        self.xAxis = ADC(Pin(27))
-        self.yAxis = ADC(Pin(26))
+        # Uncomment for joystick
+        # self.xAxis = ADC(Pin(27))
+        # self.yAxis = ADC(Pin(26))
         
         print("Input initialized . . .")
         
@@ -39,7 +40,7 @@ class Input:
         return not self.key1.value()
     
     def getA(self):
-        pass
+        return not self.key3.value()
     
     def getB(self):
         pass
