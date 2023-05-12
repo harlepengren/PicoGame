@@ -1,7 +1,7 @@
 from picogame.game import GameController
 from picogame.sprite import Sprite, SpriteKind
 from picogame.image import Image
-from picogame.input import Input
+from picogame.controller import Input
 from picogame.vector import Vector
 from picogame import collision
 from random import randint
