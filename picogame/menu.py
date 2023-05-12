@@ -58,19 +58,19 @@ class Menu(game.GameController):
             y += 10
             
         # Any user input
-        if self.playerInput.getUp():
+        if self.playerInput.getButtonDown('UP'):
             if self.currentSelection > 0:
                 self.currentSelection -= 1
                 
-        if self.playerInput.getDown():
+        if self.playerInput.getButtonDown('DOWN'):
             if self.currentSelection < (len(self.gameList)-1):
                 self.currentSelection += 1
                 
-        if self.playerInput.getA():
+        if self.playerInput.getButtonDown('A'):
             # load the game
             print('Loading' + self.gameList[self.currentSelection])
-            #game = __import(self.gameList[currentSelection]
+            game = __import__('/games/'+self.gameList[currentSelection])
             
-        if self.playerInput.getHome():
+        if self.playerInput.getButtonDown('HOME'):
             print('home')
 

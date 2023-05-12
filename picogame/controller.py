@@ -6,16 +6,16 @@ class Button:
         self.pin = Pin(pinNumber,Pin.IN,Pin.PULL_UP)
         self.lastState = self.getState()
         
-    def getState():
+    def getState(self):
         return not self.pin.value()
 
 class Input:
     def __init__(self):
         self.controls = {
-            "UP": Button("UP",0)
-            "DOWN": Button("DOWN",1)
-            "HOME": Button("HOME",21)
-            "A": Button("A",22)
+            "UP": Button("UP",0),
+            "DOWN": Button("DOWN",1),
+            "HOME": Button("HOME",21),
+            "A": Button("A",22),
             }
         
         # Uncomment for joystick
@@ -47,19 +47,21 @@ class Input:
     def getButtonDown(self,currentButton):
         """Returns true if button was pushed since last time we checked."""
         state = self.controls[currentButton].getState()
-        if (state == True) and (state != self.controls[currentButton].lastState)
+        if (state == True) and (state != self.controls[currentButton].lastState):
             self.controls[currentButton].lastState = state
             return True
         
+        self.controls[currentButton].lastState = state
         return False
     
     def getButtonReleased(self):
         """Returns true if button was released since last time we checked."""
         state = self.controls[currentButton].getState()
-        if (state == False) and (state != self.controls[currentButton].lastState)
+        if (state == False) and (state != self.controls[currentButton].lastState):
             self.controls[currentButton].lastState = state
             return True
         
+        self.controls[currentButton].lastState = state
         return False
     
     def getButton(self,currentButton):
