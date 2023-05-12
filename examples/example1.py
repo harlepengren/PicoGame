@@ -70,10 +70,10 @@ class MyGame(GameController):
         
         # Get player input - for now, I am using A and B buttons
         #currentY = self.playerInput.getY()
-        if self.playerInput.getA():
+        if self.playerInput.getDown():
             self.player.position += Vector(0,5)
             
-        if self.playerInput.getB():
+        if self.playerInput.getUp():
             self.player.position += Vector(0,-5)
         
         # Update enemy and projectile positions

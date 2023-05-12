@@ -32,11 +32,17 @@ class Input:
         
         return 0
     
-    def getA(self):
+    def getUp(self):
         return not self.key0.value()
     
-    def getB(self):
+    def getDown(self):
         return not self.key1.value()
+    
+    def getA(self):
+        pass
+    
+    def getB(self):
+        pass
     
     def getHome(self):
         return not self.key2.value()
