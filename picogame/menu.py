@@ -5,6 +5,7 @@ Loads a list of games from SD card and allows user to select file.
 import machine
 from . import sdcard
 from . import game
+from . import controller
 import os
 
 # Load the games from the /games director as a list
@@ -18,6 +19,8 @@ class Menu(game.GameController):
         self.path = path
         sdcard.mountCard(path)
         self.loadGames(path)
+        self.currentSelection = 0
+        self.playerInput = controller.Input()
     
     def loadGames(self,path):
         """Load games from path. This function will only return games with .py extension."""
@@ -43,6 +46,17 @@ class Menu(game.GameController):
         x = 0
         y = 0
         self.clearScreen()
-        for game in self.gameList:
-            self.blitText(game,(x,y))
+        for index in range(0,len(self.gameList)):
+            if index == self.currentSelection:
+                # Draw a rectangle that is 10px high by length of the game name * 10 px
+                titleHeight = 10
+                titleWidth = len(self.gameList[index])*10
+                self._screen.rect(x-2,y-2,x+titleWidth,y+titleHeight,0xffffff,True)
+                self.blitText(self.gameList[index],(x,y),0x0)
+            else:
+                self.blitText(self.gameList[index],(x,y))
             y += 10
+            
+        # Any user input
+        if self.playerInput.getA():
+            self.player.position += Vector(0,5)
