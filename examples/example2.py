@@ -8,8 +8,8 @@ from random import randint
 from machine import Timer
 
 class MyGame(GameController):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,currentScreen):
+        super().__init__(currentScreen)
         
         # Create my sprites
         self.projectiles = []
@@ -102,6 +102,6 @@ class MyGame(GameController):
         self.blit(self.player)
         self.blitText("Score: " + str(self.score),(50,5))
 
-def run():
-    myGame = MyGame()
+def run(currentScreen):
+    myGame = MyGame(currentScreen)
     myGame.run()

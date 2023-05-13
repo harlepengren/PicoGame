@@ -5,8 +5,13 @@ from machine import Pin
 import time
 
 class GameController:
-    def __init__(self):
-        self._screen = screen.Screen()
+    def __init__(self,currentScreen=None):
+        
+        if currentScreen == None:
+            self._screen = screen.Screen()
+        else:
+            self._screen = currentScreen
+            
         self._screen.clear()
         self._bgColor = 0
         self.playerInput = controller.Input()
