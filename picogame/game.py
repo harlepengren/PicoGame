@@ -1,5 +1,6 @@
 from . import screen
 from . import image
+from . import controller
 from machine import Pin
 import time
 
@@ -8,6 +9,7 @@ class GameController:
         self._screen = screen.Screen()
         self._screen.clear()
         self._bgColor = 0
+        self.playerInput = controller.Input()
         
     def setBGColor(self,bgColor):
         self._bgColor = bgColor
@@ -48,3 +50,8 @@ class GameController:
                 self.update()
                 self.draw()
                 self.lastTime = self.currentTime
+            
+            if controller.getButtonDown('HOME'):
+                break
+            
+        print("Game ended . . .")
