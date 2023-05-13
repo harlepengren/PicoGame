@@ -30,7 +30,7 @@ class Menu(game.GameController):
         deletionList = []
         for index in range(0,len(gameList)):
             extension = gameList[index].find('.py')
-            if extension > 0:
+            if (extension > 0) and (gameList[index][0] != '.'):
                 gameList[index] = gameList[index][0:extension]
             else:
                 # Not a python file, add to deletion list
@@ -69,7 +69,8 @@ class Menu(game.GameController):
         if self.playerInput.getButtonDown('A'):
             # load the game
             print('Loading' + self.gameList[self.currentSelection])
-            game = __import__('/games/'+self.gameList[currentSelection])
+            game = __import__('/games/'+self.gameList[self.currentSelection])
+            game.run()
             
         if self.playerInput.getButtonDown('HOME'):
             print('home')
