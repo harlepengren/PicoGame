@@ -22,7 +22,6 @@ class Menu(game.GameController):
         self.loadGames(path)
         self.currentSelection = 0
         self.playerInput = controller.Input()
-        self.clearMemory = False
     
     def loadGames(self,path):
         """Load games from path. This function will only return games with .py extension."""
@@ -70,15 +69,15 @@ class Menu(game.GameController):
                 
         if self.playerInput.getButtonDown('A'):
             # load the game
-            free = gc.mem_free()
-            used = gc.mem_alloc()
-            print("Memory before:",used/(used+free))
+            #free = gc.mem_free()
+            #used = gc.mem_alloc()
+            #print("Memory before:",used/(used+free))
             gc.collect()
             game = __import__('/games/'+self.gameList[self.currentSelection])
             game.run()
-            free = gc.mem_free()
-            used = gc.mem_alloc()
-            print("Memory before:",used/(used+free))
+            #free = gc.mem_free()
+            #used = gc.mem_alloc()
+            #print("Memory before:",used/(used+free))
             
         if self.playerInput.getButtonDown('HOME'):
             print('home')
