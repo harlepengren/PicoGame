@@ -51,7 +51,7 @@ class GameController:
                 self.draw()
                 self.lastTime = self.currentTime
             
-            if controller.getButtonDown('HOME'):
+            if self.playerInput.getButtonDown('HOME'):
                 break
             
         print("Game ended . . .")
