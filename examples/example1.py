@@ -35,8 +35,6 @@ class MyGame(GameController):
             . . . . f f f f f f f f f f . .""")
         self.player = Sprite(SpriteKind.PLAYER, image=playerImage)
         
-        self.playerInput = Input()
-        
         # Create timer for projectiles
         projectileTimer = Timer()
         projectileTimer.init(mode=Timer.PERIODIC, period=1500, callback=self.createProjectile)
@@ -70,10 +68,10 @@ class MyGame(GameController):
         
         # Get player input - for now, I am using A and B buttons
         #currentY = self.playerInput.getY()
-        if self.playerInput.getDown():
+        if self.playerInput.getButton('UP'):
             self.player.position += Vector(0,5)
             
-        if self.playerInput.getUp():
+        if self.playerInput.getButton('DOWN'):
             self.player.position += Vector(0,-5)
         
         # Update enemy and projectile positions
@@ -86,8 +84,7 @@ class MyGame(GameController):
             self.blit(currentEnemy)
             
         self.blit(self.player)
-            
-            
-if __name__ == '__main__':
+
+def run():
     myGame = MyGame()
     myGame.run()

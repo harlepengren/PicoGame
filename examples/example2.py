@@ -37,8 +37,6 @@ class MyGame(GameController):
             . . . . f f f f f f f f f f . .""")
         self.player = Sprite(SpriteKind.PLAYER, image=playerImage)
         
-        self.playerInput = Input()
-        
         # Create timer for projectiles
         projectileTimer = Timer()
         projectileTimer.init(mode=Timer.PERIODIC, period=1500, callback=self.createProjectile)
@@ -103,8 +101,7 @@ class MyGame(GameController):
             
         self.blit(self.player)
         self.blitText("Score: " + str(self.score),(50,5))
-            
-            
-if __name__ == '__main__':
+
+def run():
     myGame = MyGame()
     myGame.run()
