@@ -1,6 +1,6 @@
 from . import screen
-from . import image
 from . import controller
+from . import vector
 from machine import Pin
 import time
 
@@ -60,3 +60,16 @@ class GameController:
                 break
             
         print("Game ended . . .")
+
+    def move(self,currentSprite):
+        if self.playerInput.getButton('UP'):
+            currentSprite.position += vector.Vector(0,5)
+            
+        if self.playerInput.getButton('DOWN'):
+            currentSprite.position += vector.Vector(0,-5)
+
+        if self.playerInput.getButton('LEFT'):
+            currentSprite.position -= vector.Vector(0,-5)
+
+        if self.playerInput.getButton('RIGHT'):
+            currentSprite.position += vector.Vector(0,5)
