@@ -15,6 +15,7 @@ class MyGame(GameController):
         # Create my sprites
         self.projectiles = []
         self.enemies = []
+        self.tiles = []
         
         # The player
         mytile = Image()
@@ -38,6 +39,7 @@ class MyGame(GameController):
         
         self.mySprite = Sprite(SpriteKind.TILE, image=mytile)
         self.mySprite.position = Vector(50,50)
+        self.tiles.append(self.mySprite)
 
         imgSprite2 = Image()
         imgSprite2.createFromString("""
@@ -60,6 +62,7 @@ class MyGame(GameController):
 
         self.mySprite2 = Sprite(SpriteKind.PLAYER, image=imgSprite2)
         self.mySprite2.position = Vector(50,50)
+        self.tiles.append(self.mySprite2)
 
         imgSprite3 = Image()
         imgSprite3.createFromString("""
@@ -97,6 +100,9 @@ class MyGame(GameController):
         for currentEnemy in self.enemies:
             currentEnemy.updatePosition()
             self.blit(currentEnemy)
+            
+        for currentTile in self.tiles:
+            self.blit(currentTile)
             
         self.blit(self.player)
 
