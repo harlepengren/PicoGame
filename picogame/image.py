@@ -77,12 +77,34 @@ class Image:
                 self._imageData.append(0)
             elif (currentChar == '1'):
                 self._imageData.append(int(0xffff))
-            elif (currentChar == 'a'):
-                self._imageData.append(int(0xf800))
+            elif (currentChar == '2'):
+                self._imageData.append(int(0xf904))
             elif (currentChar == '3'):
-                self._imageData.append(int(0x1f))
+                self._imageData.append(int(0xfc98))
+            elif (currentChar == '4'):
+                self._imageData.append(int(0xfc06))
+            elif (currentChar == '5'):
+                self._imageData.append(int(0xffa1))
+            elif (currentChar == '6'):
+                self._imageData.append(int(0x24f4))
+            elif (currentChar == '7'):
+                self._imageData.append(int(0x7eca))
+            elif (currentChar == '8'):
+                self._imageData.append(int(0x0215))
+            elif (currentChar == '9'):
+                self._imageData.append(int(0x879f))
+            elif (currentChar == 'a'):
+                self._imageData.append(int(0xc05e))
+            elif (currentChar == 'b'):
+                self._imageData.append(int(0xfc9f))
+            elif (currentChar == 'c'):
+                self._imageData.append(int(0x50ca))
+            elif (currentChar == 'd'):
+                self._imageData.append(int(0xacf0))
+            elif (currentChar == 'e'):
+                self._imageData.append(int(0x7b07))
             else:
-                self._imageData.append(int(0x7e0))
+                self._imageData.append(int(0x0020))
         
         tempBuffer = bytearray(width*height*2)
         self.buffer = framebuf.FrameBuffer(tempBuffer,width,height,framebuf.RGB565)
