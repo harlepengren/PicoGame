@@ -14,8 +14,11 @@ class Input:
         self.controls = {
             "UP": Button("UP",0),
             "DOWN": Button("DOWN",1),
+            "LEFT": Button("LEFT",2),
+            "RIGHT": Button("RIGHT",3),
             "HOME": Button("HOME",21),
             "A": Button("A",22),
+            "B": Button("B",26)
             }
         
         # Uncomment for joystick
