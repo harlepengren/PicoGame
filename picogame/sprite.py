@@ -5,6 +5,7 @@ class SpriteKind():
     PLAYER = 1
     ENEMY = 2
     PROJECTILE = 3
+    TILE = 4
 
 class Sprite:
     """Class to track sprite objects."""
