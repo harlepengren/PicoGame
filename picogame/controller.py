@@ -1,13 +1,42 @@
 from machine import Pin, ADC
 
+class ControllerButtonEvent:
+    PRESSED = 0
+    RELEASED = 1
+    REPEAT = 2
+
 class Button:    
     def __init__(self,name,pinNumber):
         self.name = name
         self.pin = Pin(pinNumber,Pin.IN,Pin.PULL_UP)
         self.lastState = self.getState()
+
+        self.callback = None
+        self.event = None
         
     def getState(self):
         return not self.pin.value()
+    
+    def checkEvent(self):
+        # Check whether the callback function is set
+        if not self.callback:
+            return
+
+        # Is this the event we are looking for
+        if self.event == ControllerButtonEvent.PRESSED:
+            if self.getState() and not self.lastState:
+                self.callback()
+        elif self.event == ControllerButtonEvent.REPEAT:
+            if self.getState() and self.lastState:
+                self.callback()
+        elif self.event == ControllerButtonEvent.RELEASED:
+            if not self.getState() and self.lastState:
+                self.callback()
+
+    def on_event(self,event, callback):
+        self.event = event
+        self.callback = callback
+
 
 class Input:
     def __init__(self):
