@@ -1,18 +1,18 @@
 from .controller import *
-import sprite, image
-import game as gme
+from . import sprite, image
+from . import game as gme
 import random
 
 # Create controller
 class MakeCodeInput(Input):
     def __init__(self):
-        super.__init__()
+        super().__init__()
 
         # Move A and B from dictionary
         self.A = self.controls["A"]
         self.B = self.controls["B"]
         del self.controls["A"]
-        del self.Controls["B"]
+        del self.controls["B"]
 
     def move_sprite(self,currentSprite):
         pass
@@ -22,6 +22,8 @@ controller = MakeCodeInput()
 class Scene:
     def set_background_image(self,backgroundImage):
         pass
+    
+scene = Scene()
 
 class Sprites:
     def __init__(self):
@@ -62,7 +64,7 @@ sprites = Sprites()
 # Game Controller
 class MakeCodeController(gme.GameController):
     def __init__(self):
-        super.__init__()
+        super().__init__()
         self.intervalUpdates = []
     
     def update(self):
