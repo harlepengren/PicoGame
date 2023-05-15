@@ -18,6 +18,7 @@ class Button:
         return not self.pin.value()
     
     def checkEvent(self):
+        """Checks whether an event has occurred and if so, calls the callback function."""
         # Check whether the callback function is set
         if not self.callback:
             return
@@ -49,13 +50,14 @@ class Input:
             "A": Button("A",22),
             "B": Button("B",26)
             }
-        
+
         # Uncomment for joystick
         # self.xAxis = ADC(Pin(27))
         # self.yAxis = ADC(Pin(26))
         
         print("Input initialized . . .")
         
+    # Joystick code
     def getX(self):
         xValue = self.xAxis.read_u16()
         
@@ -75,7 +77,8 @@ class Input:
             return 1
         
         return 0
-    
+    # end of joystick code
+
     def getButtonDown(self,currentButton):
         """Returns true if button was pushed since last time we checked."""
         state = self.controls[currentButton].getState()
@@ -86,7 +89,7 @@ class Input:
         self.controls[currentButton].lastState = state
         return False
     
-    def getButtonReleased(self):
+    def getButtonReleased(self,currentButton):
         """Returns true if button was released since last time we checked."""
         state = self.controls[currentButton].getState()
         if (state == False) and (state != self.controls[currentButton].lastState):
