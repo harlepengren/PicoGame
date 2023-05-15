@@ -14,6 +14,8 @@ class Sprite:
         self.position = vector.Vector(position[0],position[1])
         self.image = image
         self.speed = vector.Vector(speed)
+        self.destroyed = False
+        self.stay_in_screen = False
 
         if self.image != None:
             # Set the width and height
@@ -22,16 +24,24 @@ class Sprite:
         else:
             self.width = 0
             self.height = 0
-        
+
+    def set_stay_in_screen(self,option):
+        self.stay_in_screen = option
+
     def updatePosition(self):
         if self.kind == SpriteKind.PROJECTILE:
             self.position += self.speed
         elif self.kind == SpriteKind.ENEMY:
             # AI updates
             pass
+
+        # To Do: implement logic for stay_in_screen
     
     def getBuffer(self):
         return self.image.buffer
+    
+    def destroy(self):
+        self.destroyed = True
         
     
         
