@@ -6,14 +6,17 @@ class SpriteKind():
     ENEMY = 2
     PROJECTILE = 3
     TILE = 4
+    player = 1
+    enemy = 2
+    projectile = 3
 
 class Sprite:
     """Class to track sprite objects."""
     def __init__(self,kind=SpriteKind.PLAYER, position=(0,0), speed=(0,0), image=None):
         self.kind = kind
         self.position = vector.Vector(position[0],position[1])
-        self._x = self.position[0]
-        self._y = self.position[1]
+        self.x = self.position.x
+        self.y = self.position.y
         self.image = image
         self.speed = vector.Vector(speed)
         self.destroyed = False
@@ -27,17 +30,21 @@ class Sprite:
             self.width = 0
             self.height = 0
 
-    def get_x(self):
-        return self.position[0]
+    @property
+    def x(self):
+        return self.position.x
     
-    def get_y(self):
-        return self.position[1]
+    @property
+    def y(self):
+        return self.position.y
 
-    def set_x(self, x):
-        self.position[0] = x
+    @x.setter
+    def x(self, value):
+        self.position.x = value
 
-    def set_y(self,y):
-        self.position[1] = y
+    @y.setter
+    def y(self,value):
+        self.position.y = value
 
     def set_stay_in_screen(self,option):
         self.stay_in_screen = option
