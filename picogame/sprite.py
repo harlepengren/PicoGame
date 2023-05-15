@@ -12,6 +12,8 @@ class Sprite:
     def __init__(self,kind=SpriteKind.PLAYER, position=(0,0), speed=(0,0), image=None):
         self.kind = kind
         self.position = vector.Vector(position[0],position[1])
+        self._x = self.position[0]
+        self._y = self.position[1]
         self.image = image
         self.speed = vector.Vector(speed)
         self.destroyed = False
@@ -24,6 +26,18 @@ class Sprite:
         else:
             self.width = 0
             self.height = 0
+
+    def get_x(self):
+        return self.position[0]
+    
+    def get_y(self):
+        return self.position[1]
+
+    def set_x(self, x):
+        self.position[0] = x
+
+    def set_y(self,y):
+        self.position[1] = y
 
     def set_stay_in_screen(self,option):
         self.stay_in_screen = option
