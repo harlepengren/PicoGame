@@ -114,5 +114,5 @@ def on_update_interval2():
     myRock.set_kind(SpriteKind.enemy)
 game.on_update_interval(3000, on_update_interval2)
 
-def run():
+def run(currentScreen):
     game.run()
