@@ -50,19 +50,16 @@ class Sprite:
         self.stay_in_screen = option
 
     def updatePosition(self):
-        if self.kind == SpriteKind.PROJECTILE:
-            self.position += self.speed
-        elif self.kind == SpriteKind.ENEMY:
-            # AI updates
-            pass
-
-        # To Do: implement logic for stay_in_screen
+        self.position += self.speed
     
     def getBuffer(self):
         return self.image.buffer
     
     def destroy(self):
         self.destroyed = True
+    
+    def set_kind(self,kind):
+        self.kind = kind
         
     
         

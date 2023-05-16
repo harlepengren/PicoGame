@@ -8,7 +8,7 @@ class Vector:
             self.y = y
         
     def __add__(self, other):
-        newVector = Vector(self.x+other.x,self.y+other.y)
+        newVector = Vector(int(self.x+other.x),int(self.y+other.y))
         return newVector
     
     def __mul__(self, scalar:int):

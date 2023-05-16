@@ -2,6 +2,7 @@ from .controller import *
 from . import sprite, image
 from . import game as gme
 import random
+import time
 
 # Create controller
 class MakeCodeInput(Input):
@@ -45,7 +46,8 @@ class Sprites:
         return newSprite
 
     def create_projectile_from_side(self,newImage,vx,vy):
-        newSprite = sprite.Sprite(sprite.SpriteKind.PROJECTILE,speed=(vx,vy),image=newImage)
+        scale = 0.02
+        newSprite = sprite.Sprite(sprite.SpriteKind.PROJECTILE,speed=(vx*scale,vy*scale),image=newImage)
         
         self._spriteList.append(newSprite)
         return newSprite
@@ -74,20 +76,29 @@ class MakeCodeController(gme.GameController):
         self.intervalUpdates = []
     
     def update(self):
+        self.clearScreen()
         # Make sure to check whether destroyed flag is set and handle
         
-        # check whether time as passed
+        # check whether time as passed, this is not very readable, consider a dictionary or a class
         for currentUpdate in self.intervalUpdates:
-            if self.deltaTime > currentUpdate[0]:
+            currentUpdate[2] -= self.deltaTime
+            if currentUpdate[2] <= 0:
                 currentUpdate[1]()
+                # Reset the timer
+                currentUpdate[2] = currentUpdate[0]
                 
         #LOOP THROUGH AND BLIT
         for currentSprite in sprites._spriteList:
+            currentSprite.updatePosition()
+            
+            # if the currentSprite is way off the screen and not the player, destroy it
+            
             if currentSprite != None:
                 self.blit(currentSprite)
     
     def on_update_interval(self, interval,callback):
-        self.intervalUpdates.append((interval,callback))
+        # Append to our list of updates. The last item in the tuple is time to next update.
+        self.intervalUpdates.append([interval,callback,0])
 
     def reset(self):
         # To do in the future
