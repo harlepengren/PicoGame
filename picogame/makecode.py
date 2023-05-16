@@ -74,6 +74,11 @@ class MakeCodeController(gme.GameController):
         for currentUpdate in self.intervalUpdates:
             if self.deltaTime > currentUpdate[0]:
                 currentUpdate[1]()
+                
+        #LOOP THROUGH AND BLIT
+        for currentSprite in sprites._spriteList:
+            if currentSprite != None
+                self.blit(currentSprite)
     
     def on_update_interval(self, interval,callback):
         self.intervalUpdates.append((interval,callback))
