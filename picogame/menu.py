@@ -74,7 +74,7 @@ class Menu(game.GameController):
             #print("Memory before:",used/(used+free))
             gc.collect()
             game = __import__('/games/'+self.gameList[self.currentSelection])
-            game.run()
+            game.run(self._screen)
             #free = gc.mem_free()
             #used = gc.mem_alloc()
             #print("Memory before:",used/(used+free))
