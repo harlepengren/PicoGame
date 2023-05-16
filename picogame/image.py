@@ -106,6 +106,9 @@ class Image:
             else:
                 self._imageData.append(int(0x0020))
         
+        height -= 1
+        
+        print("height",height)
         tempBuffer = bytearray(width*height*2)
         self.buffer = framebuf.FrameBuffer(tempBuffer,width,height,framebuf.RGB565)
         
