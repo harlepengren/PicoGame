@@ -14,9 +14,29 @@ class MakeCodeInput(Input):
         self.B = self.controls["B"]
         del self.controls["A"]
         del self.controls["B"]
+        
+        self.currentSprite = None
+
+    def checkButtons(self):
+        self.A.checkEvent()
+        self.B.checkEvent()
 
     def move_sprite(self,currentSprite):
-        pass
+        self.currentSprite = currentSprite
+        
+    def moveCurrentSprite(self):
+        if self.currentSprite != None:
+            if self.getButton('UP'):
+                self.currentSprite.position += Vector(0,5)
+            
+            if self.getButton('DOWN'):
+                self.position += Vector(0,-5)
+                
+            if self.getButton('LEFT'):
+                self.currentSprite.position += Vector(-5,0)
+            
+            if self.getButton('RIGHT'):
+                self.position += Vector(5,0)
 
 controller = MakeCodeInput()
 
@@ -37,9 +57,9 @@ class Sprites:
 
         return newSprite
 
-    def create_projectile_from_sprite(self,spriteImage,fromSprite,spriteX,spriteY):
-        newSprite = sprite.Sprite(sprite.SpriteKind.PROJECTILE,speed=(0,0),image=spriteImage)
-        newSprite.fromSprite = fromSprite
+    def create_projectile_from_sprite(self,spriteImage,fromSprite,vx,vy):
+        scale = 0.02
+        newSprite = sprite.Sprite(sprite.SpriteKind.PROJECTILE,position=(fromSprite.x,fromSprite.y),speed=(vx*scale,vy*scale),image=spriteImage)
 
         self._spriteList.append(newSprite)
 
@@ -79,6 +99,9 @@ class MakeCodeController(gme.GameController):
         self.clearScreen()
         # Make sure to check whether destroyed flag is set and handle
         
+        # Process input
+        controller.checkButtons()
+        
         # check whether time as passed, this is not very readable, consider a dictionary or a class
         for currentUpdate in self.intervalUpdates:
             currentUpdate[2] -= self.deltaTime
@@ -102,7 +125,7 @@ class MakeCodeController(gme.GameController):
 
     def reset(self):
         # To do in the future
-        pass
+        print("reset")
 
 game = MakeCodeController()
 
