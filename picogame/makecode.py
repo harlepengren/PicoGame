@@ -46,6 +46,9 @@ class Sprites:
 
     def create_projectile_from_side(self,newImage,vx,vy):
         newSprite = sprite.Sprite(sprite.SpriteKind.PROJECTILE,speed=(vx,vy),image=newImage)
+        
+        self._spriteList.append(newSprite)
+        return newSprite
 
 
     # Add handler for overlaps
@@ -56,7 +59,10 @@ class Sprites:
         self._spriteList.remove(currSprite)
 
 def img(newImage):
-    return image.Image().createFromString(newImage)
+    myImage = image.Image()
+    myImage.createFromString(newImage)
+    
+    return myImage
 
 sprites = Sprites()
 
@@ -77,7 +83,7 @@ class MakeCodeController(gme.GameController):
                 
         #LOOP THROUGH AND BLIT
         for currentSprite in sprites._spriteList:
-            if currentSprite != None
+            if currentSprite != None:
                 self.blit(currentSprite)
     
     def on_update_interval(self, interval,callback):
