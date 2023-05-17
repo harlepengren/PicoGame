@@ -6,3 +6,5 @@ import picogame.sprite
 import picogame.vector
 import picogame.collision
 import picogame.menu
+import picogame.sdcard
+import picogame.makecode
