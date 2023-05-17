@@ -1,6 +1,7 @@
 from .controller import *
 from . import sprite, image
 from . import game as gme
+from . import vector
 import random
 import time
 
@@ -27,16 +28,16 @@ class MakeCodeInput(Input):
     def moveCurrentSprite(self):
         if self.currentSprite != None:
             if self.getButton('UP'):
-                self.currentSprite.position += Vector(0,5)
+                self.currentSprite.position += vector.Vector(0,5)
             
             if self.getButton('DOWN'):
-                self.position += Vector(0,-5)
+                self.currentSprite.position += vector.Vector(0,-5)
                 
             if self.getButton('LEFT'):
-                self.currentSprite.position += Vector(-5,0)
+                self.currentSprite.position += vector.Vector(-5,0)
             
             if self.getButton('RIGHT'):
-                self.position += Vector(5,0)
+                self.currentSprite.position += vector.Vector(5,0)
 
 controller = MakeCodeInput()
 
@@ -100,6 +101,7 @@ class MakeCodeController(gme.GameController):
         # Make sure to check whether destroyed flag is set and handle
         
         # Process input
+        controller.moveCurrentSprite()
         controller.checkButtons()
         
         # check whether time as passed, this is not very readable, consider a dictionary or a class
