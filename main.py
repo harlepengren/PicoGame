@@ -6,5 +6,4 @@ def run():
     gameMenu = Menu('/games')
     gameMenu.run()
 
-if __name__ == '__main__':
-    print('running . . .')
+run()
