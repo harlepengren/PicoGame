@@ -1,7 +1,7 @@
 MPY_DIR = /home/kkoehler/micropython/
 
-MOD = factorial
-SRC = factorial.c
+MOD = display
+SRC = display.c
 ARCH = armv6m
 
 include $(MPY_DIR)/py/dynruntime.mk
