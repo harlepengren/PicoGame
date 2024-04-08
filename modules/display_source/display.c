@@ -2,10 +2,11 @@
 
 #include "py/runtime.h"
 #include "py/obj.h"
+//#include "hardware/spi.h"
 
 typedef struct _displayclass_obj_t {
     mp_obj_base_t base;
-    spi_inst_t* spi;
+    //spi_inst_t* spi;
     int8_t spi_pin;
     int8_t cs;
     int8_t dc;
@@ -16,17 +17,17 @@ typedef struct _displayclass_obj_t {
 
 const mp_obj_type_t displayclass_type;
 
-STATIC void displayclass_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
+static void displayclass_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
     (void)kind;
     displayclass_obj_t *self = MP_OBJ_TO_PTR(self_in);
-    mp_print_str(print, "Display Object");
+    mp_print_str(print, "Display Object()");
     mp_obj_print_helper(print, mp_obj_new_int(self->height), PRINT_REPR);
     mp_print_str(print, " x ");
     mp_obj_print_helper(print, mp_obj_new_int(self->width), PRINT_REPR);
     mp_print_str(print, ")");
 }
 
-STATIC mp_obj_t displayclass_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
+static mp_obj_t displayclass_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
     mp_arg_check_num(n_args, n_kw, 2, 2, true);
     displayclass_obj_t *self = m_new_obj(displayclass_obj_t);
     self->base.type = &displayclass_type;
@@ -41,11 +42,24 @@ STATIC mp_obj_t displayclass_make_new(const mp_obj_type_t *type, size_t n_args, 
 }
 
 // Instance Methods
-STATIC mp_obj_t displayclass_clear(mp_obj_t self_in, mp_obj_t color_obj) {
-    displayclass_obj_t *class_instance = MP_OBJ_TO_PTR(self_in);
+static mp_obj_t displayclass_clear(mp_obj_t self_in, mp_obj_t color_obj) {
+    displayclass_obj_t *self = MP_OBJ_TO_PTR(self_in);
     mp_int_t n_color = mp_obj_get_int(color_obj);
 
-    return self_in;
+    return mp_obj_new_int(n_color);
 }
 
 MP_DEFINE_CONST_FUN_OBJ_2(displayclass_clear_obj, displayclass_clear);
+
+static const mp_rom_map_elem_t displayclass_locals_dict_table[] = {};
+
+static MP_DEFINE_CONST_DICT(displayclass_locals_dict, displayclass_locals_dict_table);
+
+const mp_obj_type_t displayclass_type = {
+    { &mp_type_type },
+    .name = MP_QSTR_displayclass,
+    .print = displayclass_print,
+    .make_new = displayclass_make_new,
+    .locals_dict = (mp_obj_dict_t*)&displayclass_locals_dict,
+};
+
