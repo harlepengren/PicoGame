@@ -43,7 +43,7 @@ static mp_obj_t displayclass_make_new(const mp_obj_type_t *type, size_t n_args, 
 
 // Instance Methods
 static mp_obj_t displayclass_clear(mp_obj_t self_in, mp_obj_t color_obj) {
-    displayclass_obj_t *self = MP_OBJ_TO_PTR(self_in);
+    //displayclass_obj_t *self = MP_OBJ_TO_PTR(self_in);
     mp_int_t n_color = mp_obj_get_int(color_obj);
 
     return mp_obj_new_int(n_color);
@@ -51,9 +51,11 @@ static mp_obj_t displayclass_clear(mp_obj_t self_in, mp_obj_t color_obj) {
 
 MP_DEFINE_CONST_FUN_OBJ_2(displayclass_clear_obj, displayclass_clear);
 
-static const mp_rom_map_elem_t displayclass_locals_dict_table[] = {};
+const mp_rom_map_elem_t displayclass_locals_dict_table[] = {
+    { MP_ROM_QSTR(MP_QSTR_clear), MP_ROM_PTR(&displayclass_clear_obj) },
+};
 
-static MP_DEFINE_CONST_DICT(displayclass_locals_dict, displayclass_locals_dict_table);
+MP_DEFINE_CONST_DICT(displayclass_locals_dict, displayclass_locals_dict_table);
 
 const mp_obj_type_t displayclass_type = {
     { &mp_type_type },
@@ -63,3 +65,19 @@ const mp_obj_type_t displayclass_type = {
     .locals_dict = (mp_obj_dict_t*)&displayclass_locals_dict,
 };
 
+static mp_map_elem_t displayclass_globals_table[] = {
+    { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_displayclass) },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_myclass), (mp_obj_t)&displayclass_type }
+};
+
+static MP_DEFINE_CONST_DICT (
+    mp_module_displayclass_globals,
+    displayclass_globals_table
+);
+
+const mp_obj_module_t displayclass_user_cmodule = {
+    .base = { &mp_type_module },
+    .globals = (mp_obj_dict_t*)&mp_module_displayclass_globals,
+};
+
+MP_REGISTER_MODULE(MP_QSTR_displayclass, displayclass_user_cmodule, MODULE_DISPLAYCLASS_ENABLED);
