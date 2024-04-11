@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 #include "display.h"
 #include "pico/time.h"
@@ -55,26 +57,30 @@ display_struct* display_init(spi_inst_t* spi, int8_t cs, int8_t dc, int8_t sck, 
     display_reset(current_display);
 
     // Initialization Commands
-    display_write_cmd(current_display, SWRESET,NULL,0);
+    display_write_cmd(current_display, SWRESET);
     sleep_ms(10);
+    
+    display_write_cmd_args(PWCTRB, 3, {0x00, 0xC1, 0x30}); // Power control B
+    display_write_cmd_args(POSC, 4, {0x54, 0x03, 0x12, 0x81}); // Power on sequenc control
+    display_write_cmd_args(DTCA, 3, {0x85, 0x00, 0x78});
+    display_write_cmd_args(PWCTRA, 5, {0x39, 0x2c, 0x00, 0x34, 0x02}); // Power control A
+    display_write_cmd_args(PUMPRC, 1, {0x20});        // Pump ratio control
+    display_write_cmd_args(DTCB, 2, {0x00, 0x00});    // Driver timing control B
+    display_write_cmd_args(PWCTR1, 1, {0x23});        // Power control 1
+    display_write_cmd_args(PWCTR2, 1, {0x10});        // Power control 2
+    display_write_cmd_args(VMCTR, 2, {0x3E, 0x28});    // VCOM ctrl 1
+    display_write_cmd_args(VMCTR, 1, {0x86});          // VCOM ctrl 2
+    //display_write_cmd_args(MADCTL,1, {0x88});       // Rotation
+    display_write_cmd_args(PIXFMT, 1, {0x55});        // Set pixel format (16 bpp)
+    display_write_cmd_args(FRMCTR1, 2, {0x00, 0x18}); // Frame rate control
+    display_write_cmd_args(DFUNCTR, 3, {0x08, 0x82, 0x27});   // Display function control
+    display_write_cmd(SLEEP_OUT);   // Exit Sleep
+    sleep_ms(5);
+    write_cmd(DISPLAY_ON);
+    sleep_ms(5);
+
     /********************************************
-    self.write_cmd(self.SWRESET)  # Software reset
-    sleep(.1)
-    self.write_cmd(self.PWCTRB, 0x00, 0xC1, 0x30)  # Pwr ctrl B
-    self.write_cmd(self.POSC, 0x64, 0x03, 0x12, 0x81)  # Pwr on seq. ctrl
-    self.write_cmd(self.DTCA, 0x85, 0x00, 0x78)  # Driver timing ctrl A
-    self.write_cmd(self.PWCTRA, 0x39, 0x2C, 0x00, 0x34, 0x02)  # Pwr ctrl A
-    self.write_cmd(self.PUMPRC, 0x20)  # Pump ratio control
-    self.write_cmd(self.DTCB, 0x00, 0x00)  # Driver timing ctrl B
-    self.write_cmd(self.PWCTR1, 0x23)  # Pwr ctrl 1
-    self.write_cmd(self.PWCTR2, 0x10)  # Pwr ctrl 2
-    self.write_cmd(self.VMCTR1, 0x3E, 0x28)  # VCOM ctrl 1
-    self.write_cmd(self.VMCTR2, 0x86)  # VCOM ctrl 2
-    self.write_cmd(self.MADCTL, self.rotation)  # Memory access ctrl
     self.write_cmd(self.VSCRSADD, 0x00)  # Vertical scrolling start address
-    self.write_cmd(self.PIXFMT, 0x55)  # COLMOD: Pixel format
-    self.write_cmd(self.FRMCTR1, 0x00, 0x18)  # Frame rate ctrl
-    self.write_cmd(self.DFUNCTR, 0x08, 0x82, 0x27)
     self.write_cmd(self.ENABLE3G, 0x00)  # Enable 3 gamma ctrl
     self.write_cmd(self.GAMMASET, 0x01)  # Gamma curve selected
     if gamma:  # Use custom gamma correction values
@@ -84,11 +90,7 @@ display_struct* display_init(spi_inst_t* spi, int8_t cs, int8_t dc, int8_t sck, 
         self.write_cmd(self.GMCTRN1, 0x00, 0x0E, 0x14, 0x03, 0x11, 0x07,
                         0x31, 0xC1, 0x48, 0x08, 0x0F, 0x0C, 0x31, 0x36,
                         0x0F)
-    self.write_cmd(self.SLPOUT)  # Exit sleep
-    sleep(.1)
-    self.write_cmd(self.DISPLAY_ON)  # Display on
-    sleep(.1)
-    self.clear()
+
     *************************************************/
 
     return current_display;
@@ -118,20 +120,44 @@ void display_clear_screen(display_struct* current_display, uint16_t color, uint1
     uint16_t* buffer = (uint16_t*)malloc(buffer_size*sizeof(uint16_t));
     memset(buffer, color, buffer_size);
 
-    for(int index=0; index<lines; ++index){
+    // Write the starting position
+    display_write_cmd_args(current_display,SET_COLUMN,2,{0,0});
+    display_write_cmd_args(current_display,SET_PAGE,2,{0,0});
+    display_write_cmd(current_display,WRITE_RAM);
 
+    for(int index=0; index<lines; ++index){
+        display_write16_data(current_display, buffer, buffer_size)
     }
     free(buffer);
 }
 
-void display_write_cmd(display_struct* current_display, uint8_t command, uint8_t* args, uint8_t arg_count){
+// Write a command without arguments
+void display_write_cmd(display_struct* current_display, uint8_t command){
+    gpio_put(current_display->dc, 0);
+    gpio_put(current_display->cs, 0);
+    spi_write_blocking(current_display->spi,&command,1);
+    gpio_put(current_display->cs, 1);
+}
+
+// Write a command with arguments
+void display_write_cmd_args(display_struct* current_display, uint8_t command, uint8_t arg_count, ...){
+    
+
     gpio_put(current_display->dc, 0);
     gpio_put(current_display->cs, 0);
     spi_write_blocking(current_display->spi,&command,1);
     gpio_put(current_display->cs, 1);
 
-    for(int index=0; index<arg_count; ++index){
-        display_write_data(current_display,&args[index], sizeof(args[index]));
+    if(arg_count > 0){
+        va_list valist;
+
+        va_start(valist, arg_count);
+        for(int index=0; index<arg_count; ++index){
+            uint8_t cmd_arg = va_arg(valist, int8_t);
+            display_write_data(current_display,&args[index], sizeof(args[index]));
+        }
+
+        va_end(valist);
     }
 }
 
