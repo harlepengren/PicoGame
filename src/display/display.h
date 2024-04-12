@@ -6,6 +6,8 @@
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
 
+#define BIT_DEPTH 2     // 565 color with 2 bytes per pixel
+
 typedef struct _display_struct {
     spi_inst_t* spi;
     int8_t sck;
@@ -15,6 +17,8 @@ typedef struct _display_struct {
     int8_t rst;
     int16_t width;
     int16_t height;
+    uint8_t* frame_buffer;
+    int buffer_size;
 } display_struct;
 
 // Commands
@@ -60,17 +64,20 @@ typedef struct _display_struct {
 
 int16_t Color565(int8_t r, int8_t g, int8_t b);
 
-// Initialize and De-initialize
-display_struct* display_init(spi_inst_t* spi, int8_t cs, int8_t dc, int8_t sck, int8_t mosi, int8_t rst, int16_t width, int16_t height);
-void display_deinit(display_struct* current_display);
-void display_reset(display_struct* current_display);
+// Display Class
+class Display {
+    private: 
+        display_struct current_display;
 
-// Functions
-void display_clear_screen(display_struct* current_display, uint16_t color, uint16_t lines);
-void display_write_cmd(display_struct* current_display, uint8_t command);
-void display_write_cmd_args(display_struct* current_display, uint8_t command, uint8_t arg_count, uint8_t* args);
-void display_write_data(display_struct* current_display, uint8_t* data, int data_len);
-void display_write16_data(display_struct* current_display, uint16_t* data, int data_len);
+    public:
+        Display(spi_inst_t* spi, int8_t cs, int8_t dc, int8_t sck, int8_t mosi, int8_t rst, int16_t width, int16_t height);
+        ~Display();
 
-
+        void Reset();
+        void ClearScreen(uint16_t color, uint16_t lines);
+        void WriteCmd(uint8_t command);
+        void WriteCmd(uint8_t command, uint8_t arg_count, ...);
+        void WriteData(uint8_t* data, int data_len);
+        void WriteData16(uint16_t* data, int data_len);
+};
 #endif

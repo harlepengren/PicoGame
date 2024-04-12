@@ -9,7 +9,7 @@ pico_sdk_init()
 #target_include_directories(display)
 include_directories(display)
 
-add_executable(${PROJECT} main.c display/display.c)
+add_executable(${PROJECT} main.cpp display/display.cpp)
 target_link_libraries(${PROJECT} pico_stdlib hardware_spi)
 
 pico_add_extra_outputs(${PROJECT})
