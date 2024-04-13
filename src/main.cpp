@@ -4,7 +4,7 @@
 #include "pico/time.h"
 #include "hardware/spi.h"
 
-#include "display/display.h"
+//#include "display/display.h"
 #include "ili9341/ili9341.h"
 #include "ili9341/mode2.h"
 

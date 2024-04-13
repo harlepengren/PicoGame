@@ -5,6 +5,10 @@
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*
 #define SPI_PORT spi0
 #define PIN_MISO 4
@@ -97,4 +101,9 @@ void ili9341_write_data(void *buffer, int bytes);
 void ili9341_start_writing();
 void ili9341_stop_writing();
 void ili9341_write_data_continuous(void *biffer, int bytes);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif
