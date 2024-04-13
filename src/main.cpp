@@ -22,17 +22,29 @@ int main()
 	.pin_dc = 13
     };
 
+    printf("Start\n");
     ili9341_init();
+    print("ili934 init\n");
     mode2_init();
+    printf("mode2 init");
+
+    uint16_t pixel_x = 50;
+    uint16_t pixel_y = 75;
+    uint16_t pixel_color = 0xF8;
 
     uint16_t x = 0;
     while(1){
         mode2_clear();
         mode2_rect(x,40,40,80,0xFFFF);
+        mode2_draw_pixel(pixel_x,pixel_y,pixel_color);
         mode2_render();
 
         x+=1;
         x = x%280;
+
+        pixel_x = (pixel_x + 27) % 280;
+        pixel_y = (pixel_y + 54) % 280;
+        pixel_color = (pixel_color + 10) % 0xFFFF;
     }
 
 
