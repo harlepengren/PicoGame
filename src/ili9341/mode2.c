@@ -12,6 +12,10 @@ void mode2_clear() {
     memset(mode2_buffer, 0, SIZE*sizeof(uint16_t));
 }
 
+void mode2_draw_pixel(uint16_t x, uint16_t y, uint16_t color){
+	mode2_buffer[x*ILI9341_TFTWIDTH+y] = color;
+}
+
 void mode2_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t color) {
 	uint16_t *base_loc = &mode2_buffer[x*ILI9341_TFTWIDTH+y];
 
