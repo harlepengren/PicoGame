@@ -31,9 +31,11 @@ int main()
     Display current_display(spi0, cs_pin, dc_pin, sck_pin, mosi_pin, rst_pin, width, height);
     printf("Display Created . . .\n");
 
+    current_display.ClearScreen(Color565(255,0,0));
+    printf("Screen cleared");
+
     while(1){
-        gpio_put(LED_PIN, 1);        
-        current_display.ClearScreen(Color565(255,0,0),8);
+        gpio_put(LED_PIN, 1);
         sleep_ms(500);
         gpio_put(LED_PIN, 0);
         sleep_ms(500);

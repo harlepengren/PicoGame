@@ -22,6 +22,7 @@ typedef struct _display_struct {
 } display_struct;
 
 // Commands
+#define NOP 0x00
 #define SWRESET 0x01
 #define READ_ID 0x04
 #define READ_STATUS 0x09
@@ -47,6 +48,8 @@ typedef struct _display_struct {
 #define FRMCTR1 0xB1    // Frame rate control (In normal mode/full colors)
 #define FRMCTR2 0xB2    // Frame rate control (In idle mode/8 colors)
 #define FRMCTR3 0xB3    // Frame rate control (In partial mode/full colors)
+#define GMCTRP1 0xE0
+#define GMCTRN1 0xE1
 #define DFUNCTR 0xB6    // Display function control
 #define PWCTR1 0xC0
 #define PWCTR2 0xC1
@@ -60,7 +63,9 @@ typedef struct _display_struct {
 #define DTCB 0xEA       // Driver timing control B
 #define POSC 0xED       // Power on sequence
 #define PUMPRC 0xF7     // Pump ratio control
-
+#define ENABLE3G 0xF2   // Enable/disable gamma
+#define VSCRSADD 0x37   // Vertical scrolling start address
+#define GAMMASET 0x26   // Gamma set
 
 int16_t Color565(int8_t r, int8_t g, int8_t b);
 
@@ -74,7 +79,8 @@ class Display {
         ~Display();
 
         void Reset();
-        void ClearScreen(uint16_t color, uint16_t lines);
+        void WriteBlock(uint16_t x0,uint16_t y0,uint16_t x1,uint16_t y1, uint8_t* data, int data_len);
+        void ClearScreen(uint16_t color);
         void WriteCmd(uint8_t command);
         void WriteCmd(uint8_t command, uint8_t arg_count, ...);
         void WriteData(uint8_t* data, int data_len);
