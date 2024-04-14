@@ -10,8 +10,12 @@
 
 using namespace std;
 
+
+
 int main()
 {
+    stdio_init_all();
+
     ili9341_config = {
 	.port = spi1,
 	.pin_miso = 6,
@@ -22,11 +26,8 @@ int main()
 	.pin_dc = 13
     };
 
-    printf("Start\n");
     ili9341_init();
-    print("ili934 init\n");
     mode2_init();
-    printf("mode2 init");
 
     uint16_t pixel_x = 50;
     uint16_t pixel_y = 75;
