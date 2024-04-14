@@ -39,11 +39,11 @@ def convert_image(filename, output_name, transparency_color = (0,0,0)):
     with open("output_name.txt","wb") as binary_file:
         # write the color palette as the first 32 bytes (565 RGB)
         # the first byte tells how many entries
-        binary_file.write(len(color_palette))
+        binary_file.write(int.to_bytes(len(color_palette)))
 
         # write the colors
         for current_color in color_palette:
-            binary_file.write(convert_565rgb(current_color))
+            binary_file.write(convert_565rgb(current_color).to_bytes(2))
 
         for index in range(0,len(temporary_image),2):
-            binary_file.write(((temporary_image[index] & 0xf) << 4) | ((temporary_image[index+1] & 0xf)))
+            binary_file.write(int.to_bytes(((temporary_image[index] & 0xf) << 4) | ((temporary_image[index+1] & 0xf))))
