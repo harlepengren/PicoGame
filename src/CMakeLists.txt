@@ -6,11 +6,16 @@ project(${PROJECT} C CXX ASM)
 
 pico_sdk_init()
 
-add_executable(${PROJECT} main.cpp ili9341/ili9341.c ili9341/mode2.c ili9341/image.cpp)
+add_subdirectory(../FatFs_SPI build)
+
+add_executable(${PROJECT} main.cpp ili9341/ili9341.c ili9341/mode2.c ili9341/image.cpp hw_config.c)
 
 target_include_directories(${PROJECT} PRIVATE ${CMAKE_SOURCE_DIR}/ili9341)
 
-target_link_libraries(${PROJECT} pico_stdlib hardware_spi pico_malloc pico_mem_ops)
+target_link_libraries(${PROJECT} pico_stdlib hardware_spi pico_malloc pico_mem_ops FatFs_SPI)
+
+pico_set_program_name(${PROJECT} "PicoGame")
+pico_set_program_version(${PROJECT} "0.1")
 
 pico_add_extra_outputs(${PROJECT})
 pico_enable_stdio_usb(${PROJECT} 1)
