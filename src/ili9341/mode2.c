@@ -1,5 +1,7 @@
-#include "mode2.h"
 #include <string.h>
+
+#include "pico/mem_ops.h"
+#include "mode2.h"
 
 #define SIZE (ILI9341_TFTHEIGHT*ILI9341_TFTWIDTH)
 
@@ -22,7 +24,7 @@ void mode2_clear() {
 
 void mode2_draw_pixel(uint16_t x, uint16_t y, uint16_t color){
 	if(x < 0 || x >= ILI9341_TFTWIDTH || y < 0 || y >= ILI9341_TFTHEIGHT || color == 0){
-		return 0;
+		return;
 	}
 
 	mode2_buffer[x*ILI9341_TFTWIDTH+y] = color;
@@ -34,7 +36,7 @@ void mode2_draw_image(uint16_t x, uint16_t y, uint16_t width, uint8_t* data, int
 	uint16_t current_y = y;
 	uint16_t pixel_color[2];
 
-	for(int index=0; index<data_len, index++){
+	for(int index=0; index<data_len; index++){
 		pixel_color[0] = color_palette[data[index] >> 4];
 		pixel_color[1] = color_palette[data[index] & 0xFF];
 

@@ -36,12 +36,20 @@ def convert_image(filename, output_name, transparency_color = (0,0,0)):
             temporary_image.append(0)
 
     # Now export to a file
-    with open("output_name.txt","wb") as binary_file:
-        # write the color palette as the first 32 bytes (565 RGB)
+    with open(output_name,"wb") as binary_file:
+        # Write the height and width (2 bytes each)
+        binary_file.write(im.height.to_bytes(2))
+
+        if add_column:
+            binary_file.write((im.width+1).to_bytes(2))
+        else:
+            binary_file.write((im.width).to_bytes(2))
+
+        # write the color palette next
         # the first byte tells how many entries
         binary_file.write(int.to_bytes(len(color_palette)))
 
-        # write the colors
+        # write the colors - 2 bytes per color (565 RGB)
         for current_color in color_palette:
             binary_file.write(convert_565rgb(current_color).to_bytes(2))
 
