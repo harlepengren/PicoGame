@@ -6,7 +6,7 @@ project(${PROJECT} C CXX ASM)
 
 pico_sdk_init()
 
-add_subdirectory(../FatFs_SPI build)
+add_subdirectory(FatFs_SPI build)
 
 add_executable(${PROJECT} main.cpp ili9341/ili9341.c ili9341/mode2.c ili9341/image.cpp hw_config.c)
 

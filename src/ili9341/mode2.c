@@ -51,6 +51,38 @@ void mode2_draw_image(uint16_t x, uint16_t y, uint16_t width, uint8_t* data, int
 	}
 }
 
+void mode2_draw_line(uint16_t x, uint16_t y, uint8_t* data, int data_len){
+	// Line is outside the screen, don't draw
+	if(y < 0 || y > ILI9341_TFTHEIGHT){
+		return;
+	}
+
+	// where should we start and end
+	uint16_t offset = 0;
+	uint16_t start_x = x;
+	uint16_t width = data_len;
+	if(x < 0){
+		start_x = 0;
+		offset = start_x - x;
+
+		// if the offset is odd, then skip 1 pixel (the second half of 1 byte)
+		if(offset % 2 == 1){
+			offset +=1;
+		}
+	} else if(x > ILI9341_TFTWIDTH){
+		width -= (uint16_t)((x - ILI9341_TFTWIDTH)/2);
+	}
+
+	for(int index=offset; index<width; index++){
+		mode2_draw_pixel(start_x+(index*2), y, color_palette[data[index] >> 4]);
+		mode2_draw_pixel(start_x+(index*2)+1, y, color_palette[data[index] & 0xFF]);
+	}
+
+	// Base case, line is fully in the screen space
+	// Alternative cases: x < 0, x >ILI9341_TFTWIDTH
+
+}
+
 void mode2_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t color) {
 	uint16_t *base_loc = &mode2_buffer[x*ILI9341_TFTWIDTH+y];
 
