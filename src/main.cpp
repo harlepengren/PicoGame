@@ -1,5 +1,4 @@
-#include <stdio.h>
-
+#include "pico/stdio.h"
 #include "pico/stdlib.h"
 #include "pico/time.h"
 #include "hardware/spi.h"
@@ -27,6 +26,8 @@ int main()
 	.pin_dc = 13
     };
 
+    sleep_ms(100);
+    printf("Init\n");
     ili9341_init();
     mode2_init();
 
@@ -55,8 +56,8 @@ int main()
 
         mode2_render();
 
-        x + = 10*direction;
-        y += 15;
+        x += 10*x_direction;
+        y += 15*y_direction;
 
         if (x < 0 || x > (ILI9341_TFTWIDTH-32)){
             x_direction *= -1;

@@ -19,7 +19,6 @@ class Image{
         uint32_t image_position;
         uint16_t height;
         uint16_t width;
-        uint offset;
 
     public:
         ~Image();

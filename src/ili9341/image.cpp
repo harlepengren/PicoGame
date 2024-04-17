@@ -1,8 +1,7 @@
-#include <stdlib.h>
-
+#include "pico/stdio.h"
 #include "pico/stdlib.h"
 #include "pico/malloc.h"
-#include "pico/flash."
+#include "hardware/flash.h"
 
 #include "mode2.h"
 #include "image.h"
@@ -24,6 +23,7 @@ Image::~Image(){
 void Image::LoadImage(const char* filename){
     UINT bytes_read=0;
     uint8_t buffer[FLASH_SECTOR_SIZE];
+    uint offset;
 
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
@@ -61,23 +61,23 @@ void Image::LoadImage(const char* filename){
     }*/
 
     image_position = (uint32_t)f_tell(fil);
-    offset = 0;
+    offset = FLASH_TARGET_OFFSET;
 
     printf("reading the image data\n");
     for(int index=0; index<(height*width/2); index+=bytes_read){
-        f_read(fil, sizeof(buffer), &bytes_read);
-        if(br == 0){
+        f_read(fil, buffer, sizeof(buffer), &bytes_read);
+        if(bytes_read == 0){
             break;
         }
 
-        flash_range_erase(flash_target_offset,FLASH_SECTOR_SIZE);
-        flash_range_program(flash_target_offset,buffer,FLASH_SECTOR_SIZE);
+        flash_range_erase(offset,FLASH_SECTOR_SIZE);
+        flash_range_program(offset,buffer,FLASH_SECTOR_SIZE);
 
-        flash_target_offset += FLASH_SECTOR_SIZE;
+        offset += FLASH_SECTOR_SIZE;
     }
 
     f_close(fil);
-    f_unmount(pSD->pcname);
+    f_unmount(pSD->pcName);
 }
 
 void Image::ReadIntoBuffer(uint16_t x, uint16_t y, uint16_t buffer_width, uint16_t buffer_height){
@@ -92,5 +92,5 @@ void Image::ReadIntoBuffer(uint16_t x, uint16_t y, uint16_t buffer_width, uint16
 
     }
 
-    free(line_pixels);
+    free(line);
 }
