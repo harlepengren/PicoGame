@@ -25,8 +25,11 @@ void Image::LoadImage(const char* filename){
     uint8_t buffer[FLASH_SECTOR_SIZE];
     uint offset;
 
+    printf("Number of SD cards: %i\n", sd_get_num());
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
+    printf("Check config file: %i\n", pSD->ss_gpio);
+    
     FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
     if (FR_OK!=fr) {
 		printf("E f_mount error: %s (%d)\n",FRESULT_str(fr),fr);

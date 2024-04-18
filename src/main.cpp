@@ -1,3 +1,9 @@
+#ifndef PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS
+#define PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS (5000)
+#endif
+
+#include <stdio.h>
+
 #include "pico/stdio.h"
 #include "pico/stdlib.h"
 #include "pico/time.h"
@@ -7,14 +13,14 @@
 #include "ili9341/ili9341.h"
 #include "ili9341/mode2.h"
 #include "image.h"
+#include "setup.h"
 
 using namespace std;
-
-
 
 int main()
 {
     stdio_init_all();
+    sleep_ms(5000);
 
     ili9341_config = {
 	.port = spi1,
@@ -26,10 +32,10 @@ int main()
 	.pin_dc = 13
     };
 
-    sleep_ms(100);
     printf("Init\n");
     ili9341_init();
     mode2_init();
+    init_pins();
 
     int16_t x = 50;
     int16_t y = 75;

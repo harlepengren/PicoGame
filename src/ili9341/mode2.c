@@ -1,5 +1,7 @@
+#include <stdio.h>
 #include <string.h>
 
+#include "pico/stdio.h"
 #include "pico/mem_ops.h"
 #include "mode2.h"
 
@@ -9,6 +11,7 @@ uint16_t mode2_buffer[SIZE] = { 0 };
 uint16_t color_palette[16] = {0};
 
 void mode2_init() {
+	printf("Mode 2 init\n");
 }
 
 void mode2_set_color_palette(uint8_t palette_entry, uint16_t color){
