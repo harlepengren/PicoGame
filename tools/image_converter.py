@@ -1,6 +1,8 @@
 # Converts an image to a raw stream of bytes
 from PIL import Image
 
+BYTE_ORDER = 'little'
+
 def convert_565rgb(color):
     r = color[0]
     g = color[1]
@@ -38,20 +40,20 @@ def convert_image(filename, output_name, transparency_color = (0,0,0)):
     # Now export to a file
     with open(output_name,"wb") as binary_file:
         # Write the height and width (2 bytes each)
-        binary_file.write(im.height.to_bytes(2))
+        binary_file.write(im.height.to_bytes(2,byteorder=BYTE_ORDER))
 
         if add_column:
-            binary_file.write((im.width+1).to_bytes(2))
+            binary_file.write((im.width+1).to_bytes(2,byteorder=BYTE_ORDER))
         else:
-            binary_file.write((im.width).to_bytes(2))
+            binary_file.write((im.width).to_bytes(2, byteorder=BYTE_ORDER))
 
         # write the color palette next
         # the first byte tells how many entries
-        binary_file.write(int.to_bytes(len(color_palette)))
+        binary_file.write(int.to_bytes(len(color_palette),byteorder=BYTE_ORDER))
 
         # write the colors - 2 bytes per color (565 RGB)
         for current_color in color_palette:
-            binary_file.write(convert_565rgb(current_color).to_bytes(2))
+            binary_file.write(convert_565rgb(current_color).to_bytes(2,byteorder=BYTE_ORDER))
 
         for index in range(0,len(temporary_image),2):
-            binary_file.write(int.to_bytes(((temporary_image[index] & 0xf) << 4) | ((temporary_image[index+1] & 0xf))))
+            binary_file.write(int.to_bytes(((temporary_image[index] & 0xf) << 4) | ((temporary_image[index+1] & 0xf)),byteorder=BYTE_ORDER))
