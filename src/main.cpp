@@ -4,10 +4,11 @@
 
 #include <stdio.h>
 
-#include "pico/stdio.h"
-#include "pico/stdlib.h"
-#include "pico/time.h"
-#include "hardware/spi.h"
+#include <pico/stdio.h>
+#include <pico/stdlib.h>
+#include <pico/time.h>
+#include <hardware/spi.h>
+#include <pico/multicore.h>
 
 //#include "display/display.h"
 #include "ili9341/ili9341.h"
@@ -18,10 +19,17 @@
 
 using namespace std;
 
+#define PICO_GAME_DEBUG
+
 int main()
 {
     stdio_init_all();
     time_init();
+
+    #ifdef PICO_GAME_DEBUG
+    multicore_reset_core1();
+    #endif
+
     sleep_ms(2000);
 
     ili9341_config = {

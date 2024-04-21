@@ -11,8 +11,8 @@
 #include "hw_config.h"
 
 Image::~Image(){
-    if(fil != NULL){
-        f_close(fil);
+    if(&fil != NULL){
+        f_close(&fil);
     }
 
     if(palette != NULL){
@@ -36,7 +36,7 @@ void Image::LoadImage(const char* filename){
 		return;
 	}
 
-	fr=f_open(fil,filename,FA_READ);
+	fr=f_open(&fil,filename,FA_READ);
 
     if(fr != FR_OK){
         printf("Open failed\n");
@@ -45,30 +45,30 @@ void Image::LoadImage(const char* filename){
 
     printf("Reading Height and Width\n");
     // Read the height and width
-    fr = f_read(fil,&height,2,&bytes_read);
+    fr = f_read(&fil,&height,2,&bytes_read);
     //height = (uint16_t)(fgetc(fp) << 8 | fgetc(fp));
-    fr = f_read(fil,&width,2,&bytes_read);
+    fr = f_read(&fil,&width,2,&bytes_read);
     //width = (uint16_t)(fgetc(fp) << 8 | fgetc(fp));
 
     printf("Reading the palette\n");
     // Read the color palette
     // Step 1: Get the number of colors in the palette
-    fr = f_read(fil,&num_colors,2,&bytes_read);
+    fr = f_read(&fil,&num_colors,2,&bytes_read);
     //num_colors = (uint16_t)fgetc(fp);
 
     palette = (uint16_t*)malloc(sizeof(uint16_t)*num_colors);
 
-    fr = f_read(fil,palette,sizeof(uint16_t)*num_colors,&bytes_read);
+    fr = f_read(&fil,palette,sizeof(uint16_t)*num_colors,&bytes_read);
     /*for(uint8_t index=0; index<num_colors; ++index){
         palette[index] = ((uint8_t)fgetc(fp) << 8) | (uint8_t)fgetc(fp);
     }*/
 
-    image_position = (uint32_t)f_tell(fil);
+    image_position = (uint32_t)f_tell(&fil);
     offset = FLASH_TARGET_OFFSET;
 
     printf("reading the image data\n");
     for(int index=0; index<(height*width/2); index+=bytes_read){
-        f_read(fil, buffer, sizeof(buffer), &bytes_read);
+        f_read(&fil, buffer, sizeof(buffer), &bytes_read);
         if(bytes_read == 0){
             break;
         }
@@ -79,7 +79,7 @@ void Image::LoadImage(const char* filename){
         offset += FLASH_SECTOR_SIZE;
     }
 
-    f_close(fil);
+    f_close(&fil);
     f_unmount(pSD->pcName);
 }
 

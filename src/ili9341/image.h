@@ -14,7 +14,7 @@ class Image{
         uint16_t* palette;
         uint16_t num_colors;
         uint8_t* image;
-        FIL* fil;
+        FIL fil;
         //FILE* fp;
         uint32_t image_position;
         uint16_t height;
