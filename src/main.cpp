@@ -14,13 +14,15 @@
 #include "ili9341/mode2.h"
 #include "image.h"
 #include "setup.h"
+#include "rtc.h"
 
 using namespace std;
 
 int main()
 {
     stdio_init_all();
-    sleep_ms(5000);
+    time_init();
+    sleep_ms(2000);
 
     ili9341_config = {
 	.port = spi1,
@@ -35,7 +37,8 @@ int main()
     printf("Init\n");
     ili9341_init();
     mode2_init();
-    init_pins();
+
+    printf("now to init the sd card\n");
 
     int16_t x = 50;
     int16_t y = 75;
