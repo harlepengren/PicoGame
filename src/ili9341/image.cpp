@@ -1,7 +1,8 @@
-#include "pico/stdio.h"
-#include "pico/stdlib.h"
-#include "pico/malloc.h"
-#include "hardware/flash.h"
+#include <pico/stdio.h>
+#include <pico/stdlib.h>
+#include <pico/malloc.h>
+#include <hardware/flash.h>
+#include <string.h>
 
 #include "mode2.h"
 #include "image.h"
@@ -22,7 +23,9 @@ Image::~Image(){
 
 void Image::LoadImage(const char* filename){
     UINT bytes_read=0;
-    uint8_t buffer[FLASH_SECTOR_SIZE];
+    uint16_t buffer[FLASH_SECTOR_SIZE/2];
+    uint8_t temp_buffer[FLASH_SECTOR_SIZE/2];
+    int read_len = FLASH_SECTOR_SIZE/2;
     uint offset;
 
     printf("Number of SD cards: %i\n", sd_get_num());
@@ -67,33 +70,62 @@ void Image::LoadImage(const char* filename){
     offset = FLASH_TARGET_OFFSET;
 
     printf("reading the image data\n");
-    for(int index=0; index<(height*width/2); index+=bytes_read){
-        f_read(&fil, buffer, sizeof(buffer), &bytes_read);
-        if(bytes_read == 0){
-            break;
+    bool done = false;
+    bool first = true;
+    while(!done){
+        f_read(&fil, temp_buffer, read_len, &bytes_read);
+
+
+        if(bytes_read < read_len){
+            done = true;
         }
 
-        flash_range_erase(offset,FLASH_SECTOR_SIZE);
-        flash_range_program(offset,buffer,FLASH_SECTOR_SIZE);
+        for(int index=0; index<bytes_read; ++index){
+            buffer[index] = palette[temp_buffer[index]];
 
-        offset += FLASH_SECTOR_SIZE;
+        }
+
+        if(first){
+            for(int temp_index=0; temp_index< bytes_read; ++temp_index){
+                printf("%08x ", buffer[temp_index]);
+            }
+            printf("/n");
+            first = false;
+        }
+
+    /*for(int index=0; index<(height*width/2); index+=bytes_read){
+        f_read(&fil, buffer, sizeof(buffer), &bytes_read);
+        if(bytes_read == 0){
+            printf("Problem\n");
+            break;
+        }*/
+
+        flash_range_erase(offset,bytes_read*2);
+        flash_range_program(offset,(const uint8_t*)buffer,bytes_read*2);
+
+        offset += bytes_read*2;
     }
+
+    printf("Done Reading: %n",offset-FLASH_TARGET_OFFSET);
+    printf("====================================================");
 
     f_close(&fil);
     f_unmount(pSD->pcName);
 }
 
 void Image::ReadIntoBuffer(uint16_t x, uint16_t y, uint16_t buffer_width, uint16_t buffer_height){
-    uint16_t line_pixels = width/2;
-    uint8_t* line = (uint8_t*)malloc(line_pixels);
+    //uint16_t line_pixels = width;
+    //uint8_t* line = (uint8_t*)malloc(width);
 
     // Set the flash offset
-    const uint8_t* image = (const uint8_t*)(XIP_BASE+FLASH_TARGET_OFFSET);
+    uint offset = XIP_BASE + FLASH_TARGET_OFFSET;
 
     for(int index=0; index<height; ++index){
-        mode2_draw_line(x,y+index,line,line_pixels);
+        mode2_draw_line(x,y+index,(uint8_t*)offset,width*2);
 
+        // Mulitply by 2 since there are 16bpp.
+        offset += width*2;
     }
 
-    free(line);
+    //free(line);
 }

@@ -73,7 +73,7 @@ int main()
 
         mode2_render();
 
-        x += 10*x_direction;
+        /*x += 10*x_direction;
         y += 15*y_direction;
 
         if (x < 0 || x > (ILI9341_TFTWIDTH-32)){
@@ -82,7 +82,7 @@ int main()
 
         if (y < 0 || y > (ILI9341_TFTHEIGHT-32)){
             y_direction *= -1;
-        }
+        }*/
     }
 
 

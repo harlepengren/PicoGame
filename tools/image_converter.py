@@ -37,6 +37,9 @@ def convert_image(filename, output_name, transparency_color = (0,0,0)):
         if add_column:
             temporary_image.append(0)
 
+    if len(color_palette) > 0xffff:
+        print("Too many colors. The limit is " + 0xffff)
+
     # Now export to a file
     with open(output_name,"wb") as binary_file:
         # Write the height and width (2 bytes each)
@@ -48,8 +51,8 @@ def convert_image(filename, output_name, transparency_color = (0,0,0)):
             binary_file.write((im.width).to_bytes(2, byteorder=BYTE_ORDER))
 
         # write the color palette next
-        # the first byte tells how many entries
-        binary_file.write(int.to_bytes(len(color_palette),byteorder=BYTE_ORDER))
+        # the next 2 bytes tells how many entries
+        binary_file.write(len(color_palette).to_bytes(2,byteorder=BYTE_ORDER))
 
         # write the colors - 2 bytes per color (565 RGB)
         for current_color in color_palette:
