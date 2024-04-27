@@ -10,12 +10,8 @@
 #include <hardware/spi.h>
 #include <pico/multicore.h>
 
-//#include "display/display.h"
-#include "ili9341/ili9341.h"
-#include "ili9341/mode2.h"
-#include "image.h"
-#include "setup.h"
-#include "rtc.h"
+#include "screen/screen.h"
+#include "ili9341/image.h"
 
 using namespace std;
 
@@ -24,27 +20,12 @@ using namespace std;
 int main()
 {
     stdio_init_all();
-    time_init();
 
     #ifdef PICO_GAME_DEBUG
     multicore_reset_core1();
     #endif
 
     sleep_ms(2000);
-
-    ili9341_config = {
-	.port = spi1,
-	.pin_miso = 6,
-	.pin_cs = 9,
-	.pin_sck = 14,
-	.pin_mosi = 15,
-	.pin_reset = 10,
-	.pin_dc = 13
-    };
-
-    printf("Init\n");
-    ili9341_init();
-    mode2_init();
 
     printf("now to init the sd card\n");
 
@@ -54,6 +35,7 @@ int main()
     int8_t y_direction = 1;
 
     Image ball;
+    Screen current_screen;
     ball.LoadImage("test_circle.bin");
 
     while(1){
@@ -69,9 +51,10 @@ int main()
         pixel_y = (pixel_y + 54) % 280;
         pixel_color = (pixel_color + 10) % 0xFFFF;*/
 
-        ball.ReadIntoBuffer(x,y,ILI9341_TFTWIDTH,ILI9341_TFTHEIGHT);
+        //ball.ReadIntoBuffer(x,y,ILI9341_TFTWIDTH,ILI9341_TFTHEIGHT);
 
-        mode2_render();
+        current_screen.ClearScreen(0xFA00);
+        current_screen.Render();
 
         /*x += 10*x_direction;
         y += 15*y_direction;

@@ -4,7 +4,7 @@
 #include <hardware/flash.h>
 #include <string.h>
 
-#include "mode2.h"
+//#include "mode2.h"
 #include "image.h"
 #include "ff.h"
 #include "f_util.h"
@@ -111,21 +111,4 @@ void Image::LoadImage(const char* filename){
 
     f_close(&fil);
     f_unmount(pSD->pcName);
-}
-
-void Image::ReadIntoBuffer(uint16_t x, uint16_t y, uint16_t buffer_width, uint16_t buffer_height){
-    //uint16_t line_pixels = width;
-    //uint8_t* line = (uint8_t*)malloc(width);
-
-    // Set the flash offset
-    uint offset = XIP_BASE + FLASH_TARGET_OFFSET;
-
-    for(int index=0; index<height; ++index){
-        mode2_draw_line(x,y+index,(uint8_t*)offset,width*2);
-
-        // Mulitply by 2 since there are 16bpp.
-        offset += width*2;
-    }
-
-    //free(line);
 }

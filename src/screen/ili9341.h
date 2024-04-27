@@ -2,8 +2,8 @@
 #define _ILI9341_H
 
 #include <stdint.h>
-#include "pico/stdlib.h"
-#include "hardware/spi.h"
+#include <pico/stdlib.h>
+#include <hardware/spi.h>
 
 #ifdef __cplusplus
 extern "C" {
