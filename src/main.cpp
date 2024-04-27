@@ -34,40 +34,29 @@ int main()
     int8_t x_direction = 1;
     int8_t y_direction = 1;
 
-    Image ball;
+    //Image ball;
     Screen current_screen;
-    ball.LoadImage("test_circle.bin");
+    //ball.LoadImage("test_circle.bin");
+
+    uint16_t background_color = ConvertColor565(255,0,0);
 
     while(1){
-        /*mode2_clear();
-        mode2_rect(x,40,40,80,0xFFFF);
-        mode2_draw_pixel(pixel_x,pixel_y,pixel_color);
-        mode2_render();
-
-        x+=1;
-        x = x%280;
-
-        pixel_x = (pixel_x + 27) % 280;
-        pixel_y = (pixel_y + 54) % 280;
-        pixel_color = (pixel_color + 10) % 0xFFFF;*/
-
-        //ball.ReadIntoBuffer(x,y,ILI9341_TFTWIDTH,ILI9341_TFTHEIGHT);
-
-        current_screen.ClearScreen(0xFA00);
+        current_screen.ClearScreen(background_color);
+        current_screen.DrawRectangle(x,y,x+50,y+50);
+        current_screen.DrawLine(0,0,current_screen.GetWidth(),current_screen.GetHeight(),ConvertColor565(0,0,255));
+        current_screen.DrawLine(0,100,100,100,0xffff);
+        current_screen.DrawCircle(120,160,50,0xffff);
         current_screen.Render();
 
-        /*x += 10*x_direction;
-        y += 15*y_direction;
-
-        if (x < 0 || x > (ILI9341_TFTWIDTH-32)){
+        x += 10 * x_direction;
+        if(x+50 > current_screen.GetWidth()){
+            x = current_screen.GetWidth() - 50;
+            x_direction *= -1;
+        } else if(x < 0){
+            x = 0;
             x_direction *= -1;
         }
-
-        if (y < 0 || y > (ILI9341_TFTHEIGHT-32)){
-            y_direction *= -1;
-        }*/
     }
-
 
     return 0;
 }
