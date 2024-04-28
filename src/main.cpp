@@ -11,7 +11,7 @@
 #include <pico/multicore.h>
 
 #include "screen/screen.h"
-#include "ili9341/image.h"
+#include "screen/image.h"
 
 using namespace std;
 
@@ -34,18 +34,20 @@ int main()
     int8_t x_direction = 1;
     int8_t y_direction = 1;
 
-    //Image ball;
+    Image ball;
     Screen current_screen;
-    //ball.LoadImage("test_circle.bin");
+    ball.LoadImage("test_circle.bin");
 
     uint16_t background_color = ConvertColor565(255,0,0);
 
     while(1){
         current_screen.ClearScreen(background_color);
-        current_screen.DrawRectangle(x,y,x+50,y+50);
+        current_screen.DrawRectangle(x,75,x+50,150);
         current_screen.DrawLine(0,0,current_screen.GetWidth(),current_screen.GetHeight(),ConvertColor565(0,0,255));
         current_screen.DrawLine(0,100,100,100,0xffff);
-        current_screen.DrawCircle(120,160,50,0xffff);
+        current_screen.DrawCircle(120,160,100,0xffff,false);
+        current_screen.DrawCircle(120,160,50,0xff07,true);
+        current_screen.DrawImage(110,y,&ball);
         current_screen.Render();
 
         x += 10 * x_direction;
@@ -55,6 +57,15 @@ int main()
         } else if(x < 0){
             x = 0;
             x_direction *= -1;
+        }
+
+        y += 10 *y_direction;
+        if(y+50 > current_screen.GetHeight()){
+            y = current_screen.GetHeight() - 50;
+            y_direction *= -1;
+        } else if (y< 0){
+            y=0;
+            y_direction *= -1;
         }
     }
 

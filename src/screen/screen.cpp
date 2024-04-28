@@ -6,6 +6,7 @@
 
 #include "screen.h"
 #include "ili9341.h"
+#include "image.h"
 
 uint16_t ConvertColor565(uint8_t r, uint8_t g, uint8_t b){
 	// Reminder pico is little endian
@@ -42,6 +43,10 @@ uint16_t Screen::GetWidth(){
 
 uint16_t Screen::GetHeight(){
 	return height;
+}
+
+int Screen::GetPosition(int x, int y){
+	return y*width + x;
 }
 
 void Screen::ClearScreen(uint16_t color){
@@ -103,40 +108,49 @@ void Screen::DrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16
     } 
 }
 
-void Screen::PlotCirclePoints(uint16_t xc, uint16_t yc, uint16_t x, uint16_t y, uint16_t color){
-	screen_buffer[(yc+y)*width + (xc+x)] = color;
-	screen_buffer[(yc+y)*width + (xc-x)] = color;
-	screen_buffer[(yc-y)*width + (xc+x)] = color;
-	screen_buffer[(yc-y)*width + (xc-x)] = color;
-	screen_buffer[(yc+x)*width + (xc+y)] = color;
-	screen_buffer[(yc+x)*width + (xc-y)] = color;
-	screen_buffer[(yc-x)*width + (xc+y)] = color;
-	screen_buffer[(yc-x)*width + (xc-y)] = color;
-}
+// https://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm#C
+void Screen::DrawCircle(int xc, int yc, int radius, uint16_t color, bool fill){
+	int f = 1 - radius;
+	int ddF_x = 0;
+	int ddF_y = -2 * radius;
+	int x = 0;
+	int y = radius;
 
-void Screen::DrawCircle(uint16_t xc, uint16_t yc, uint16_t radius, uint16_t color, bool fill){
-	uint16_t x = 0, y = radius;
-    uint16_t d = 3 - 2 * radius;
-    PlotCirclePoints(xc, yc, x, y,color);
-    while (y >= x)
-    {
-        // for each pixel we will
-        // draw all eight pixels
-        
-        x++;
+	// Plot initial pixels (0,90,180,270)
+	if(fill){
+		DrawLine(xc-radius, yc,xc+radius,yc,color);
+	} else {
+		screen_buffer[GetPosition(xc, yc+radius)] = color;
+		screen_buffer[GetPosition(xc, yc-radius)] = color;
+		screen_buffer[GetPosition(xc+radius, yc)] = color;
+		screen_buffer[GetPosition(xc-radius, yc)] = color;
+	}
 
-        // check for decision parameter
-        // and correspondingly 
-        // update d, x, y
-        if (d > 0)
-        {
-            y--; 
-            d = d + 4 * (x - y) + 10;
-        }
-        else
-            d = d + 4 * x + 6;
-        PlotCirclePoints(xc, yc, x, y,color);
-    }
+	while(x < y){
+		if(f >= 0){
+			y--;
+			ddF_y += 2;
+			f += ddF_y;
+		}
+		x++;
+		ddF_x += 2;
+		f += ddF_x + 1;
+		if(fill){
+			DrawLine(xc-x,yc+y,xc+x,yc+y,color);
+			DrawLine(xc-x,yc-y,xc+x,yc-y,color);
+			DrawLine(xc-y,yc+x,xc+y,yc+x,color);
+			DrawLine(xc-y,yc-x,xc+y,yc-x,color);
+		} else {
+			screen_buffer[GetPosition(xc+x, yc+y)] = color;
+			screen_buffer[GetPosition(xc-x,yc+y)] = color;
+			screen_buffer[GetPosition(xc+x,yc-y)] = color;
+			screen_buffer[GetPosition(xc-x,yc-y)] = color;
+			screen_buffer[GetPosition(xc+y,yc+x)] = color;
+			screen_buffer[GetPosition(xc-y, yc+x)] = color;
+			screen_buffer[GetPosition(xc+y,yc-x)] = color;
+			screen_buffer[GetPosition(xc-y,yc-x)] = color;
+		}
+	}
 }
 
 void Screen::DrawRectangle(uint16_t start_x, uint16_t start_y, uint16_t end_x, uint16_t end_y, uint16_t color, bool fill){
@@ -145,16 +159,34 @@ void Screen::DrawRectangle(uint16_t start_x, uint16_t start_y, uint16_t end_x, u
 	uint16_t y1 = start_y < 0 ? 0 : start_y;
 	uint16_t y2 = end_y >= height ? height-1 : end_y;*/
 
-	for(int y=start_y; y<end_y; ++y){
-		for(int x=start_x; x<end_x; ++x){
-			int pixel = y*width + x;
-			screen_buffer[pixel] = color;
+	// Filled Rectangle
+	if(fill){
+		for(int y=start_y; y<end_y; ++y){
+			for(int x=start_x; x<end_x; ++x){
+				screen_buffer[GetPosition(x,y)] = color;
+			}
 		}
+	} else{
+		// Not filled
+		DrawLine(start_x, start_y, end_x, start_y, color);
+		DrawLine(end_x, start_y, end_x, end_y, color);
+		DrawLine(start_x, end_y, end_x, end_y, color);
+		DrawLine(start_x, start_y,start_x, end_y, color);
 	}
 }
 
-void Screen::DrawImage(uint16_t x, uint16_t y/*image*/){
+void Screen::DrawImage(uint16_t xs, uint16_t ys, Image* p_image){
+	uint8_t* offset = p_image->GetImageOffset();
+	uint8_t current_pixel;
 
+	for(int y=0; y<p_image->GetHeight(); ++y){
+		for(int x=0; x<p_image->GetWidth(); x+=2){
+			current_pixel = (uint8_t)(*offset);
+			screen_buffer[GetPosition(xs+x,ys+y)] = p_image->GetPaletteColor(current_pixel >> 4);
+			screen_buffer[GetPosition(xs+x+1,ys+y)] = p_image->GetPaletteColor(current_pixel >> 0xf);
+			offset++;
+		}
+	}
 }
 
 void Screen::Render(){

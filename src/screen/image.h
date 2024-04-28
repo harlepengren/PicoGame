@@ -15,14 +15,16 @@ class Image{
         uint16_t num_colors;
         uint8_t* image;
         FIL fil;
-        //FILE* fp;
-        uint32_t image_position;
         uint16_t height;
         uint16_t width;
 
     public:
         ~Image();
+        uint16_t GetHeight();
+        uint16_t GetWidth();
+        uint8_t* GetImageOffset();
         void LoadImage(const char* filename);
+        uint16_t GetPaletteColor(uint8_t index);
         void ReadIntoBuffer(uint16_t x, uint16_t y, uint16_t buffer_width, uint16_t buffer_height);
 };
 

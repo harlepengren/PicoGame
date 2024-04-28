@@ -9,7 +9,7 @@ pico_sdk_init()
 add_subdirectory(FatFs_SPI build)
 add_subdirectory(screen)
 
-add_executable(${PROJECT} main.cpp hw_config.c setup.cpp ili9341/image.cpp)
+add_executable(${PROJECT} main.cpp hw_config.c setup.cpp)
 
 #target_include_directories(${PROJECT} PRIVATE ${CMAKE_SOURCE_DIR}/ili9341)
 

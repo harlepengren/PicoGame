@@ -2,6 +2,7 @@
 #define SCREEN_H
 
 #include "ili9341.h"
+#include "image.h"
 
 #define SIZE (ILI9341_TFTHEIGHT*ILI9341_TFTWIDTH)
 
@@ -18,11 +19,12 @@ class Screen{
         ~Screen();
         uint16_t GetWidth();
         uint16_t GetHeight();
+        int GetPosition(int x, int y);
         void ClearScreen(uint16_t color=0);
         void DrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color=0xffff);
-        void DrawCircle(uint16_t xc, uint16_t yc, uint16_t radius, uint16_t color=0xffff, bool fill=true);
+        void DrawCircle(int xc, int yc, int radius, uint16_t color=0xffff, bool fill=true);
         void DrawRectangle(uint16_t start_x, uint16_t start_y, uint16_t end_x, uint16_t end_y, uint16_t color=0xffff, bool fill=true);
-        void DrawImage(uint16_t x, uint16_t y/*image*/);
+        void DrawImage(uint16_t xs, uint16_t ys, Image* p_image);
         void Render();
 };
 
