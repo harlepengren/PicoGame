@@ -8,12 +8,14 @@ pico_sdk_init()
 
 add_subdirectory(FatFs_SPI build)
 add_subdirectory(screen)
+add_subdirectory(input)
 
 add_executable(${PROJECT} main.cpp hw_config.c setup.cpp)
 
 #target_include_directories(${PROJECT} PRIVATE ${CMAKE_SOURCE_DIR}/ili9341)
 
-target_link_libraries(${PROJECT} pico_stdlib hardware_spi hardware_flash pico_malloc pico_mem_ops pico_multicore FatFs_SPI screen)
+target_link_libraries(${PROJECT} pico_stdlib hardware_spi hardware_flash 
+    pico_malloc pico_mem_ops pico_multicore FatFs_SPI screen input)
 
 pico_set_program_name(${PROJECT} "PicoGame")
 pico_set_program_version(${PROJECT} "0.1")

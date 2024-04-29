@@ -1,21 +1,29 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-enum button{a_button, b_button, home_button};
+#include <vector>
+
+#define A_BUTTON 5
+#define B_BUTTON 6
+#define SELECT_BUTTON 7
+
+enum button{a_button, b_button, select_button};
+enum event_type{button_down, button_up};
+
+struct InputEvent{
+    button inputButton;         // Button that this event applies to
+    event_type event;           // Event to look for (button up/button down)
+    void* callbackFunction;     // Function to call when event occurs
+};
 
 class Input{
     private:
-        // Callback functions
-        void* a_button_func;
-        void* b_button_func;
-        void* home_button_func;
-
-        uint8_t button_status;
-        uint8_t button_change;
+        std::vector<InputEvent*> eventList;
 
     public:
-        void SetCallBack(button target_button, void* callbackFunction);
-
+        Input();
+        void AddCallback(button inputButton, event_type event, void* callbackFunction);
+        void RemoveCallBack(button inputButton, event_type event);
 };
 
 #endif
