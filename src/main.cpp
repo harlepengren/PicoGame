@@ -12,10 +12,15 @@
 
 #include "screen/screen.h"
 #include "screen/image.h"
+#include "input/input.h"
 
 using namespace std;
 
 #define PICO_GAME_DEBUG
+
+void ButtonCallback(){
+    printf("Button pressed!\n");
+}
 
 int main()
 {
@@ -40,7 +45,16 @@ int main()
 
     uint16_t background_color = ConvertColor565(255,0,0);
 
+    Input controller;
+    //controller.AddCallback(A,button_down,(void*)ButtonCallback);
+
     while(1){
+        // Process Inputs
+        controller.ProcessInputs();
+        if(controller.GetButtonDown(BUTTON_A)){
+            ButtonCallback();
+        }
+
         current_screen.ClearScreen(background_color);
         current_screen.DrawRectangle(x,75,x+50,150);
         current_screen.DrawLine(0,0,current_screen.GetWidth(),current_screen.GetHeight(),ConvertColor565(0,0,255));

@@ -1,41 +1,53 @@
 #include <vector>
+#include <stdio.h>
+
 #include <hardware/gpio.h>
+#include <pico/stdlib.h>
 
 #include "input.h"
 
 Input::Input(){
+    button_state = 0x0;
+    button_change = 0x0;
 
+    InitButton(GPIO_A_BUTTON);
+    InitButton(GPIO_B_BUTTON);
+    InitButton(GPIO_SELECT_BUTTON);    
 }
 
 Input::~Input(){
-    InputEvent* p_event;
-
-    while(eventList.size() > 0){
-        p_event = eventList.back();
-        delete p_event;
-        eventList.pop_back();
-    }
+    gpio_deinit(GPIO_A_BUTTON);
+    gpio_deinit(GPIO_B_BUTTON);
+    gpio_deinit(GPIO_SELECT_BUTTON);
 }
 
-void Input::AddCallback(button inputButton, event_type event, void* callbackFunction){
-    InputEvent* p_inputEvent = new InputEvent;
-    p_inputEvent->inputButton = inputButton;
-    p_inputEvent->event = event;
-    p_inputEvent->callbackFunction = callbackFunction;
-
-    eventList.push_back(p_inputEvent);
+void Input::InitButton(uint8_t button)
+{
+    gpio_init(button);
+    gpio_set_dir(button, GPIO_IN);
+    gpio_pull_up(button);
 }
 
-void Input::RemoveCallBack(button inputButton, event_type event){
-    InputEvent* p_event;
-
-    // Find the event
-    std::vector<InputEvent*>::iterator it;
-    for(it=eventList.begin(); it != eventList.end(); ++it){
-        p_event = *it;
-        if(p_event->inputButton == inputButton && p_event->event == event){
-            eventList.erase(it);
-            break;
-        }
+void Input::ProcessInputs()
+{
+    if(!gpio_get(GPIO_A_BUTTON)){
+        printf("A Button Down\n");
     }
+
+    uint8_t current_buttons = gpio_get(GPIO_A_BUTTON) | gpio_get(GPIO_B_BUTTON) | gpio_get(GPIO_SELECT_BUTTON);
+    button_change = current_buttons ^ button_state;
+    button_state = current_buttons;    
+}
+
+bool Input::GetButtonDown(uint8_t testButton) {
+    return (testButton & button_state & button_change) == testButton;
+}
+
+
+bool Input::GetButtonUp(uint8_t testButton){
+    return (testButton & button_state & !button_change) == 0;
+}
+
+bool Input::GetKey(uint8_t testButton){
+    return button_state & testButton == testButton;
 }

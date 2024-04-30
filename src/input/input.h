@@ -3,27 +3,33 @@
 
 #include <vector>
 
-#define A_BUTTON 5
-#define B_BUTTON 6
-#define SELECT_BUTTON 7
+#define GPIO_A_BUTTON 5
+#define GPIO_B_BUTTON 6
+#define GPIO_SELECT_BUTTON 7
 
-enum button{a_button, b_button, select_button};
-enum event_type{button_down, button_up};
+#define BUTTON_UP       0x0001
+#define BUTTON_DOWN     0x0002
+#define BUTTON_LEFT     0x0004
+#define BUTTON_RIGHT    0x0008
+#define BUTTON_A        0x0010
+#define BUTTON_B        0x0020
+#define BUTTON_HOME     0x0040
 
-struct InputEvent{
-    button inputButton;         // Button that this event applies to
-    event_type event;           // Event to look for (button up/button down)
-    void* callbackFunction;     // Function to call when event occurs
-};
-
+// This class should be a singleton
 class Input{
     private:
-        std::vector<InputEvent*> eventList;
+        uint8_t button_state;
+        uint8_t button_change;
+
+        void InitButton(uint8_t button);
 
     public:
         Input();
-        void AddCallback(button inputButton, event_type event, void* callbackFunction);
-        void RemoveCallBack(button inputButton, event_type event);
+        ~Input();
+        void ProcessInputs();
+        bool GetButtonDown(uint8_t testButton);  // Button was pressed during the frame
+        bool GetButtonUp(uint8_t testButton);    // Button was released during the frame
+        bool GetKey(uint8_t testButton);         // Button is currently down
 };
 
 #endif
