@@ -9,6 +9,7 @@
 #include <pico/time.h>
 #include <hardware/spi.h>
 #include <pico/multicore.h>
+#include <hardware/timer.h>
 
 #include "screen/screen.h"
 #include "screen/image.h"
@@ -48,38 +49,48 @@ int main()
     Input controller;
     //controller.AddCallback(A,button_down,(void*)ButtonCallback);
 
+    uint64_t current_time = time_us_64();
+    uint16_t fixed_time_update = 33333;     // 1e6/30 - fixes the framerate at 30 fps
+
+    bool first = true;
+
     while(1){
-        // Process Inputs
-        controller.ProcessInputs();
-        if(controller.GetButtonDown(BUTTON_A)){
-            ButtonCallback();
-        }
+        if(time_us_64() > current_time + fixed_time_update){
+            current_time = time_us_64();
+            // Process Inputs
+            controller.ProcessInputs();
 
-        current_screen.ClearScreen(background_color);
-        current_screen.DrawRectangle(x,75,x+50,150);
-        current_screen.DrawLine(0,0,current_screen.GetWidth(),current_screen.GetHeight(),ConvertColor565(0,0,255));
-        current_screen.DrawLine(0,100,100,100,0xffff);
-        current_screen.DrawCircle(120,160,100,0xffff,false);
-        current_screen.DrawCircle(120,160,50,0xff07,true);
-        current_screen.DrawImage(110,y,&ball);
-        current_screen.Render();
+            current_screen.ClearScreen(background_color);
+            current_screen.DrawRectangle(x,75,x+50,150);
+            current_screen.DrawLine(0,0,current_screen.GetWidth(),current_screen.GetHeight(),ConvertColor565(0,0,255));
+            current_screen.DrawLine(0,100,100,100,0xffff);
+            current_screen.DrawCircle(120,160,100,0xffff,false);
+            current_screen.DrawCircle(120,160,50,0xff07,true);
+            current_screen.DrawImage(110,y,&ball);
+            current_screen.Render();
 
-        x += 10 * x_direction;
-        if(x+50 > current_screen.GetWidth()){
-            x = current_screen.GetWidth() - 50;
-            x_direction *= -1;
-        } else if(x < 0){
-            x = 0;
-            x_direction *= -1;
-        }
+            x += 10 * x_direction;
+            if(x+50 > current_screen.GetWidth()){
+                x = current_screen.GetWidth() - 50;
+                x_direction *= -1;
+            } else if(x < 0){
+                x = 0;
+                x_direction *= -1;
+            }
 
-        y += 10 *y_direction;
-        if(y+50 > current_screen.GetHeight()){
-            y = current_screen.GetHeight() - 50;
-            y_direction *= -1;
-        } else if (y< 0){
-            y=0;
-            y_direction *= -1;
+            y += 10 *y_direction;
+            if(y+50 > current_screen.GetHeight()){
+                y = current_screen.GetHeight() - 50;
+                y_direction *= -1;
+            } else if (y< 0){
+                y=0;
+                y_direction *= -1;
+            }
+
+            if(first){
+                first = false;
+                printf("%llu microseconds\n",time_us_64() - current_time);
+            }
         }
     }
 

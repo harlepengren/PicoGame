@@ -14,7 +14,7 @@ add_executable(${PROJECT} main.cpp hw_config.c setup.cpp)
 
 #target_include_directories(${PROJECT} PRIVATE ${CMAKE_SOURCE_DIR}/ili9341)
 
-target_link_libraries(${PROJECT} pico_stdlib hardware_spi hardware_flash 
+target_link_libraries(${PROJECT} pico_stdlib hardware_spi hardware_flash hardware_timer
     pico_malloc pico_mem_ops pico_multicore FatFs_SPI screen input)
 
 pico_set_program_name(${PROJECT} "PicoGame")
