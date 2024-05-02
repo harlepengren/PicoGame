@@ -47,12 +47,9 @@ int main()
     uint16_t background_color = ConvertColor565(255,0,0);
 
     Input controller;
-    //controller.AddCallback(A,button_down,(void*)ButtonCallback);
 
     uint64_t current_time = time_us_64();
     uint16_t fixed_time_update = 33333;     // 1e6/30 - fixes the framerate at 30 fps
-
-    bool first = true;
 
     while(1){
         if(time_us_64() > current_time + fixed_time_update){
@@ -87,10 +84,15 @@ int main()
                 y_direction *= -1;
             }
 
-            if(first){
-                first = false;
-                printf("%llu microseconds\n",time_us_64() - current_time);
+            if(controller.GetKey(BUTTON_A)){
+                background_color += 5;
+                printf("Color: %n", background_color);
+                
+                if(background_color >= 0xfff0){
+                    background_color = 0;
+                }
             }
+
         }
     }
 
