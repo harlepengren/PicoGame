@@ -93,8 +93,8 @@ void Image::LoadImage(const char* filename){
         offset += bytes_read;
     }
 
-    printf("Done Reading: %08x",offset);
-    printf("====================================================");
+    printf("Done Reading: %08x\n",offset);
+    printf("====================================\n");
 
     f_close(&fil);
     f_unmount(pSD->pcName);
