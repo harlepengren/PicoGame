@@ -15,6 +15,8 @@
 #define BUTTON_B        0x0020
 #define BUTTON_HOME     0x0040
 
+
+
 // This class should be a singleton
 class Input{
     private:
