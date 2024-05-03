@@ -17,6 +17,9 @@ class Image{
         FIL fil;
         uint16_t height;
         uint16_t width;
+        uint image_offset;
+
+        static uint GetNextOffset();
 
     public:
         ~Image();

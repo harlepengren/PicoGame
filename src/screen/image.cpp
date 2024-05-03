@@ -4,12 +4,17 @@
 #include <hardware/flash.h>
 #include <string.h>
 
-//#include "mode2.h"
 #include "image.h"
 #include "ff.h"
 #include "f_util.h"
 #include "sd_card.h"
 #include "hw_config.h"
+
+uint Image::GetNextOffset(){
+    static uint offset = FLASH_TARGET_OFFSET;
+
+    return offset;
+}
 
 Image::~Image(){
     if(&fil != NULL){
@@ -43,7 +48,6 @@ void Image::LoadImage(const char* filename){
     printf("Number of SD cards: %i\n", sd_get_num());
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
-    printf("Check config file: %i\n", pSD->ss_gpio);
     
     FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
     if (FR_OK!=fr) {
@@ -71,8 +75,8 @@ void Image::LoadImage(const char* filename){
     palette = (uint16_t*)malloc(sizeof(uint16_t)*num_colors);
     fr = f_read(&fil,palette,sizeof(uint16_t)*num_colors,&bytes_read);
 
-    offset = FLASH_TARGET_OFFSET;
-    image = (uint8_t*)(XIP_BASE + FLASH_TARGET_OFFSET);
+    offset = GetNextOffset();
+    image = (uint8_t*)(XIP_BASE + offset);
 
     printf("Reading the image data:%08x\n",offset);
     printf("====================================\n");
