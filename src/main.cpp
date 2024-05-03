@@ -84,15 +84,6 @@ int main()
                 y_direction *= -1;
             }
 
-            if(controller.GetKey(BUTTON_A)){
-                background_color += 5;
-                printf("Color: %n", background_color);
-                
-                if(background_color >= 0xfff0){
-                    background_color = 0;
-                }
-            }
-
         }
     }
 
