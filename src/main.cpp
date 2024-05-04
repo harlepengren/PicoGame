@@ -44,6 +44,9 @@ int main()
     Screen current_screen;
     ball.LoadImage("test_circle.bin");
 
+    Image magenta;
+    magenta.LoadImage("magenta.bin");
+
     uint16_t background_color = ConvertColor565(255,0,0);
 
     Input controller;
@@ -64,6 +67,7 @@ int main()
             current_screen.DrawCircle(120,160,100,0xffff,false);
             current_screen.DrawCircle(120,160,50,0xff07,true);
             current_screen.DrawImage(110,y,&ball);
+            current_screen.DrawImage(10,10,&magenta);
             current_screen.Render();
 
             x += 10 * x_direction;

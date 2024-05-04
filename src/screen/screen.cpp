@@ -176,15 +176,18 @@ void Screen::DrawRectangle(uint16_t start_x, uint16_t start_y, uint16_t end_x, u
 }
 
 void Screen::DrawImage(uint16_t xs, uint16_t ys, Image* p_image){
-	uint8_t* offset = p_image->GetImageOffset();
+	uint8_t* current_offset = p_image->GetImageOffset();
 	uint8_t current_pixel;
 
 	for(int y=0; y<p_image->GetHeight(); ++y){
 		for(int x=0; x<p_image->GetWidth(); x+=2){
-			current_pixel = (uint8_t)(*offset);
-			screen_buffer[GetPosition(xs+x,ys+y)] = p_image->GetPaletteColor(current_pixel >> 4);
-			screen_buffer[GetPosition(xs+x+1,ys+y)] = p_image->GetPaletteColor(current_pixel >> 0xf);
-			offset++;
+			if((uint8_t)(*current_offset) != 0)
+			{
+				current_pixel = (uint8_t)(*current_offset);
+				screen_buffer[GetPosition(xs+x,ys+y)] = p_image->GetPaletteColor(current_pixel >> 4);
+				screen_buffer[GetPosition(xs+x+1,ys+y)] = p_image->GetPaletteColor(current_pixel & 0xf);
+			}
+			current_offset++;
 		}
 	}
 }

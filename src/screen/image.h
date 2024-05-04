@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "hardware/flash.h"
+#include <hardware/flash.h>
+
 #include "ff.h"
 
 #ifndef IMAGE_H
@@ -18,8 +19,8 @@ class Image{
         uint16_t height;
         uint16_t width;
         uint image_offset;
-
-        static uint GetNextOffset();
+        uint16_t alpha;
+        static inline uint offset = FLASH_TARGET_OFFSET;
 
     public:
         ~Image();

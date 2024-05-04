@@ -10,12 +10,6 @@
 #include "sd_card.h"
 #include "hw_config.h"
 
-uint Image::GetNextOffset(){
-    static uint offset = FLASH_TARGET_OFFSET;
-
-    return offset;
-}
-
 Image::~Image(){
     if(&fil != NULL){
         f_close(&fil);
@@ -43,7 +37,6 @@ void Image::LoadImage(const char* filename){
     UINT bytes_read=0;
     uint8_t buffer[FLASH_SECTOR_SIZE];
     int read_len = FLASH_SECTOR_SIZE;
-    uint offset;
 
     printf("Number of SD cards: %i\n", sd_get_num());
     // Get pointer to SD card image
@@ -74,11 +67,11 @@ void Image::LoadImage(const char* filename){
 
     palette = (uint16_t*)malloc(sizeof(uint16_t)*num_colors);
     fr = f_read(&fil,palette,sizeof(uint16_t)*num_colors,&bytes_read);
+    alpha = palette[0];
 
-    offset = GetNextOffset();
     image = (uint8_t*)(XIP_BASE + offset);
 
-    printf("Reading the image data:%08x\n",offset);
+    printf("Storing this image at: %08x\n",image);
     printf("====================================\n");
 
     while(!done){
@@ -94,7 +87,7 @@ void Image::LoadImage(const char* filename){
         flash_range_program(offset,(const uint8_t*)buffer,bytes_read);
         restore_interrupts(interrupts);
 
-        offset += bytes_read;
+        offset += FLASH_SECTOR_SIZE;
     }
 
     printf("Done Reading: %08x\n",offset);
