@@ -69,6 +69,12 @@ void Image::LoadImage(const char* filename){
     fr = f_read(&fil,palette,sizeof(uint16_t)*num_colors,&bytes_read);
     alpha = palette[0];
 
+    // Palette in file is little endian, but screen is big endian, so we need to flip the bytes
+    for(int palette_index=0; palette_index<num_colors; ++palette_index){
+        uint16_t current_color = palette[palette_index];
+        palette[palette_index] = ((current_color & 0xff) << 8) | (current_color >> 8);
+    }
+
     image = (uint8_t*)(XIP_BASE + offset);
 
     printf("Storing this image at: %08x\n",image);
