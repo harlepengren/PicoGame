@@ -1,3 +1,5 @@
+#include "py/runtime.h"
+
 #include "picogame.h"
 
 #include "screen/screen.h"
