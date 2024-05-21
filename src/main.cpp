@@ -5,7 +5,6 @@
 #include <stdio.h>
 
 #include <pico/stdio.h>
-#include <pico/stdlib.h>
 #include <pico/time.h>
 #include <hardware/spi.h>
 #include <pico/multicore.h>
