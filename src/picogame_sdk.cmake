@@ -14,7 +14,6 @@ add_subdirectory(input)
 add_library(${PROJECT} INTERFACE)
 
 target_sources(${PROJECT} INTERFACE hw_config.c setup.cpp)
-#add_executable(${PROJECT} main.cpp hw_config.c setup.cpp)
 
 target_link_libraries(${PROJECT} INTERFACE pico_stdlib hardware_spi hardware_flash hardware_timer
     pico_malloc pico_mem_ops pico_multicore FatFs_SPI screen input)
