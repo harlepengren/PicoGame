@@ -1,4 +1,4 @@
-set(PROJECT PicoGame)
+set(PROJECT PicoGame_sdk)
 cmake_minimum_required(VERSION 3.15)
 
 include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
