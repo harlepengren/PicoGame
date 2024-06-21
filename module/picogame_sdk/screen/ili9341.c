@@ -75,7 +75,9 @@ inline void ili9341_stop_writing() {
 void ili9341_init() {
     // This example will use SPI0 at 0.5MHz.
     spi_init(ili9341_config.port, 500 * 1000);
-    int baudrate = spi_set_baudrate(ili9341_config.port, 75000 * 1000);
+    // The function below sets the baud rate. It returns the actual baudrate. We should do
+    // something with it, but since I don't, I am avoiding the unused variable error.
+    /*int baudrate = */spi_set_baudrate(ili9341_config.port, 75000 * 1000);
 
     gpio_set_function(ili9341_config.pin_miso, GPIO_FUNC_SPI);
     gpio_set_function(ili9341_config.pin_sck, GPIO_FUNC_SPI);

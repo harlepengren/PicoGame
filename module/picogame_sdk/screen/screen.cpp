@@ -2,11 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <pico/mem_ops.h>
+#include "pico/stdlib.h"
+#include "pico/types.h"
+//#include "pico/mem_ops.h"
 
 #include "screen.h"
 #include "ili9341.h"
-#include "image.h"
+//#include "image.h"
 
 uint16_t ConvertColor565(uint8_t r, uint8_t g, uint8_t b){
 	// Reminder pico is little endian
@@ -175,7 +177,7 @@ void Screen::DrawRectangle(uint16_t start_x, uint16_t start_y, uint16_t end_x, u
 	}
 }
 
-void Screen::DrawImage(uint16_t xs, uint16_t ys, Image* p_image){
+/*void Screen::DrawImage(uint16_t xs, uint16_t ys, Image* p_image){
 	uint8_t* current_offset = p_image->GetImageOffset();
 	uint8_t current_pixel;
 
@@ -190,7 +192,7 @@ void Screen::DrawImage(uint16_t xs, uint16_t ys, Image* p_image){
 			current_offset++;
 		}
 	}
-}
+}*/
 
 void Screen::Render(){
     ili9341_start_writing();
