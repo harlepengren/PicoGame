@@ -10,6 +10,11 @@
 #include "ili9341.h"
 //#include "image.h"
 
+uint16_t swap_uint16( uint16_t val ) 
+{
+	return (val << 8) | (val >> 8 );
+}
+
 uint16_t ConvertColor565(uint8_t r, uint8_t g, uint8_t b){
 	// Reminder pico is little endian
 	uint16_t color = (r & 0xf8) << 8 | (g & 0xfc) << 3 | b >> 3;
@@ -46,7 +51,9 @@ int GetPosition(Screen* screen, int x, int y){
 	return y*screen->width + x;
 }
 
-void ClearScreen(Screen* screen, uint16_t color){
+void ClearScreen(Screen* screen, uint16_t color_in){
+	uint16_t color = swap_uint16(color_in);
+
 	if(color == 0){
 		memset(screen->screen_buffer, color, SIZE*sizeof(uint16_t));
 	} else {
