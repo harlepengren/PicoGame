@@ -4,6 +4,8 @@ extern "C" {
 
 #include "pico/stdlib.h"
 
+typedef
+
 void* CreatePicoScreen();
 uint16_t GetWidth(void* screen);
 uint16_t GetHeight(void* screen);

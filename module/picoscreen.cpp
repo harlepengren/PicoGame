@@ -1,11 +1,12 @@
 #include <stdarg.h>
+#include <stdlib.h>
 
 #include "picoscreen.h"
 #include "picogame_sdk/screen/screen.h"
 
+
 void* CreatePicoScreen(){
     Screen* current_screen = new Screen();
-
     return current_screen;
 }
 
