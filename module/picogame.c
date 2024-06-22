@@ -17,7 +17,7 @@ static mp_obj_t clear_screen(mp_obj_t self_in, mp_obj_t color_in){
 	PicoScreen_obj_t* self = MP_OBJ_TO_PTR(self_in);
 	int color = mp_obj_get_int(color_in);
 
-	ClearScreen(&(self->screen),0xffc0);
+	ClearScreen(&(self->screen),color);
 
 	return mp_const_none;
 }
@@ -37,6 +37,15 @@ static mp_obj_t get_height(mp_obj_t self_in){
 }
 static MP_DEFINE_CONST_FUN_OBJ_1(pico_getheight_obj, get_height);
 
+static mp_obj_t render(mp_obj_t self_in){
+	PicoScreen_obj_t* self = MP_OBJ_TO_PTR(self_in);
+
+	Render(&(self->screen));
+
+	return 	mp_const_none;
+}
+static MP_DEFINE_CONST_FUN_OBJ_1(pico_render_obj, render);
+
 static mp_obj_t PicoScreen_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
 	PicoScreen_obj_t *self = mp_obj_malloc(PicoScreen_obj_t,type);
 	CreateScreen(&(self->screen));
@@ -48,6 +57,7 @@ static const mp_rom_map_elem_t PicoScreen_locals_dict_table[] = {
 	{ MP_ROM_QSTR(MP_QSTR_clear_screen), MP_OBJ_FROM_PTR(&pico_clearscreen_obj) },
 	{ MP_ROM_QSTR(MP_QSTR_get_width), MP_OBJ_FROM_PTR(&pico_getwidth_obj) },
 	{ MP_ROM_QSTR(MP_QSTR_get_height), MP_OBJ_FROM_PTR(&pico_getheight_obj) },
+	{ MP_ROM_QSTR(MP_QSTR_render), MP_OBJ_FROM_PTR(&pico_render_obj) },
 };
 static MP_DEFINE_CONST_DICT(PicoScreen_locals_dict, PicoScreen_locals_dict_table);
 
