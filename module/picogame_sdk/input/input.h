@@ -1,7 +1,9 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include <vector>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define GPIO_A_BUTTON 5
 #define GPIO_B_BUTTON 6
@@ -15,23 +17,20 @@
 #define BUTTON_B        0x0020
 #define BUTTON_SELECT   0x0040
 
+typedef struct _Input{
+    uint8_t button_state;
+    uint8_t button_change;
+} Input;
 
+void InitInput(Input* self);
+//void InitButton(Input* self, uint8_t button);
 
-// This class should be a singleton
-class Input{
-    private:
-        uint8_t button_state;
-        uint8_t button_change;
+void ProcessInputs(Input* self);
+bool GetButtonDown(Input* self, uint8_t testButton);  // Button was pressed during the frame
+bool GetButtonUp(Input* self, uint8_t testButton);    // Button was released during the frame
+bool GetKey(Input* self, uint8_t testButton);         // Button is currently down
 
-        void InitButton(uint8_t button);
-
-    public:
-        Input();
-        ~Input();
-        void ProcessInputs();
-        bool GetButtonDown(uint8_t testButton);  // Button was pressed during the frame
-        bool GetButtonUp(uint8_t testButton);    // Button was released during the frame
-        bool GetKey(uint8_t testButton);         // Button is currently down
-};
-
+#ifdef __cplusplus
+}
+#endif
 #endif
