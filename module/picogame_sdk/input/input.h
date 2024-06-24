@@ -25,7 +25,7 @@ typedef struct _Input{
 void InitInput(Input* self);
 //void InitButton(Input* self, uint8_t button);
 
-void ProcessInputs(Input* self);
+uint8_t ProcessInputs(Input* self);
 bool GetButtonDown(Input* self, uint8_t testButton);  // Button was pressed during the frame
 bool GetButtonUp(Input* self, uint8_t testButton);    // Button was released during the frame
 bool GetKey(Input* self, uint8_t testButton);         // Button is currently down

@@ -30,7 +30,7 @@ void InitInput(Input* self){
     gpio_deinit(GPIO_SELECT_BUTTON);
 }*/
 
-void ProcessInputs(Input* self)
+uint8_t ProcessInputs(Input* self)
 {
     uint8_t current_buttons;
     current_buttons = (!gpio_get(GPIO_A_BUTTON) << 4) | 
@@ -38,7 +38,9 @@ void ProcessInputs(Input* self)
                       (!gpio_get(GPIO_SELECT_BUTTON)) << 6;
 
     self->button_change = current_buttons ^ self->button_state;
-    self->button_state = current_buttons; 
+    self->button_state = current_buttons;
+
+    return current_buttons; 
 }
 
 bool GetButtonDown(Input* self, uint8_t testButton) {

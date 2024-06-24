@@ -142,9 +142,9 @@ typedef struct _PicoInput_obj_t {
 static mp_obj_t process_inputs(mp_obj_t self_in){
 	PicoInput_obj_t* self = MP_OBJ_TO_PTR(self_in);
 
-	ProcessInputs(&(self->input));
+	uint8_t result = ProcessInputs(&(self->input));
 
-	return 	mp_const_none;
+	return 	mp_obj_new_int(result);
 }
 
 static MP_DEFINE_CONST_FUN_OBJ_1(pico_processinputs_obj,process_inputs);
@@ -163,11 +163,21 @@ static mp_obj_t get_key(mp_obj_t self_in, mp_obj_t key_name_in){
 #define BUTTON_B        0x0020
 #define BUTTON_SELECT */
 
-	uint key = 0;
-	if(strcmp(key_str,"A_BUTTON")){
+	uint8_t key = 0;
+	if(strcmp(key_str,"A")==0){
 		key = BUTTON_A;
-	} else if(strcmp(key_str,"B_BUTTON")){
+	} else if(strcmp(key_str,"B")==0){
 		key = BUTTON_B;
+	} else if(strcmp(key_str,"UP")==0){
+		key = BUTTON_UP;
+	} else if(strcmp(key_str,"DOWN")==0){
+		key = BUTTON_DOWN;
+	} else if(strcmp(key_str,"LEFT")==0){
+		key = BUTTON_LEFT;
+	} else if(strcmp(key_str,"RIGHT")==0){
+		key = BUTTON_RIGHT;
+	} else if(strcmp(key_str,"SELECT")==0){
+		key = BUTTON_SELECT;
 	}
 
 	return mp_obj_new_bool(GetKey(&(self->input),key));
