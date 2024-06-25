@@ -5,9 +5,14 @@
 extern "C" {
 #endif
 
-#define GPIO_A_BUTTON 5
-#define GPIO_B_BUTTON 6
+#define GPIO_A_BUTTON 6
+#define GPIO_B_BUTTON 5
 #define GPIO_SELECT_BUTTON 7
+#define GPIO_DOWN_BUTTON 28
+#define GPIO_UP_BUTTON 22
+#define GPIO_RIGHT_BUTTON 27
+#define GPIO_LEFT_BUTTON 26
+
 
 #define BUTTON_UP       0x0001
 #define BUTTON_DOWN     0x0002
