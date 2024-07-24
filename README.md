@@ -38,7 +38,9 @@ Currently, there are two classes:
 - PicoScreen: handles screen drawing
 
 For example, to clear the screen with a blue background:
-`import PicoGame
+```
+import PicoGame
 screen = PicoGame.PicoScreen()
 screen.clear_screen(0x421d)
-screen.render()`
+screen.render()
+```
