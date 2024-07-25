@@ -44,3 +44,17 @@ screen = PicoGame.PicoScreen()
 screen.clear_screen(0x421d)
 screen.render()
 ```
+
+clear_screen takes one argument, which is the color to use to clear the screen. This is a 16 bit color. This is sometimes called 565, because it uses 5 bits for red and blue and 6 bits for green. I use [565 Color Picker](https://rgbcolorpicker.com/565) to get the hex value. However, if you prefer to convert a 24 bit color, you can use the following Python code with a tuple (r,g,b):
+
+```
+def convert_color(color):
+    """Convert from RGB to RGB565 hex. The input argument color is a tuple (R, G, B)"""
+    # note that because we are going from 24 bits to 16 bits, there will be significant color loss
+
+    red = ((color[0] >> 3) & 0x1f) << 11
+    green = ((color[2] >> 2) & 0x3f) << 5
+    blue = ((color[1] >> 3) & 0x1f)
+
+    return (red | green | blue)
+```
