@@ -34,6 +34,7 @@ Image* LoadImage(const char* filename){
 		return NULL;
 	}
 
+    FIL fil;
 	fr=f_open(&fil,filename,FA_READ);
 
     if(fr != FR_OK){
@@ -56,17 +57,17 @@ Image* LoadImage(const char* filename){
     uint pallette_size = sizeof(uint16_t)*p_image->num_colors;
     p_image->palette = (uint16_t*)malloc(pallette_size);
     fr = f_read(&fil,p_image->palette,pallette_size,&bytes_read);
-    alpha = p_image->palette[0];
+    p_image->alpha = p_image->palette[0];
 
     // Palette in file is little endian, but screen is big endian, so we need to flip the bytes
-    for(int palette_index=0; palette_index<num_colors; ++palette_index){
+    for(int palette_index=0; palette_index<p_image->num_colors; ++palette_index){
         uint16_t current_color = p_image->palette[palette_index];
         p_image->palette[palette_index] = ((current_color & 0xff) << 8) | (current_color >> 8);
     }
 
     p_image->image = (uint8_t*)(XIP_BASE + offset);
 
-    printf("Storing this image at: %08x\n",image);
+    printf("Storing this image at: %08x\n",p_image->image);
     printf("====================================\n");
 
     while(!done){
@@ -108,7 +109,7 @@ void CloseImage(Image* p_image){
 }
 
 uint16_t GetPaletteColor(Image* p_image, uint8_t index){
-    if(index < num_colors){
+    if(index < p_image->num_colors){
         return p_image->palette[index];
     }
     
