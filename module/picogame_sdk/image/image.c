@@ -67,7 +67,7 @@ Image* LoadImage(const char* filename){
 
     p_image->image = (uint8_t*)(XIP_BASE + offset);
 
-    printf("Storing this image at: %08x\n",p_image->image);
+    printf("Storing this image at: %08x\n",(uint*)p_image->image);
     printf("====================================\n");
 
     while(!done){
@@ -94,8 +94,8 @@ Image* LoadImage(const char* filename){
         offset += FLASH_SECTOR_SIZE;
     }
 
-    //printf("Done Reading: %08x\n",offset);
-    //printf("====================================\n");
+    printf("Done Reading: %08x\n",offset);
+    printf("====================================\n");
 
     f_close(&fil);
     f_unmount(pSD->pcName);
@@ -137,7 +137,7 @@ void ReadIntoBuffer(Image* p_image, uint16_t* screen_buffer, uint16_t x, uint16_
     // For each row, copy the row into the buffer
     for(int current_row = y; (current_row < buffer_height) && (current_row < y + p_image->height); current_row++){
         uint16_t* current_position = &screen_buffer[current_row * buffer_width + x];
-        uint16_t* image_position = ((current_row - y) * p_image->width) + row_start;
+        uint16_t* image_position = &screen_buffer[((current_row - y) * p_image->width) + row_start];
         memcpy(current_position, p_image,row_end);
     }
 
