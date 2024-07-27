@@ -26,7 +26,7 @@ Compile mpy-cross, which is required for the ports:
 
 Build the module in the ports/rp2 folder:
     $ cd ports/rp2
-    $ make USER_C_MODULES=../../../module/pciogame.cmake
+    $ make USER_C_MODULES=../../../module/picogame.cmake
 
 ## Using the Engine
 Connect the board to your computer using bootsel mode. Copy firmware.uf2 into the Raspberry Pico folder. This will cause the Raspberry Pico to reboot. I use [Thonny](https://thonny.org) for Micropython.
