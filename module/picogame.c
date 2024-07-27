@@ -5,6 +5,7 @@
 
 #include "picogame_sdk/screen/screen.h"
 #include "picogame_sdk/input/input.h"
+#include "picogame_sdk/image/image.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -203,6 +204,45 @@ MP_DEFINE_CONST_OBJ_TYPE(
 	MP_TYPE_FLAG_NONE,
 	make_new, PicoInput_make_new,
 	locals_dict, &PicoInput_locals_dict);
+
+/*****************************************************************
+ * Image: Functions to Load and Display an Image
+ *****************************************************************/
+typedef struct _PicoImage_obj_t {
+	mp_obj_base_t base;
+	Image image;
+} PicoImage_obj_t;
+
+static mp_obj_t load_image(mp_obj_t self_in, mp_obj_t path_obj){
+	PicoImage_obj_t* self = MP_OBJ_TO_PTR(self_in);
+	const char *path = qstr_str(mp_obj_get_qstr(path_obj));
+
+	Image* new_image = LoadImage(path);
+	self->image = new_image;
+
+	return 	mp_obj_new_bool(self->image != null);
+}
+
+static MP_DEFINE_CONST_FUN_OBJ_2(pico_loadimage_obj,load_image);
+
+static mp_obj_t PicoImage_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
+	PicoImage_obj_t *self = mp_obj_malloc(PicoInput_obj_t,type);
+
+	return MP_OBJ_FROM_PTR(self);
+}
+
+static const mp_rom_map_elem_t PicoImage_locals_dict_table[] = {
+	{ MP_ROM_QSTR(MP_QSTR_load_image), MP_OBJ_FROM_PTR(&pico_loadimage_obj) },
+};
+static MP_DEFINE_CONST_DICT(PicoImage_locals_dict, PicoImage_locals_dict_table);
+
+MP_DEFINE_CONST_OBJ_TYPE(
+	type_PicoImage,
+	MP_QSTR_PicoImage,
+	MP_TYPE_FLAG_NONE,
+	make_new, PicoImage_make_new,
+	locals_dict, &PicoImage_locals_dict);
+
 
 /*****************************************************************
  * Module: Overall Module Functions

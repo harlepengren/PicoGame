@@ -30,7 +30,8 @@ Image* LoadImage(const char* filename){
     FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
     if (FR_OK!=fr) {
 		printf("E f_mount error: %s (%d)\n",FRESULT_str(fr),fr);
-		return;
+        free(p_image);
+		return null;
 	}
 
 	fr=f_open(&fil,filename,FA_READ);
@@ -39,7 +40,7 @@ Image* LoadImage(const char* filename){
         printf("Open failed\n");
         free(p_image);
         p_image = null;
-        return;
+        return null;
     }
 
     printf("Reading Height and Width\n");
