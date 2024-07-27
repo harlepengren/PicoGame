@@ -31,7 +31,7 @@ Image* LoadImage(const char* filename){
     if (FR_OK!=fr) {
 		printf("E f_mount error: %s (%d)\n",FRESULT_str(fr),fr);
         free(p_image);
-		return null;
+		return NULL;
 	}
 
 	fr=f_open(&fil,filename,FA_READ);
@@ -39,8 +39,8 @@ Image* LoadImage(const char* filename){
     if(fr != FR_OK){
         printf("Open failed\n");
         free(p_image);
-        p_image = null;
-        return null;
+        p_image = NULL;
+        return NULL;
     }
 
     printf("Reading Height and Width\n");
@@ -104,7 +104,7 @@ Image* LoadImage(const char* filename){
 
 void CloseImage(Image* p_image){
     free(p_image);
-    p_image = null;
+    p_image = NULL;
 }
 
 uint16_t GetPaletteColor(Image* p_image, uint8_t index){

@@ -220,7 +220,7 @@ static mp_obj_t load_image(mp_obj_t self_in, mp_obj_t path_obj){
 	Image* new_image = LoadImage(path);
 	self->image = new_image;
 
-	return 	mp_obj_new_bool(self->image != null);
+	return 	mp_obj_new_bool(self->image != NULL);
 }
 
 static MP_DEFINE_CONST_FUN_OBJ_2(pico_loadimage_obj,load_image);
