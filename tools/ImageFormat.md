@@ -18,3 +18,5 @@ Since then we have changed into storing this in the flash memory. This allows us
 
 ## Special Notes
 We are storing two pixels per byte. We don't want to check for the end of row in the middle of a byte. Therefore, the width must be even. If the input image is odd, we add 1 pixel to the end of the row to make it even.
+
+The transparency color is always the first color in the color palette. If no transparency color is defined, then the transparency color is set to black. If you want no transparency in your image, then you need to set to a color that does not appear in the image.
