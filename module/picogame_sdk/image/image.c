@@ -65,10 +65,10 @@ Image* LoadImage(const char* filename){
         p_image->palette[palette_index] = ((current_color & 0xff) << 8) | (current_color >> 8);
     }
 
-    p_image->image = (uint8_t*)(XIP_BASE + offset);
+    p_image->image = (uint16_t*)(XIP_BASE + offset);
 
-    printf("Storing this image at: %08s\n",p_image->image);
-    printf("====================================\n");
+    //printf("Storing this image at: %08s\n",p_image->image);
+    //printf("====================================\n");
 
     while(!done){
         f_read(&fil, read_buffer, read_len, &bytes_read);

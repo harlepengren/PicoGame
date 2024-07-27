@@ -16,7 +16,7 @@
 typedef struct {
     uint16_t* palette;
     uint16_t num_colors;
-    uint8_t* image;
+    uint16_t* image;
     FIL fil;
     uint16_t height;
     uint16_t width;
