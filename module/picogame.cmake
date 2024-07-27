@@ -14,7 +14,7 @@ target_sources(picogame INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/FatFs_SPI/sd_driver/sd_card.c)
 
 set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/FatFs_SPI/sd_driver/sd_card.c 
-    PROPERTIES COMPILE_OPTIONS "-Wno-unused-parameter;-Wno-missing-field-initializer;-Werror=no-unused-variable")
+    PROPERTIES COMPILE_OPTIONS "-Wno-unused-parameter;-Wno-missing-field-initializer;-Wno-unused-variable")
 
 target_include_directories(picogame INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/
