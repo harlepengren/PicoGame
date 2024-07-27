@@ -6,13 +6,18 @@ target_sources(picogame INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/screen/screen.c
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/screen/ili9341.c
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/input/input.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/image/image.c)
+    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/image/image.c
+    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/image/hw_config.c
+    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/FatFs_SPI/ff15/source/ff.c
+    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/FatFs_SPI/sd_driver/sd_card.c)
 
 target_include_directories(picogame INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/screen/
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/input
-    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/image)
+    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/image
+    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/FatFs_SPI/ff15/source/
+    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/FatFs_SPI/sd_driver/)
 
 target_link_libraries(usermod INTERFACE picogame)
