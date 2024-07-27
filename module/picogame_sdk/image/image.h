@@ -13,7 +13,7 @@
 // TO DO: Eventually, change this into assets (e.g., images and audio) instead of just images.
 // However, not a high priority since the game system does not have audio output yet.
 
-typdef struct {
+typedef struct {
     uint16_t* palette;
     uint16_t num_colors;
     uint8_t* image;
