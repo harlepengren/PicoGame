@@ -137,7 +137,7 @@ void ReadIntoBuffer(Image* p_image, uint16_t* screen_buffer, uint16_t x, uint16_
     // For each row, copy the row into the buffer
     for(int current_row = y; (current_row < buffer_height) && (current_row < y + p_image->height); current_row++){
         uint16_t* current_position = &screen_buffer[current_row * buffer_width + x];
-        uint16_t* image_position = p_image->image[((current_row - y) * p_image->width) + row_start];
+        uint16_t* image_position = &p_image->image[((current_row - y) * p_image->width) + row_start];
         memcpy(current_position, image_position,row_end);
     }
 
