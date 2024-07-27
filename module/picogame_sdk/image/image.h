@@ -1,12 +1,12 @@
+#ifndef IMAGE_H
+#define IMAGE_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <hardware/flash.h>
 
 #include "ff.h"
-
-#ifndef IMAGE_H
-#define IMAGE_H
 
 #define FLASH_TARGET_OFFSET (1024*1024)
 
