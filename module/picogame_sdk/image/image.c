@@ -13,8 +13,11 @@
 Image* LoadImage(const char* filename){
     bool done = false;
     UINT bytes_read=0;
-    uint8_t buffer[FLASH_SECTOR_SIZE];
-    int read_len = FLASH_SECTOR_SIZE;
+
+    // We will be storing 16 bits per color, so we need to read half of the sector size.
+    uint8_t read_buffer[FLASH_SECTOR_SIZE/2];
+    uint16_t write_buffer[FLASH_SECTOR_SIZE/2];
+    int read_len = FLASH_SECTOR_SIZE / 2;   
 
     // Create an image
     Image* p_image;
@@ -66,16 +69,24 @@ Image* LoadImage(const char* filename){
     printf("====================================\n");
 
     while(!done){
-        f_read(&fil, buffer, read_len, &bytes_read);
+        f_read(&fil, read_buffer, read_len, &bytes_read);
 
         if(bytes_read < read_len){
             done = true;
         }
 
+        // For each byte, lookup the value in the color palette and record the result in the write_buffer
+        for(int read_index=0; read_index<bytes_read; read_index++){
+            uint16_t pixel = p_image->palette[read_buffer[read_index] >> 4];
+            write_buffer[read_index*2] = pixel;
+            pixel = p_image->palette[read_buffer[read_index] & 0xf];
+            write_buffer[read_index*2 + 1] = pixel;
+        }
+
         // Not sure if necessary, but recommended to save interrupts
         uint32_t interrupts = save_and_disable_interrupts();
         flash_range_erase(offset,FLASH_SECTOR_SIZE);
-        flash_range_program(offset,(const uint8_t*)buffer,bytes_read);
+        flash_range_program(offset,(const uint8_t*)write_buffer,bytes_read);
         restore_interrupts(interrupts);
 
         offset += FLASH_SECTOR_SIZE;
@@ -103,6 +114,29 @@ uint16_t GetPaletteColor(Image* p_image, uint8_t index){
     return 0;
 }
 
-void ReadIntoBuffer(Image* p_image, uint16_t x, uint16_t y, uint16_t buffer_width, uint16_t buffer_height){
+// Copies the image from the flash memory location into the screen buffer
+void ReadIntoBuffer(Image* p_image, uint16_t* screen_buffer, uint16_t x, uint16_t y, uint16_t buffer_width, uint16_t buffer_height){
+    // First, are we starting offscreen
+    if(x > buffer_width || y > buffer_height){
+        return;
+    }
+
+    uint16_t row_start = 0;
+    if(x < 0){
+        row_start = abs(x);
+    }
+    
+    // Next, we need to know whether our width goes beyond the buffer_width
+    uint16_t row_end = p_image->width;
+    if(x + p_image->width > buffer_width){
+        row_end = x + p_image->width - buffer_width;
+    }
+    
+    // For each row, copy the row into the buffer
+    for(int current_row = y; (current_row < buffer_height) && (current_row < y + p_image->height); current_row++){
+        uint16_t* current_position = &screen_buffer[current_row * buffer_width + x];
+        uint16_t* image_position = ((current_row - y) * p_image->width) + row_start;
+        memcpy(current_position, p_image,row_end);
+    }
 
 }
