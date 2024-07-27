@@ -1,6 +1,6 @@
 #include <pico/stdio.h>
 #include <pico/stdlib.h>
-#include <pico/malloc.h>
+//#include <pico/malloc.h>
 #include <hardware/flash.h>
 #include <string.h>
 
