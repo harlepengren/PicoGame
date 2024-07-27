@@ -210,12 +210,12 @@ MP_DEFINE_CONST_OBJ_TYPE(
  *****************************************************************/
 typedef struct _PicoImage_obj_t {
 	mp_obj_base_t base;
-	Image image;
+	Image* image;
 } PicoImage_obj_t;
 
 static mp_obj_t load_image(mp_obj_t self_in, mp_obj_t path_obj){
 	PicoImage_obj_t* self = MP_OBJ_TO_PTR(self_in);
-	const char *path = qstr_str(mp_obj_get_qstr(path_obj));
+	const char *path = qstr_str(mp_obj_str_get_qstr(path_obj));
 
 	Image* new_image = LoadImage(path);
 	self->image = new_image;
@@ -226,7 +226,7 @@ static mp_obj_t load_image(mp_obj_t self_in, mp_obj_t path_obj){
 static MP_DEFINE_CONST_FUN_OBJ_2(pico_loadimage_obj,load_image);
 
 static mp_obj_t PicoImage_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
-	PicoImage_obj_t *self = mp_obj_malloc(PicoInput_obj_t,type);
+	PicoImage_obj_t *self = mp_obj_malloc(PicoImage_obj_t,type);
 
 	return MP_OBJ_FROM_PTR(self);
 }
