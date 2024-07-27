@@ -11,6 +11,8 @@ Since then we have changed into storing this in the flash memory. This allows us
 | 0x00   | 2 bytes | Height of image |
 | 0x02   | 2 bytes | Width of image  |
 | 0x04   | 2 bytes | Number of colors in the color palette |
+| 0x06   | 2 bytes per color | This is where we store the colors in the color palette. We will store 2 bytes per color (565). |
+| 0x06 + (2*number of colors) | height * width / 2 | Store the actual pixels, 2 pixels per byte using the color palette index. |
 
 
 
