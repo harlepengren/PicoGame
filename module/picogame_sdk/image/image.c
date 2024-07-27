@@ -94,8 +94,8 @@ Image* LoadImage(const char* filename){
         offset += FLASH_SECTOR_SIZE;
     }
 
-    printf("Done Reading: %08x\n",offset);
-    printf("====================================\n");
+    //printf("Done Reading: %08x\n",offset);
+    //printf("====================================\n");
 
     f_close(&fil);
     f_unmount(pSD->pcName);
