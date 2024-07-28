@@ -252,6 +252,7 @@ static const mp_rom_map_elem_t PicoGame_globals_table[] = {
 	{ MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_PicoGame) },
 	{ MP_ROM_QSTR(MP_QSTR_PicoScreen), MP_ROM_PTR(&type_PicoScreen) },
 	{ MP_ROM_QSTR(MP_QSTR_PicoInput), MP_ROM_PTR(&type_PicoInput) },
+	{ MP_ROM_QSTR(MP_QSTR_PicoImage), MP_ROM_PTR(&type_PicoImage) },
 };
 static MP_DEFINE_CONST_DICT(PicoGame_globals, PicoGame_globals_table);
 
