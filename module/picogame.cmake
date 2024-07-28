@@ -8,7 +8,7 @@ target_sources(picogame INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/input/input.cpp
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/image/image.c
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/image/hw_config.c
-    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/FatFs_SPI/ff15/source/ff.c
+    #${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/FatFs_SPI/ff15/source/ff.c
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/FatFs_SPI/src/f_util.c
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/FatFs_SPI/src/my_debug.c
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/FatFs_SPI/sd_driver/sd_card.c)
