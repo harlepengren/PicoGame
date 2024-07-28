@@ -25,7 +25,7 @@ typedef struct {
 } Image;
 
 uint GetOffset();
-uint UpdateOffset(uint addOffset)
+uint UpdateOffset(uint addOffset);
 Image* LoadImage(const char* filename);
 void CloseImage(Image* p_image);
 uint16_t GetPaletteColor(Image* p_image, uint8_t index);
