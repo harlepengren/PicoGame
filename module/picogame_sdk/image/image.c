@@ -10,6 +10,18 @@
 #include "sd_card.h"
 #include "hw_config.h"
 
+uint GetOffset(){
+    return UpdateOffset(0);
+}
+
+uint UpdateOffset(uint addOffset){
+    static uint offset = FLASH_TARGET_OFFSET;
+
+    offset += addOffset;
+
+    return offset;
+}
+
 Image* LoadImage(const char* filename){
     bool done = false;
     UINT bytes_read=0;
@@ -65,7 +77,7 @@ Image* LoadImage(const char* filename){
         p_image->palette[palette_index] = ((current_color & 0xff) << 8) | (current_color >> 8);
     }
 
-    p_image->image = (uint16_t*)(XIP_BASE + offset);
+    p_image->image = (uint16_t*)(XIP_BASE + GetOffset());
 
     //printf("Storing this image at: %08s\n",p_image->image);
     //printf("====================================\n");
@@ -87,14 +99,14 @@ Image* LoadImage(const char* filename){
 
         // Not sure if necessary, but recommended to save interrupts
         uint32_t interrupts = save_and_disable_interrupts();
-        flash_range_erase(offset,FLASH_SECTOR_SIZE);
-        flash_range_program(offset,(const uint8_t*)write_buffer,bytes_read);
+        flash_range_erase(GetOffset(),FLASH_SECTOR_SIZE);
+        flash_range_program(GetOffset(),(const uint8_t*)write_buffer,bytes_read);
         restore_interrupts(interrupts);
 
-        offset += FLASH_SECTOR_SIZE;
+        UpdateOffset(FLASH_SECTOR_SIZE);
     }
 
-    printf("Done Reading: %08x\n",offset);
+    printf("Done Reading: %08x\n",GetOffset());
     printf("====================================\n");
 
     f_close(&fil);
