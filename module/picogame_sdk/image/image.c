@@ -43,7 +43,7 @@ Image* LoadImage(const char* filename){
 
     //printf("Number of SD cards: %i\n", sd_get_num());
     char error_buffer[40];
-    sprintf(&error_buffer,"Number of sd cards: %u",sd_get_num());
+    sprintf(error_buffer,"Number of sd cards: %u",sd_get_num());
     mp_raise_msg(&mp_type_ValueError,"Mount file");
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
