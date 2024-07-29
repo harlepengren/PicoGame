@@ -4,6 +4,12 @@
 #include <hardware/flash.h>
 #include <string.h>
 
+// TODO: Remove
+// I wanted to keep the sdk seperate from micropython
+// however, I need for now to debug.
+#include "py/runtime.h"
+#include "py/obj.h"
+
 #include "image.h"
 #include "ff.h"
 #include "f_util.h"
@@ -38,6 +44,12 @@ Image* LoadImage(const char* filename){
     printf("Number of SD cards: %i\n", sd_get_num());
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
+
+    if(pSD == NULL}{
+        mp_raise_msg(&mp_type_ValueError,"SD Card");
+        return;
+    }
+
     
     FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
     if (FR_OK!=fr) {
