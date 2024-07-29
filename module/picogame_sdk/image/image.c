@@ -41,7 +41,9 @@ Image* LoadImage(const char* filename){
     Image* p_image;
     p_image = (Image*)malloc(sizeof(Image));
 
-    printf("Number of SD cards: %i\n", sd_get_num());
+    //printf("Number of SD cards: %i\n", sd_get_num());
+    sprintf("Number of sd cards: %i",sd_get_num());
+    mp_raise_msg(&mp_type_ValueError,"Mount file");
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
 
@@ -49,14 +51,16 @@ Image* LoadImage(const char* filename){
         mp_raise_msg(&mp_type_ValueError,"SD Card");
         return NULL;
     }
-
     
     FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
     if (FR_OK!=fr) {
 		printf("E f_mount error: %s (%d)\n",FRESULT_str(fr),fr);
+        mp_raise_msg(&mp_type_ValueError,"Mount file");
         free(p_image);
 		return NULL;
 	}
+
+    mp_raise_msg(&mp_type_ValueError,"Ready to open file");
 
     FIL fil;
 	fr=f_open(&fil,filename,FA_READ);
