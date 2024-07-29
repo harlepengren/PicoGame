@@ -47,7 +47,7 @@ Image* LoadImage(const char* filename){
 
     if(pSD == NULL}{
         mp_raise_msg(&mp_type_ValueError,"SD Card");
-        return;
+        return NULL;
     }
 
     
