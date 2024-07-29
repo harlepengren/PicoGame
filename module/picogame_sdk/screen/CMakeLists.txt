@@ -3,7 +3,6 @@ add_library(screen INTERFACE)
 target_sources(screen INTERFACE
     screen.cpp
     ili9341.c
-    image.cpp
     )
 
 target_link_libraries(screen INTERFACE

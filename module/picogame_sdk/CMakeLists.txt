@@ -6,6 +6,7 @@ add_library(picogame_sdk INTERFACE)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/FatFs_SPI)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/screen)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/input)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/input)
 
 target_sources(picogame_sdk INTERFACE ${CMAKE_CURRENT_LIST_DIR}/hw_config.c ${CMAKE_CURRENT_LIST_DIR}/setup.cpp)
 
