@@ -45,7 +45,7 @@ Image* LoadImage(const char* filename){
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
 
-    if(pSD == NULL}{
+    if(pSD == NULL){
         mp_raise_msg(&mp_type_ValueError,"SD Card");
         return NULL;
     }
