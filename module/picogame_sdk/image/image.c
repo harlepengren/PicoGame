@@ -9,6 +9,7 @@
 // however, I need for now to debug.
 #include "py/runtime.h"
 #include "py/obj.h"
+#include "py/mpprint.h"
 
 #include "image.h"
 #include "ff.h"
@@ -44,24 +45,24 @@ Image* LoadImage(const char* filename){
     //printf("Number of SD cards: %i\n", sd_get_num());
     char error_buffer[40];
     sprintf(error_buffer,"Number of sd cards: %u",sd_get_num());
-    mp_raise_msg(&mp_type_ValueError,"Mount file");
+    mp_print_str(&MP_PYTHON_PRINTER,error_buffer);
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
 
     if(pSD == NULL){
-        mp_raise_msg(&mp_type_ValueError,"SD Card");
+        mp_raise_msg(&mp_type_ValueError,"SD Card is null");
         return NULL;
     }
     
     FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
     if (FR_OK!=fr) {
 		printf("E f_mount error: %s (%d)\n",FRESULT_str(fr),fr);
-        mp_raise_msg(&mp_type_ValueError,"Mount file");
+        mp_raise_msg(&mp_type_ValueError,"Mount file error");
         free(p_image);
 		return NULL;
 	}
 
-    mp_raise_msg(&mp_type_ValueError,"Ready to open file");
+    mp_print_str(&MP_PYTHON_PRINTER,"Ready to open file");
 
     FIL fil;
 	fr=f_open(&fil,filename,FA_READ);
