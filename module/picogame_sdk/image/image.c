@@ -42,7 +42,7 @@ Image* LoadImage(const char* filename){
     Image* p_image;
     p_image = (Image*)malloc(sizeof(Image));
 
-    //printf("Number of SD cards: %i\n", sd_get_num());
+    printf("Number of SD cards: %u\n", sd_get_num());
     char error_buffer[40];
     sprintf(error_buffer,"Number of sd cards: %u",sd_get_num());
     mp_print_str(&mp_sys_stdout_print,error_buffer);
@@ -50,7 +50,7 @@ Image* LoadImage(const char* filename){
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
 
-    if(pSD == NULL){
+    /*if(pSD == NULL){
         mp_raise_msg(&mp_type_ValueError,"SD Card is null");
         return NULL;
     }
@@ -129,7 +129,7 @@ Image* LoadImage(const char* filename){
     printf("====================================\n");
 
     f_close(&fil);
-    f_unmount(pSD->pcName);
+    f_unmount(pSD->pcName);*/
 
     return p_image;
 }
