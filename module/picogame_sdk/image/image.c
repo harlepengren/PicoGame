@@ -30,7 +30,10 @@ uint UpdateOffset(uint addOffset){
 }
 
 Image* LoadImage(const char* filename){
-    bool done = false;
+    printf("Attempting to load file %s", filename);
+
+    return NULL;
+    /*bool done = false;
     UINT bytes_read=0;
 
     // We will be storing 16 bits per color, so we need to read half of the sector size.
@@ -50,7 +53,7 @@ Image* LoadImage(const char* filename){
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
 
-    /*if(pSD == NULL){
+    if(pSD == NULL){
         mp_raise_msg(&mp_type_ValueError,"SD Card is null");
         return NULL;
     }
