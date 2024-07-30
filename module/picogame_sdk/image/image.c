@@ -132,9 +132,9 @@ Image* LoadImage(const char* filename){
     printf("====================================\n");
 
     f_close(&fil);
-    f_unmount(pSD->pcName);*/
+    f_unmount(pSD->pcName);
 
-    return p_image;
+    return p_image;*/
 }
 
 void CloseImage(Image* p_image){
