@@ -46,7 +46,7 @@ Image* LoadImage(const char* filename){
     char error_buffer[40];
     sprintf(error_buffer,"Number of sd cards: %u",sd_get_num());
     //mp_print_str(MICROPY_ERROR_PRINTER,error_buffer);
-    mp_raise_msg(&mp_type_ValueError,"SD Card is null");
+    mp_raise_msg(&mp_type_ValueError,error_buffer);
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
 
