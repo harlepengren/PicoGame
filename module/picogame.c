@@ -7,6 +7,8 @@
 #include "picogame_sdk/input/input.h"
 #include "picogame_sdk/image/image.h"
 
+#define MICROPY_DEBUG_PRINTERS 1
+
 #ifdef __cplusplus
 extern "C" {
 #endif
