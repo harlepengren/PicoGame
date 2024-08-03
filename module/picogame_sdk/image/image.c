@@ -34,8 +34,7 @@ Image* LoadImage(const char* filename){
     uint num_sd_cards = sd_get_num();
     mp_printf(MP_PYTHON_PRINTER,"Number of SD cards: %u\n", num_sd_cards);
 
-    return NULL;
-    /*bool done = false;
+    bool done = false;
     UINT bytes_read=0;
 
     // We will be storing 16 bits per color, so we need to read half of the sector size.
@@ -47,11 +46,6 @@ Image* LoadImage(const char* filename){
     Image* p_image;
     p_image = (Image*)malloc(sizeof(Image));
 
-    printf("Number of SD cards: %u\n", sd_get_num());
-    char error_buffer[40];
-    sprintf(error_buffer,"Number of sd cards: %u",sd_get_num());
-    mp_print_str(&mp_sys_stdout_print,error_buffer);
-    //mp_raise_msg(&mp_type_ValueError,error_buffer);
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
 
@@ -62,13 +56,13 @@ Image* LoadImage(const char* filename){
     
     FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
     if (FR_OK!=fr) {
-		printf("E f_mount error: %s (%d)\n",FRESULT_str(fr),fr);
+		//printf("E f_mount error: %s (%d)\n",FRESULT_str(fr),fr);
         mp_raise_msg(&mp_type_ValueError,"Mount file error");
         free(p_image);
 		return NULL;
 	}
 
-    mp_print_str(MP_PYTHON_PRINTER,"Ready to open file");
+    mp_printf(MP_PYTHON_PRINTER,"Ready to open file");
 
     FIL fil;
 	fr=f_open(&fil,filename,FA_READ);
