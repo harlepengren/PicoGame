@@ -35,11 +35,6 @@ Image* LoadImage(const char* filename){
     mp_printf(MP_PYTHON_PRINTER,"Number of SD cards: %u\n", num_sd_cards);
 
 
-    // We will be storing 16 bits per color, so we need to read half of the sector size.
-    uint8_t read_buffer[FLASH_SECTOR_SIZE/2];
-    uint16_t write_buffer[FLASH_SECTOR_SIZE/2];
-    int read_len = FLASH_SECTOR_SIZE / 2;   
-
     // Create an image
     Image* p_image;
     p_image = (Image*)malloc(sizeof(Image));
@@ -100,6 +95,11 @@ Image* LoadImage(const char* filename){
 
     bool done = false;
     UINT bytes_read=0;
+
+    // We will be storing 16 bits per color, so we need to read half of the sector size.
+    uint8_t read_buffer[FLASH_SECTOR_SIZE/2];
+    uint16_t write_buffer[FLASH_SECTOR_SIZE/2];
+    int read_len = FLASH_SECTOR_SIZE / 2;
 
     while(!done){
         f_read(&fil, read_buffer, read_len, &bytes_read);
