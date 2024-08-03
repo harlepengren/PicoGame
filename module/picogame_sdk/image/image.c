@@ -34,8 +34,6 @@ Image* LoadImage(const char* filename){
     uint num_sd_cards = sd_get_num();
     mp_printf(MP_PYTHON_PRINTER,"Number of SD cards: %u\n", num_sd_cards);
 
-    bool done = false;
-    UINT bytes_read=0;
 
     // We will be storing 16 bits per color, so we need to read half of the sector size.
     uint8_t read_buffer[FLASH_SECTOR_SIZE/2];
@@ -53,7 +51,10 @@ Image* LoadImage(const char* filename){
         mp_raise_msg(&mp_type_ValueError,"SD Card is null");
         return NULL;
     }
-    
+
+    return p_image;
+
+/*    
     FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
     if (FR_OK!=fr) {
 		//printf("E f_mount error: %s (%d)\n",FRESULT_str(fr),fr);
@@ -97,8 +98,8 @@ Image* LoadImage(const char* filename){
 
     p_image->image = (uint16_t*)(XIP_BASE + GetOffset());
 
-    //printf("Storing this image at: %08s\n",p_image->image);
-    //printf("====================================\n");
+    bool done = false;
+    UINT bytes_read=0;
 
     while(!done){
         f_read(&fil, read_buffer, read_len, &bytes_read);
@@ -130,7 +131,7 @@ Image* LoadImage(const char* filename){
     f_close(&fil);
     f_unmount(pSD->pcName);
 
-    return p_image;
+    return p_image;*/
 }
 
 void CloseImage(Image* p_image){
