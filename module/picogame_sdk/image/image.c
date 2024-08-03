@@ -30,7 +30,7 @@ uint UpdateOffset(uint addOffset){
 }
 
 Image* LoadImage(const char* filename){
-    mp_printf("Attempting to load file %s", filename);
+    mp_printf(MP_PYTHON_PRINTER, "Attempting to load file %s", filename);
 
     return NULL;
     /*bool done = false;
