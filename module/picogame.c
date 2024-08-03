@@ -217,8 +217,6 @@ static mp_obj_t load_image(mp_obj_t self_in, mp_obj_t path_obj){
 	PicoImage_obj_t* self = MP_OBJ_TO_PTR(self_in);
 	const char *path = qstr_str(mp_obj_str_get_qstr(path_obj));
 
-	printf("embarking on loading of image");
-
 	Image* new_image = LoadImage(path);
 	self->image = new_image;
 

@@ -31,6 +31,8 @@ uint UpdateOffset(uint addOffset){
 
 Image* LoadImage(const char* filename){
     mp_printf(MP_PYTHON_PRINTER, "Attempting to load file %s", filename);
+    uint num_sd_cards = sd_get_num();
+    mp_printf(MP_PYTHON_PRINTER,"Number of SD cards: %u\n", num_sd_cards);
 
     return NULL;
     /*bool done = false;
