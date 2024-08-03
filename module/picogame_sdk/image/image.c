@@ -30,7 +30,7 @@ uint UpdateOffset(uint addOffset){
 }
 
 Image* LoadImage(const char* filename){
-    printf("Attempting to load file %s", filename);
+    mp_printf("Attempting to load file %s", filename);
 
     return NULL;
     /*bool done = false;
