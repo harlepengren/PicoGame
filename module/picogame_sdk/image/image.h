@@ -29,7 +29,7 @@ typedef struct {
 
 uint GetOffset();
 uint UpdateOffset(uint addOffset);
-void LoadImage(Image* p_image, const char* filename);
+int LoadImage(Image* p_image, const char* filename);
 void CloseImage(Image* p_image);
 uint16_t GetPaletteColor(Image* p_image, uint8_t index);
 void ReadIntoBuffer(Image* p_image, uint16_t* screen_buffer, uint16_t x, uint16_t y, uint16_t buffer_width, uint16_t buffer_height);
