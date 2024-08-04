@@ -31,7 +31,10 @@ uint UpdateOffset(uint addOffset){
 
 Image* LoadImage(const char* filename){
     mp_printf(MP_PYTHON_PRINTER, "Starting . . .\n");
-    DEBUG_printf("Next test\n");
+    //DEBUG_printf("Next test\n");
+    #ifndef MICROPY_DEBUG_VERBOSE
+    mp_printf(MP_PYTHON_PRINTER,"no debug\n");
+    #endif
     sleep_ms(3000);
     mp_printf(MP_PYTHON_PRINTER, "Waiting is done.");
 
