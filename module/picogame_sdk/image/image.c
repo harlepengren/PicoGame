@@ -44,7 +44,7 @@ int LoadImage(Image* p_image, const char* filename){
         return IMG_FAIL;
     }
     
-    FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
+    FRESULT fr=f_mount(&pSD->fatfs,"",1);
     if (FR_OK!=fr) {
         char err_buff[50];
         sprintf(err_buff, "Mount file error: %s (%d)", FRESULT_str(fr),fr);
