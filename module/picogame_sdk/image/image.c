@@ -30,8 +30,9 @@ uint UpdateOffset(uint addOffset){
 }
 
 Image* LoadImage(const char* filename){
-    mp_printf(MP_PYTHON_PRINTER, "Starting . . .");
-    mp_print_str(MP_PYTHON_PRINTER, "Different type of printing, starting . . .");
+    mp_printf(MP_PYTHON_PRINTER, "Starting . . .\n");
+    mp_print_str(MP_PYTHON_PRINTER, "Different type of printing, starting . . .\n");
+    printf("Third type . . .\n");
     sleep_ms(3000);
     mp_printf(MP_PYTHON_PRINTER, "Waiting is done.");
 
