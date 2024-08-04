@@ -29,36 +29,30 @@ uint UpdateOffset(uint addOffset){
     return offset;
 }
 
-Image* LoadImage(const char* filename){
+int LoadImage(Image* p_image, const char* filename){
     mp_printf(MP_PYTHON_PRINTER, "Beginning to load images . . .\n");
 
     mp_printf(MP_PYTHON_PRINTER, "Attempting to load file %s", filename);
     uint num_sd_cards = sd_get_num();
     mp_printf(MP_PYTHON_PRINTER,"Number of SD cards: %u\n", num_sd_cards);
 
-    // Create an image
-    Image* p_image = NULL;
-    //p_image = (Image*)malloc(sizeof(Image));
-
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
 
     if(pSD == NULL){
         mp_raise_msg(&mp_type_ValueError,"SD Card is null");
-        return NULL;
+        return IMG_FAIL;
     }
-
-    return p_image;
-
-/*    
+    
     FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
     if (FR_OK!=fr) {
-		//printf("E f_mount error: %s (%d)\n",FRESULT_str(fr),fr);
         mp_raise_msg(&mp_type_ValueError,"Mount file error");
-        free(p_image);
-		return NULL;
+		return IMG_FAIL;
 	}
 
+    return IMG_OK;
+
+    /*
     mp_printf(MP_PYTHON_PRINTER,"Ready to open file");
 
     FIL fil;
