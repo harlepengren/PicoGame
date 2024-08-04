@@ -46,7 +46,9 @@ int LoadImage(Image* p_image, const char* filename){
     
     FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
     if (FR_OK!=fr) {
-        mp_raise_msg(&mp_type_ValueError,"Mount file error");
+        char err_buff[50];
+        sprintf(err_buff, "Mount file error: %d", (int)fr);
+        mp_raise_msg(&mp_type_ValueError,err_buff);
 		return IMG_FAIL;
 	}
 
