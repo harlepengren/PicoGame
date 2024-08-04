@@ -30,17 +30,11 @@ uint UpdateOffset(uint addOffset){
 }
 
 Image* LoadImage(const char* filename){
-    mp_printf(MP_PYTHON_PRINTER, "Starting . . .\n");
-    DEBUG_printf("Why?\n");
-    sleep_ms(3000);
-    mp_printf(MP_PYTHON_PRINTER, "Waiting is done.\n");
+    mp_printf(MP_PYTHON_PRINTER, "Beginning to load images . . .\n");
 
-    return NULL;
-
-    /*mp_printf(MP_PYTHON_PRINTER, "Attempting to load file %s", filename);
+    mp_printf(MP_PYTHON_PRINTER, "Attempting to load file %s", filename);
     uint num_sd_cards = sd_get_num();
     mp_printf(MP_PYTHON_PRINTER,"Number of SD cards: %u\n", num_sd_cards);
-
 
     // Create an image
     Image* p_image;
@@ -54,7 +48,7 @@ Image* LoadImage(const char* filename){
         return NULL;
     }
 
-    return p_image;*/
+    return p_image;
 
 /*    
     FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
