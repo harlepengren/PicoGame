@@ -48,6 +48,7 @@ int LoadImage(Image* p_image, const char* filename){
     if (FR_OK!=fr) {
         char err_buff[50];
         sprintf(err_buff, "Mount file error: %d", (int)fr);
+        mp_printf(MP_PYTHON_PRINTER,err_buff);
         mp_raise_msg(&mp_type_ValueError,err_buff);
 		return IMG_FAIL;
 	}
