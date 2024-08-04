@@ -9,6 +9,7 @@
 #include "ff.h"
 
 #define FLASH_TARGET_OFFSET (1024*1024)
+#define MICROPY_DEBUG_VERBOSE
 
 // TO DO: Eventually, change this into assets (e.g., images and audio) instead of just images.
 // However, not a high priority since the game system does not have audio output yet.
