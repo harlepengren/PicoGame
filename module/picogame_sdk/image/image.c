@@ -32,7 +32,7 @@ uint UpdateOffset(uint addOffset){
 Image* LoadImage(const char* filename){
     mp_printf(MP_PYTHON_PRINTER, "Starting . . .\n");
     printf("testing the print\n");
-    DEBUG_printf("Why?\n");
+    //DEBUG_printf("Why?\n");
     sleep_ms(3000);
     mp_printf(MP_PYTHON_PRINTER, "Waiting is done.\n");
 
