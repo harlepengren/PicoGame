@@ -37,8 +37,8 @@ Image* LoadImage(const char* filename){
     mp_printf(MP_PYTHON_PRINTER,"Number of SD cards: %u\n", num_sd_cards);
 
     // Create an image
-    Image* p_image;
-    p_image = (Image*)malloc(sizeof(Image));
+    Image* p_image = NULL;
+    //p_image = (Image*)malloc(sizeof(Image));
 
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
