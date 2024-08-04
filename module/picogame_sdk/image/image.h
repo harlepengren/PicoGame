@@ -7,7 +7,7 @@
 #include <hardware/flash.h>
 
 #include "ff.h"
-#include "py/misc.h"
+#include "py/malloc.h"
 
 #define FLASH_TARGET_OFFSET (1024*1024)
 #undef MICROPY_DEBUG_VERBOSE
