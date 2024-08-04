@@ -32,7 +32,7 @@ uint UpdateOffset(uint addOffset){
 int LoadImage(Image* p_image, const char* filename){
     mp_printf(MP_PYTHON_PRINTER, "Beginning to load images . . .\n");
 
-    mp_printf(MP_PYTHON_PRINTER, "Attempting to load file %s", filename);
+    mp_printf(MP_PYTHON_PRINTER, "Attempting to load file %s\n", filename);
     uint num_sd_cards = sd_get_num();
     mp_printf(MP_PYTHON_PRINTER,"Number of SD cards: %u\n", num_sd_cards);
 
@@ -47,7 +47,7 @@ int LoadImage(Image* p_image, const char* filename){
     FRESULT fr=f_mount(&pSD->fatfs,pSD->pcName,1);
     if (FR_OK!=fr) {
         char err_buff[50];
-        sprintf(err_buff, "Mount file error: %d", (int)fr);
+        sprintf(err_buff, "Mount file error: %s (%d)", FRESULT_str(fr),fr);
         mp_printf(MP_PYTHON_PRINTER,err_buff);
         mp_raise_msg(&mp_type_ValueError,err_buff);
 		return IMG_FAIL;
