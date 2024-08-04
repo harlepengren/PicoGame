@@ -10,7 +10,6 @@
 #include "py/runtime.h"
 #include "py/obj.h"
 #include "py/mpprint.h"
-#include "py/misc.h"
 
 #include "image.h"
 #include "ff.h"
