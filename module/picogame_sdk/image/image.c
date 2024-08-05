@@ -32,8 +32,13 @@ uint UpdateOffset(uint addOffset){
 int LoadImage(Image* p_image, const char* filename){
     uint num_sd_cards = sd_get_num();
 
-    // Get pointer to SD card image
-    sd_card_t *pSD=sd_get_by_num(0);
+    if(num_sd_cards > 0){
+        // Get pointer to SD card image
+        sd_card_t *pSD=sd_get_by_num(0);
+    } else {
+        mp_printf(MP_PYTHON_PRINTER, "No sd cards available.\n");
+        return IMG_FAIL;
+    }
 
     if(pSD == NULL){
         mp_raise_msg(&mp_type_ValueError,"SD Card is null");
@@ -54,12 +59,14 @@ int LoadImage(Image* p_image, const char* filename){
         return IMG_FAIL;
     }
 
-    printf("Reading Height and Width\n");
+    UINT bytes_read=0;
+
+    mp_printf(MP_PYTHON_PRINTER,"Reading Height and Width\n");
     // Read the height and width
     fr = f_read(&fil,&p_image->height,2,&bytes_read);
     fr = f_read(&fil,&p_image->width,2,&bytes_read);
 
-    printf("Reading the palette\n");
+    mp_printf(MP_PYTHON_PRINTER,"Reading the palette\n");
     // Read the color palette
     // Step 1: Get the number of colors in the palette
     fr = f_read(&fil,&p_image->num_colors,2,&bytes_read);
@@ -78,7 +85,6 @@ int LoadImage(Image* p_image, const char* filename){
     p_image->image = (uint16_t*)(XIP_BASE + GetOffset());
 
     bool done = false;
-    UINT bytes_read=0;
 
     // We will be storing 16 bits per color, so we need to read half of the sector size.
     uint8_t read_buffer[FLASH_SECTOR_SIZE/2];
