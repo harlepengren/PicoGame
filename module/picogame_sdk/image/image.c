@@ -30,8 +30,6 @@ uint UpdateOffset(uint addOffset){
 }
 
 int LoadImage(Image* p_image, const char* filename){
-    uint num_sd_cards = sd_get_num();
-
     sd_card_t *pSD=sd_get_by_num(0);
 
     if(pSD == NULL){
