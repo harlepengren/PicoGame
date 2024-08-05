@@ -32,13 +32,7 @@ uint UpdateOffset(uint addOffset){
 int LoadImage(Image* p_image, const char* filename){
     uint num_sd_cards = sd_get_num();
 
-    if(num_sd_cards > 0){
-        // Get pointer to SD card image
-        sd_card_t *pSD=sd_get_by_num(0);
-    } else {
-        mp_printf(MP_PYTHON_PRINTER, "No sd cards available.\n");
-        return IMG_FAIL;
-    }
+    sd_card_t *pSD=sd_get_by_num(0);
 
     if(pSD == NULL){
         mp_raise_msg(&mp_type_ValueError,"SD Card is null");
