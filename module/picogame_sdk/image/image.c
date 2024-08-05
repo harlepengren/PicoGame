@@ -37,7 +37,8 @@ int LoadImage(Image* p_image, const char* filename){
         return IMG_FAIL;
     }
     
-    FRESULT fr=f_mount(&pSD->fatfs,"",1);
+    FATFS fs;
+    FRESULT fr=f_mount(&fs,"",1);
     if (FR_OK!=fr) {
         mp_printf(MP_PYTHON_PRINTER,"Mount file error: %s (%d)", FRESULT_str(fr),fr);
 		return IMG_FAIL;
@@ -111,7 +112,7 @@ int LoadImage(Image* p_image, const char* filename){
     mp_printf(MP_PYTHON_PRINTER, "====================================\n");
 
     f_close(&fil);
-    f_unmount(pSD->pcName);
+    f_unmount("");
 
     return IMG_OK;
 }
