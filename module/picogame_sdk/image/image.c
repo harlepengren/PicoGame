@@ -30,11 +30,7 @@ uint UpdateOffset(uint addOffset){
 }
 
 int LoadImage(Image* p_image, const char* filename){
-    mp_printf(MP_PYTHON_PRINTER, "Beginning to load images . . .\n");
-
-    mp_printf(MP_PYTHON_PRINTER, "Attempting to load file %s\n", filename);
     uint num_sd_cards = sd_get_num();
-    mp_printf(MP_PYTHON_PRINTER,"Number of SD cards: %u\n", num_sd_cards);
 
     // Get pointer to SD card image
     sd_card_t *pSD=sd_get_by_num(0);
@@ -46,26 +42,16 @@ int LoadImage(Image* p_image, const char* filename){
     
     FRESULT fr=f_mount(&pSD->fatfs,"",1);
     if (FR_OK!=fr) {
-        char err_buff[50];
-        sprintf(err_buff, "Mount file error: %s (%d)", FRESULT_str(fr),fr);
-        mp_printf(MP_PYTHON_PRINTER,err_buff);
-        mp_raise_msg(&mp_type_ValueError,err_buff);
+        mp_printf(MP_PYTHON_PRINTER,"Mount file error: %s (%d)", FRESULT_str(fr),fr);
 		return IMG_FAIL;
 	}
-
-    return IMG_OK;
-
-    /*
-    mp_printf(MP_PYTHON_PRINTER,"Ready to open file");
 
     FIL fil;
 	fr=f_open(&fil,filename,FA_READ);
 
     if(fr != FR_OK){
-        printf("Open failed\n");
-        free(p_image);
-        p_image = NULL;
-        return NULL;
+        mp_printf(MP_PYTHON_PRINTER,"Problem opening file.\n");
+        return IMG_FAIL;
     }
 
     printf("Reading Height and Width\n");
@@ -123,8 +109,8 @@ int LoadImage(Image* p_image, const char* filename){
         UpdateOffset(FLASH_SECTOR_SIZE);
     }
 
-    printf("Done Reading: %08x\n",GetOffset());
-    printf("====================================\n");
+    mp_printf(MP_PYTHON_PRINTER,"Done Reading: %08x\n", GetOffset());
+    mp_printf(MP_PYTHON_PRINTER, "====================================\n");
 
     f_close(&fil);
     f_unmount(pSD->pcName);
