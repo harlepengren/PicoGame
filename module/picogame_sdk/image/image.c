@@ -115,7 +115,7 @@ int LoadImage(Image* p_image, const char* filename){
     f_close(&fil);
     f_unmount(pSD->pcName);
 
-    return p_image;*/
+    return IMG_OK;
 }
 
 void CloseImage(Image* p_image){
