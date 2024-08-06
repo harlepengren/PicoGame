@@ -31,12 +31,12 @@ uint UpdateOffset(uint addOffset){
 }
 
 int LoadImage(Image* p_image, const char* filename){
-    sd_card_t *pSD=sd_get_by_num(0);
+    /*sd_card_t *pSD=sd_get_by_num(0);
 
     if(pSD == NULL){
         mp_raise_msg(&mp_type_ValueError,"SD Card is null");
         return IMG_FAIL;
-    }
+    }*/
     
     FATFS fs;
     FRESULT fr=f_mount(&fs,"",1);
