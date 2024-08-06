@@ -1,7 +1,7 @@
 #include <pico/stdio.h>
 #include <pico/stdlib.h>
-#include <pico/malloc.h>
-#include <pico/mem_ops.h>
+#include "pico/malloc.h"
+#include "pico/mem_ops.h"
 #include <hardware/flash.h>
 #include <string.h>
 
