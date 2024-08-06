@@ -53,7 +53,7 @@ int LoadImage(Image* p_image, const char* filename){
         return IMG_FAIL;
     }
 
-    UINT bytes_read=0;
+   /* UINT bytes_read=0;
 
     mp_printf(MP_PYTHON_PRINTER,"Reading Height and Width\n");
     // Read the height and width
@@ -66,8 +66,6 @@ int LoadImage(Image* p_image, const char* filename){
     fr = f_read(&fil,&p_image->num_colors,2,&bytes_read);
 
     mp_printf(MP_PYTHON_PRINTER,"Height (%d), Width (%d), Colors (%d)\n",p_image->height,p_image->width,p_image->num_colors);
-
-    return IMG_OK;
 
 /*    uint pallette_size = sizeof(uint16_t)*p_image->num_colors;
     p_image->palette = (uint16_t*)malloc(pallette_size);
@@ -117,9 +115,9 @@ int LoadImage(Image* p_image, const char* filename){
     mp_printf(MP_PYTHON_PRINTER, "====================================\n");
 
     f_close(&fil);
-    f_unmount("");
+    f_unmount("");*/
 
-    return IMG_OK;*/
+    return IMG_OK;
 }
 
 void CloseImage(Image* p_image){
