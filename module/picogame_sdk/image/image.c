@@ -67,7 +67,7 @@ int LoadImage(Image* p_image, const char* filename){
 
     mp_printf(MP_PYTHON_PRINTER,"Height (%d), Width (%d), Colors (%d)\n",p_image->height,p_image->width,p_image->num_colors);
 
-/*    uint pallette_size = sizeof(uint16_t)*p_image->num_colors;
+    uint pallette_size = sizeof(uint16_t)*p_image->num_colors;
     p_image->palette = (uint16_t*)malloc(pallette_size);
     fr = f_read(&fil,p_image->palette,pallette_size,&bytes_read);
     p_image->alpha = p_image->palette[0];
