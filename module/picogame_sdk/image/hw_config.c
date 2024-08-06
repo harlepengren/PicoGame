@@ -38,8 +38,8 @@ static sd_spi_if_t spi_if = {
 /* Configuration of the SD Card socket object */
 static sd_card_t sd_card = {   
     .type = SD_IF_SPI,
-    .spi_if_p = &spi_if  // Pointer to the SPI interface driving this card
-    .use_card_detect = false;
+    .spi_if_p = &spi_if,  // Pointer to the SPI interface driving this card
+    .use_card_detect = false
 };
 
 /* ********************************************************************** */
