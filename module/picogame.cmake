@@ -28,4 +28,4 @@ target_include_directories(picogame INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/../no-OS-FatFS-SD-SDIO-SPI-RPi-Pico/src/sd_driver/
     ${CMAKE_CURRENT_LIST_DIR}/../no-OS-FatFS-SD-SDIO-SPI-RPi-Pico/src/include)
 
-target_link_libraries(usermod INTERFACE picogame pico_malloc pico_mem_ops)
+target_link_libraries(usermod INTERFACE picogame)
