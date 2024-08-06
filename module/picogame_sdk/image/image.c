@@ -1,6 +1,7 @@
 #include <pico/stdio.h>
 #include <pico/stdlib.h>
-//#include <pico/malloc.h>
+#include <pico/malloc.h>
+#include <pico/mem_ops.h>
 #include <hardware/flash.h>
 #include <string.h>
 
@@ -64,7 +65,11 @@ int LoadImage(Image* p_image, const char* filename){
     // Step 1: Get the number of colors in the palette
     fr = f_read(&fil,&p_image->num_colors,2,&bytes_read);
 
-    uint pallette_size = sizeof(uint16_t)*p_image->num_colors;
+    mp_printf(MP_PYTHON_PRINTER,"Height (%d), Width (%d), Colors (%d)\n",p_image->height,p_image->width,p_image->num_colors);
+
+    return IMG_OK;
+
+/*    uint pallette_size = sizeof(uint16_t)*p_image->num_colors;
     p_image->palette = (uint16_t*)malloc(pallette_size);
     fr = f_read(&fil,p_image->palette,pallette_size,&bytes_read);
     p_image->alpha = p_image->palette[0];
@@ -114,7 +119,7 @@ int LoadImage(Image* p_image, const char* filename){
     f_close(&fil);
     f_unmount("");
 
-    return IMG_OK;
+    return IMG_OK;*/
 }
 
 void CloseImage(Image* p_image){
