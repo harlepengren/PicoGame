@@ -40,10 +40,10 @@ socket, which SPI it is driven by, and how it is wired.
 // selects.
 static spi_t spis[] = {  // One for each SPI.
     {
-        .hw_inst = spi0,  // SPI component
-        .miso_gpio = 16, // GPIO number (not pin number)
-        .mosi_gpio = 19,
-        .sck_gpio = 18,
+        .hw_inst = spi1,  // SPI component
+        .miso_gpio = 12, // GPIO number (not pin number)
+        .mosi_gpio = 15,
+        .sck_gpio = 14,
         .baud_rate = 12500 * 1000,  
         //.baud_rate = 25 * 1000 * 1000, // Actual frequency: 20833333. 
     }
@@ -54,8 +54,8 @@ static sd_card_t sd_cards[] = {  // One for each SD card
     {
         .pcName = "0:",   // Name used to mount device
         .spi = &spis[0],  // Pointer to the SPI driving this card
-        .ss_gpio = 17,    // The SPI slave select (chip select) GPIO for this SD card
-        .use_card_detect = false,
+        .ss_gpio = 9,    // The SPI slave select GPIO for this SD card
+        .use_card_detect = true,
         .card_detect_gpio = 13,   // Card detect
         .card_detected_true = 1  // What the GPIO read returns when a card is
                                  // present. Use -1 if there is no card detect.
