@@ -8,7 +8,7 @@ target_sources(picogame INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/input/input.cpp
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/image/image.c
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/image/hw_config.c
-    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/sdcard/FatFs_SPI/src/f_util.c
+    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/sdcard/FatFs_SPI/src/f_util.c)
 
 remove_definitions(-Werror)
 
