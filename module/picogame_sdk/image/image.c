@@ -31,7 +31,7 @@ int LoadImage(Image* p_image, const char* filename){
     sd_card_t *pSD = sd_get_by_num(0);
     FRESULT fr = f_mount(&pSD->fatfs, pSD->pcName, 1);
     if (FR_OK != fr) {
-        mp_printf("f_mount error: %s (%d)\n",FRESULT_str(fr),fr);
+        mp_printf(MP_PYTHON_PRINTER, "f_mount error: %s (%d)\n",FRESULT_str(fr),fr);
     }
 
     return IMG_OK;
