@@ -1,6 +1,6 @@
-#include <pico/stdio.h>
 #include <pico/stdlib.h>
 #include <hardware/flash.h>
+#include <hardware/gpio.h>
 #include <string.h>
 
 // TODO: Remove
@@ -12,8 +12,9 @@
 
 #include "image.h"
 #include "ff.h"
-#include "f_util.h"
-#include "hw_config.h"
+#include "sd_card.h"
+//#include "f_util.h"
+//#include "hw_config.h"
 
 uint GetOffset(){
     return UpdateOffset(0);
@@ -28,11 +29,52 @@ uint UpdateOffset(uint addOffset){
 }
 
 int LoadImage(Image* p_image, const char* filename){
-    sd_card_t *pSD = sd_get_by_num(0);
-    FRESULT fr = f_mount(&pSD->fatfs, pSD->pcName, 1);
-    if (FR_OK != fr) {
-        mp_printf(MP_PYTHON_PRINTER, "f_mount error: %s (%d)\n",FRESULT_str(fr),fr);
+    FRESULT fr;
+    FATFS fs;
+    FIL fil;
+    
+    gpio_init(PICO_DEFAULT_LED_PIN);
+    gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
+    gpio_put(PICO_DEFAULT_LED_PIN, true);
+
+    // Initialize SD card
+    if (!sd_init_driver()) {
+        printf("ERROR: Could not initialize SD card\r\n");
+        return IMG_FAIL;
     }
+
+    // Mount drive
+    fr = f_mount(&fs, "0:", 1);
+    if (fr != FR_OK) {
+        printf("ERROR: Could not mount filesystem (%d)\r\n", fr);
+        return IMG_FAIL;
+    }
+
+    // Open file for reading
+    fr = f_open(&fil, filename, FA_READ);
+    if (fr != FR_OK) {
+        printf("ERROR: Could not open file (%d)\r\n", fr);
+        return IMG_FAIL;
+    }
+
+    /*while (f_gets(buf, sizeof(buf), &fil)) {
+        printf(buf);
+    }*/
+   char buffer[50];
+   uint bytes_read;
+   f_read(&fil,buffer,6,&bytes_read);
+
+    // Close file
+    fr = f_close(&fil);
+    if (fr != FR_OK) {
+        printf("ERROR: Could not close file (%d)\r\n", fr);
+        return IMG_FAIL;
+    }
+
+    // Unmount drive
+    f_unmount("0:");
+
+    gpio_put(PICO_DEFAULT_LED_PIN, false);
 
     return IMG_OK;
 }
