@@ -8,9 +8,12 @@ target_sources(picogame INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/input/input.cpp
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/image/image.c
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/image/hw_config.c
+    ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/sdcard/FatFs_SPI/sd_driver/sd_card.c
     ${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/sdcard/FatFs_SPI/src/f_util.c)
 
-remove_definitions(-Werror)
+#remove_definitions(-Werror)
+set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/picogame_sdk/FatFs_SPI/sd_driver/sd_card.c 
+    PROPERTIES COMPILE_FLAGS -Wno-unused-variable)
 
 target_include_directories(picogame INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/
