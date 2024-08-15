@@ -36,8 +36,7 @@ static void in_spi_irq_handler(const uint DMA_IRQ_num, io_rw_32 *dma_hw_ints_p) 
                 *dma_hw_ints_p = 1 << spi_p->rx_dma;  // Clear it.
                 assert(!dma_channel_is_busy(spi_p->rx_dma));
                 assert(!sem_available(&spi_p->sem));
-                bool ok = sem_release(&spi_p->sem);
-                assert(ok);
+                assert(sem_release(&spi_p->sem));
             }
         }
     }

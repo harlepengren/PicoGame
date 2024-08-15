@@ -907,8 +907,7 @@ static uint8_t sd_write_block(sd_card_t *pSD, const uint8_t *buffer,
     sd_spi_write(pSD, token);
 
     // write the data
-    bool ret = sd_spi_transfer(pSD, buffer, NULL, length);
-    myASSERT(ret);
+    myASSERT(sd_spi_transfer(pSD, buffer, NULL, length));
 
 #if SD_CRC_ENABLED
     if (crc_on) {
