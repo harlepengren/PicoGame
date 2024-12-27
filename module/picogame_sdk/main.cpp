@@ -19,7 +19,7 @@ using namespace std;
 #define PICO_GAME_DEBUG
 
 void ButtonCallback(){
-    printf("Button pressed!\n");
+    printf("Button pressed\n");
 }
 
 int main()
@@ -32,7 +32,7 @@ int main()
 
     sleep_ms(2000);
 
-    printf("now to init the sd card\n");
+    printf("Now to init the sd card\n");
 
     int16_t x = 50;
     int16_t y = 75;
