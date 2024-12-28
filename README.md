@@ -1,11 +1,11 @@
-# PicoGame
+# Pico Game
 
-PicoGame is a tiny game engine designed to run simple games on the Raspberry Pi Pico. If you want more information on the development of PicoGame as well as our 
+PicoGame is a tiny game device designed to run simple games on the Raspberry Pi Pico.
 
 # The Hardware
-For this game engine, we are using a [Raspberry Pi Pico](https://www.raspberrypi.com/products/raspberry-pi-pico/) connected to a [2.2" TFT LCD Display](https://www.adafruit.com/product/1480) using the [ili9341 driver] (https://cdn-shop.adafruit.com/datasheets/ILI9341.pdf). We use the Serial Peripheral Interface (SPI) standard to communicate from the Pico to the screen.
+Requires a [Raspberry Pi Pico](https://www.raspberrypi.com/products/raspberry-pi-pico/) connected to a [2.2" TFT LCD Display](https://www.adafruit.com/product/1480) using the [ili9341 driver](https://cdn-shop.adafruit.com/datasheets/ILI9341.pdf).
 
-# Using the Game Engine
+# The Game Engine
 There are two ways to use the game engine:
 - C/C++: The engine can be called directly in C/C++ if the game is written in C/C++.
 - Micropython Module: The game engine can be compiled into a micropython module allowing the games to be written in Python.
@@ -21,10 +21,12 @@ Get the micropython submodules:
     $ git submodule update --init
 
 Compile mpy-cross, which is required for the ports:
+
     $ cd mpy-cross
     $ make
 
 Build the module in the ports/rp2 folder:
+
     $ cd ports/rp2
     $ make USER_C_MODULES=../../../module/pciogame.cmake
 
@@ -38,6 +40,7 @@ Currently, there are two classes:
 - PicoScreen: handles screen drawing
 
 For example, to clear the screen with a blue background:
+
 ```
 import PicoGame
 screen = PicoGame.PicoScreen()
