@@ -1,6 +1,7 @@
 from machine import Pin,SPI,PWM
 import framebuf
 import time
+<<<<<<< Updated upstream
 
 BL = 13
 DC = 8
@@ -23,6 +24,26 @@ class Screen(framebuf.FrameBuffer):
         self.spi = SPI(1,10000_000,polarity=0, phase=0,sck=Pin(SCK),mosi=Pin(MOSI),miso=None)
         self.dc = Pin(DC,Pin.OUT)
         self.dc(1)
+=======
+from . import ili9341
+
+SPI_NUM = 1
+CS = 9
+# BL = 13
+DC = 13
+RST = 10
+MOSI = 15
+CLK = 14
+
+
+class Screen(framebuf.FrameBuffer):
+    def __init__(self):
+        self.width = 240
+        self.height = 320
+        spi = SPI(SPI_NUM,baudrate=1000000,sck=Pin(CLK),mosi=Pin(MOSI))
+        self.display = ili9341.Display(SPI,Pin(CS),Pin(DC),Pin(RST))
+
+>>>>>>> Stashed changes
         self.buffer = bytearray(self.height * self.width * 2)
         super().__init__(self.buffer, self.width, self.height, framebuf.RGB565)
         self.init_display()
