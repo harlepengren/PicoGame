@@ -1,6 +1,15 @@
+LCD Display
 SPI_NUM = 1
 CS = 9
 DC = 13
 RST = 10
 MOSI = 15
 CLK = 14
+
+
+SD Card
+SPI_NUM = 0
+CLK = 18
+CS = 17
+MOSI = 19
+MISO = 16
