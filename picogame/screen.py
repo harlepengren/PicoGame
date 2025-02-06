@@ -7,7 +7,7 @@ class Screen:
         try:
             # Baud rate of 40000000 seems about the max
             spi = SPI(1, baudrate=40000000, sck=Pin(14), mosi=Pin(15))
-            self._display = Display(spi, dc=Pin(13), cs=Pin(9), rst=Pin(10),rotation=0)
+            self._display = Display(spi, dc=Pin(13), cs=Pin(9), rst=Pin(10),width=240,height=320,rotation=180,mirror=True)
             self._display.clear()
             
             self._x = x
