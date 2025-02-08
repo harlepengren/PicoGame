@@ -8,7 +8,7 @@ class GameController:
     def __init__(self,currentScreen=None):
         
         if currentScreen == None:
-            self._screen = screen.Screen()
+            self._screen = screen.Screen(160,120,80,60)
         else:
             self._screen = currentScreen
             

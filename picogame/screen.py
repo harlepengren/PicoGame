@@ -19,7 +19,10 @@ class Screen:
         except KeyboardInterrupt:
             self._display.cleanup()
     
-    def clear(self,color):
+    def clear(self,color=0x0):
         self._buffer.fill(color)
+        self._display.block(self._x,self._y,self._width,self._height,self._buffer)
+        
+    def show(self):
         self._display.block(self._x,self._y,self._width,self._height,self._buffer)
         
