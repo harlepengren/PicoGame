@@ -7,4 +7,4 @@ import picogame.vector
 import picogame.collision
 import picogame.menu
 import picogame.sdcard
-import picogame.makecode
+#import picogame.makecode
