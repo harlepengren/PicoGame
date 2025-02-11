@@ -21,8 +21,16 @@ class Screen:
     
     def clear(self,color=0x0):
         self._buffer.fill(color)
-        self._display.block(self._x,self._y,self._width,self._height,self._buffer)
         
     def show(self):
-        self._display.block(self._x,self._y,self._width,self._height,self._buffer)
+        self._display.block(self._x,self._y,self._width-1,self._height-1,self._buffer)
+        
+    def blitText(self, text, x, y, color):
+        self._buffer.text(text,x,y,color)
+        
+    def blitRect(self,x,y,w,h,color,filled=True):
+        if filled:
+            self._buffer.fill_rect(x,y,w,h,color)
+        else:
+            self._buffer.rect(x,y,w,h,color)
         
